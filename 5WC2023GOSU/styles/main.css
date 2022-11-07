@@ -2,6 +2,10 @@
     font-family: "Round-Control";
     src: url("../fonts/RoundControl-Regular.otf") format("opentype");
 }
+@font-face {
+	font-family: "Coolvetica";
+	src: url("../fonts/Coolvetica.otf") format("opentype");
+}
 body,html{
     padding: 0;
     margin: 0;
@@ -124,16 +128,6 @@ body,html{
 	background-color: #936bf7;
 	border-radius: 25px;
 }
-/*#commentator {
-	position: absolute;
-	padding: 5px 30px 5px 30px;
-	left: 30px;
-	bottom: 130px;
-	color: #007E93;
-	background-color: white;
-	border-radius: 25px;
-	box-shadow: 0px 0px 20px -3px black;	
-}*/
 #nowPlayingContainer {
 	position: absolute;
 	background-image: url(../static/nowPlayingteamBlue.png);
@@ -248,6 +242,21 @@ height 150
 }
 #circle { transform: rotate(0deg); }
 #circle2 { transform: rotate(0deg); }
+
+#panel {
+	width: 500px;
+	height: 1080px;
+	background-color: rgb(80, 80, 80);
+	position: absolute;
+	left: 1920px;
+	top: 0px;
+	font-family: Coolvetica; 
+}
+#paneltitle {
+	text-align: center;
+	text-shadow: none;
+}
+
 
 .chat {
 	display: flex;
