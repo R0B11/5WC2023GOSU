@@ -1,5 +1,5 @@
 // Circle animation for match score
-// Still needs to be able to take the even or have a button to activate
+// Still needs to be able to take the event or have a button to activate
 // Written by illonion
 // Comments by ROB_ 
 
