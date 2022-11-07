@@ -39,6 +39,14 @@ body,html{
 	z-index: 0;
 	background-size: cover;
 }
+#round {
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	top: 125px;
+	font-size: 22px;
+	text-shadow: 0px 0px 8px #2a4dad;
+}
 #bottom {
 	position: absolute;
 	bottom: 0px;
