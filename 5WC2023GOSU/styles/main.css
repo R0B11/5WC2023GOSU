@@ -58,8 +58,7 @@ body,html{
 	z-index: 0;
 	background-size: cover;
 }
-#circle { transform: rotate(0deg); }
-#circle2 { transform: rotate(0deg); }
+
 #scoreBlue {
 	position: absolute;
 	left: 50px;
@@ -247,6 +246,8 @@ height 150
     transition: ease-in-out 500ms;
 	display: block
 }
+#circle { transform: rotate(0deg); }
+#circle2 { transform: rotate(0deg); }
 
 .chat {
 	display: flex;
