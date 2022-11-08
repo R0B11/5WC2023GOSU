@@ -61,6 +61,9 @@ let scoreRedTemp;
 let teamNameBlueTemp;
 let teamNameRedTemp;
 let gameState;
+let isFreemod;
+
+let numOfClients
 
 let chatLen = 0;
 let tempClass = 'unknown';
@@ -129,10 +132,33 @@ socket.onmessage = event => {
 		teamNameRedTemp = data.tourney.manager.teamName.right;
 		teamRedName.innerHTML = teamNameRedTemp;
 	}
+	if (numOfClients !== data.tourney.ipcClients.length) {
+		numOfClients = data.tourney.ipcClients.length
+	}
 	if(scoreVisibleTemp) {
-		scoreBlueTemp = data.tourney.manager.gameplay.score.left;
-		scoreRedTemp = data.tourney.manager.gameplay.score.right;
-		
+		scoreBlueTemp = 0
+		scoreRedTemp = 0
+
+		// MAKE SURE WHEN MAP IS PLAYED, SET A BOOL TO "isFreemod" TO TRUE/FALSE.
+		// Freemod Mod Multipliers
+		if (isFreemod) {
+			for (var i = 0; i < numOfClients; i++) {
+				// All mod combination multipliers
+				var tempScore = data.tourney.ipcClients[i].gameplay.score
+				if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZHD")) tempScore = tempScore * 1.9
+				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZ")) tempScore = tempScore * 1.75
+				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HDHR")) tempScore = tempScore * 1.03
+				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HR")) tempScore = tempScore * 1.05
+				// Separate FL as that gets added on top of the current multipliers(?)
+				if (data.tourney.ipcClients[i].gameplay.mods.str.includes("FL")) tempScore = tempScore * 1.4
+				if (i < numOfClients / 2) scoreBlueTemp += tempScore 
+				else scoreRedTemp += tempScore  
+			}
+		} else {
+			scoreBlueTemp = data.tourney.manager.gameplay.score.left;
+			scoreRedTemp = data.tourney.manager.gameplay.score.right;
+		}
+
 		animation.playScoreBlue.update(scoreBlueTemp);
 		animation.playScoreRed.update(scoreRedTemp);
 		
