@@ -8,21 +8,21 @@ let mapDifficulty = document.getElementById("mapDifficulty");
 
 // TEAM OVERALL SCORE
 let teamBlueName = document.getElementById("teamBlueName");
-let teamRedName = document.getElementById("teamRedName");
+let teamPurpleName = document.getElementById("teamPurpleName");
 let scoreNowBlue = document.getElementById("scoreNowBlue");
-let scoreNowRed = document.getElementById("scoreNowRed");
+let scoreNowPurple = document.getElementById("scoreNowPurple");
 let scoreMaxBlue = document.getElementById("scoreMaxBlue");
-let scoreMaxRed = document.getElementById("scoreMaxRed");
+let scoreMaxPurple = document.getElementById("scoreMaxPurple");
 
 // For Star Visibility
 let scoreBlue = document.getElementById("scoreBlue");
-let scoreRed = document.getElementById("scoreRed");
+let scorePurple = document.getElementById("scorePurple");
 let teamBlue = document.getElementById("teamBlue");
-let teamRed = document.getElementById("teamRed");
+let teamPurple = document.getElementById("teamPurple");
 
 // TEAM PLAYING SCORE
 let playScoreBlue = document.getElementById("playScoreBlue");
-let playScoreRed = document.getElementById("playScoreRed");
+let playScorePurple = document.getElementById("playScorePurple");
 
 // Graphic components
 let bottom = document.getElementById("bottom");
@@ -36,7 +36,7 @@ socket.onopen = () => {
 
 let animation = {
     playScoreBlue:  new CountUp('playScoreBlue', 0, 0, 0, .2, {useEasing: true, useGrouping: true,   separator: " ", decimal: "." }),
-    playScoreRed:  new CountUp('playScoreRed', 0, 0, 0, .2, {useEasing: true, useGrouping: true,   separator: " ", decimal: "." }),
+    playScorePurple:  new CountUp('playScorePurple', 0, 0, 0, .2, {useEasing: true, useGrouping: true,   separator: " ", decimal: "." }),
 }
 
 socket.onclose = event => {
@@ -57,9 +57,9 @@ let tempMapName;
 let tempMapDiff;
 
 let scoreBlueTemp;
-let scoreRedTemp;
+let scorePurpleTemp;
 let teamNameBlueTemp;
-let teamNameRedTemp;
+let teamNamePurpleTemp;
 let gameState;
 let isFreemod;
 
@@ -76,26 +76,26 @@ socket.onmessage = event => {
 			// Score visible -> Set bg bottom to full
 			chats.style.opacity = 0;
 			playScoreBlue.style.opacity = 1;
-			playScoreRed.style.opacity = 1;
+			playScorePurple.style.opacity = 1;
 		} else {
 			// Score invisible -> Set bg to show chats
 			chats.style.opacity = 1;
 			playScoreBlue.style.opacity = 0;
-			playScoreRed.style.opacity = 0;
+			playScorePurple.style.opacity = 0;
 		}
 	}
 	if(starsVisibleTemp !== data.tourney.manager.bools.starsVisible) {
 		starsVisibleTemp = data.tourney.manager.bools.starsVisible;
 		if(starsVisibleTemp) {
 			scoreBlue.style.display = "flex";
-			scoreRed.style.display = "flex";
+			scorePurple.style.display = "flex";
 			teamBlue.style.transform = "translateX(0)";
-			teamRed.style.transform = "translateX(0)";
+			teamPurple.style.transform = "translateX(0)";
 		} else {
 			scoreBlue.style.display = "none";
-			scoreRed.style.display = "none";
+			scorePurple.style.display = "none";
 			teamBlue.style.transform = "translateX(-150px)";
-			teamRed.style.transform = "translateX(150px)";
+			teamPurple.style.transform = "translateX(150px)";
 		}
 	}
 	if(tempImg !== data.menu.bm.path.full){
@@ -114,30 +114,30 @@ socket.onmessage = event => {
 	if(bestOfTemp !== data.tourney.manager.bestOF) {
 		bestOfTemp = data.tourney.manager.bestOF;
 		scoreMaxBlue.innerHTML = '\xa0/\xa0' + Math.ceil(bestOfTemp / 2);
-		scoreMaxRed.innerHTML = '\xa0/\xa0' + Math.ceil(bestOfTemp / 2);
+		scoreMaxPurple.innerHTML = '\xa0/\xa0' + Math.ceil(bestOfTemp / 2);
 	}
 	if(scoreBlueTemp !== data.tourney.manager.stars.left) {
 		scoreBlueTemp = data.tourney.manager.stars.left;
 		scoreNowBlue.innerHTML = scoreBlueTemp;
 	}
-	if(scoreRedTemp !== data.tourney.manager.stars.right) {
-		scoreRedTemp = data.tourney.manager.stars.right;
-		scoreNowRed.innerHTML = scoreRedTemp;
+	if(scorePurpleTemp !== data.tourney.manager.stars.right) {
+		scorePurpleTemp = data.tourney.manager.stars.right;
+		scoreNowPurple.innerHTML = scorePurpleTemp;
 	}
 	if(teamNameBlueTemp !== data.tourney.manager.teamName.left) {
 		teamNameBlueTemp = data.tourney.manager.teamName.left;
 		teamBlueName.innerHTML = teamNameBlueTemp;
 	}
-	if(teamNameRedTemp !== data.tourney.manager.teamName.right) {
-		teamNameRedTemp = data.tourney.manager.teamName.right;
-		teamRedName.innerHTML = teamNameRedTemp;
+	if(teamNamePurpleTemp !== data.tourney.manager.teamName.right) {
+		teamNamePurpleTemp = data.tourney.manager.teamName.right;
+		teamPurpleName.innerHTML = teamNamePurpleTemp;
 	}
 	if (numOfClients !== data.tourney.ipcClients.length) {
 		numOfClients = data.tourney.ipcClients.length
 	}
 	if(scoreVisibleTemp) {
 		scoreBlueTemp = 0
-		scoreRedTemp = 0
+		scorePurpleTemp = 0
 
 		// MAKE SURE WHEN MAP IS PLAYED, SET A BOOL TO "isFreemod" TO TRUE/FALSE.
 		// Freemod Mod Multipliers
@@ -152,37 +152,37 @@ socket.onmessage = event => {
 				// Separate FL as that gets added on top of the current multipliers(?)
 				if (data.tourney.ipcClients[i].gameplay.mods.str.includes("FL")) tempScore = tempScore * 1.4
 				if (i < numOfClients / 2) scoreBlueTemp += tempScore 
-				else scoreRedTemp += tempScore  
+				else scorePurpleTemp += tempScore  
 			}
 		} else {
 			scoreBlueTemp = data.tourney.manager.gameplay.score.left;
-			scoreRedTemp = data.tourney.manager.gameplay.score.right;
+			scorePurpleTemp = data.tourney.manager.gameplay.score.right;
 		}
 
 		animation.playScoreBlue.update(scoreBlueTemp);
-		animation.playScoreRed.update(scoreRedTemp);
+		animation.playScorePurple.update(scorePurpleTemp);
 		
-		if(scoreBlueTemp > scoreRedTemp) {
+		if(scoreBlueTemp > scorePurpleTemp) {
 			// Blue is Leading
 			playScoreBlue.style.backgroundColor = '#007E93';
 			playScoreBlue.style.color = 'white';
 			
-			playScoreRed.style.backgroundColor = 'transparent';
-			playScoreRed.style.color = '#8E0029';
-		} else if (scoreBlueTemp == scoreRedTemp) {
+			playScorePurple.style.backgroundColor = 'transparent';
+			playScorePurple.style.color = '#8E0029';
+		} else if (scoreBlueTemp == scorePurpleTemp) {
 			// Tie
 			playScoreBlue.style.backgroundColor = '#007E93';
 			playScoreBlue.style.color = 'white';
 			
-			playScoreRed.style.backgroundColor = '#8E0029';
-			playScoreRed.style.color = 'white';
+			playScorePurple.style.backgroundColor = '#8E0029';
+			playScorePurple.style.color = 'white';
 		} else {
-			// Red is Leading
+			// Purple is Leading
 			playScoreBlue.style.backgroundColor = 'transparent';
 			playScoreBlue.style.color = '#007E93';
 			
-			playScoreRed.style.backgroundColor = '#8E0029';
-			playScoreRed.style.color = 'white';
+			playScorePurple.style.backgroundColor = '#8E0029';
+			playScorePurple.style.color = 'white';
 			
 		}
 	}
