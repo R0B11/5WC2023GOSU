@@ -110,8 +110,9 @@ body,html{
 	padding: 10px 30px 10px 30px;
 	width: 500px;
 	color: white;
-	background-color: #75c6ea;
 	border-radius: 25px;
+	text-shadow: 0px 0px 8px rgb(255, 255, 255);
+	font-size: 40px;
 }
 #teamBlueText {
 	padding-left: 30px;
@@ -128,13 +129,15 @@ body,html{
 	color: white;
     transition: ease-in-out 500ms;
 	text-shadow: 0px 0px 20px #936bf7;
+	
 }
 #teamPurpleName {
 	padding: 10px 30px 10px 30px;
 	width: 500px;
 	color: white;
-	background-color: #936bf7;
 	border-radius: 25px;
+	text-shadow: 0px 0px 8px rgb(255, 255, 255);
+	font-size: 40px;
 }
 #nowPlayingContainer {
 	position: absolute;
