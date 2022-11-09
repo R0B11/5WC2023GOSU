@@ -56,14 +56,15 @@ let tempImg;
 let tempMapName;
 let tempMapDiff;
 
-let scoreBlueTemp;
-let scorePurpleTemp;
+let scoreBlueTemp = 0
+let scorePurpleTemp = 0
 let teamNameBlueTemp;
 let teamNamePurpleTemp;
 let gameState;
 let isFreemod;
 
 let numOfClients
+let starEvent 
 
 let chatLen = 0;
 let tempClass = 'unknown';
@@ -111,18 +112,181 @@ socket.onmessage = event => {
         tempMapDiff = '[' + data.menu.bm.metadata.difficulty + ']';
         mapDifficulty.innerHTML = tempMapDiff;
     }
-	if(bestOfTemp !== data.tourney.manager.bestOF) {
-		bestOfTemp = data.tourney.manager.bestOF;
-		scoreMaxBlue.innerHTML = '\xa0/\xa0' + Math.ceil(bestOfTemp / 2);
-		scoreMaxPurple.innerHTML = '\xa0/\xa0' + Math.ceil(bestOfTemp / 2);
-	}
-	if(scoreBlueTemp !== data.tourney.manager.stars.left) {
+	if (bestOfTemp !== Math.ceil(data.tourney.manager.bestOF / 2) ||
+		scoreBlueTemp !== data.tourney.manager.stars.left ||
+		scorePurpleTemp !== data.tourney.manager.stars.right) {
+		
+		// Best of
+		bestOfTemp =Math.ceil(data.tourney.manager.bestOF / 2)
+
+		// Add Event
+        if (scoreBlueTemp < data.tourney.manager.stars.left) {
+            starEvent = "blue-add";
+        } else if (scoreBlueTemp > data.tourney.manager.stars.left) {
+            starEvent = "blue-remove";
+        } else if (scorePurpleTemp < data.tourney.manager.stars.right) {
+            starEvent = "purple-add";
+        } else if (scorePurpleTemp > data.tourney.manager.stars.right) {
+            starEvent = "purple-remove"
+        }
+
+		// Left Stars
 		scoreBlueTemp = data.tourney.manager.stars.left;
-		scoreNowBlue.innerHTML = scoreBlueTemp;
-	}
-	if(scorePurpleTemp !== data.tourney.manager.stars.right) {
+		scoreBlue.innerHTML = '';
+		for (var i = 0; i < scoreBlueTemp; i++) {
+			if (starEvent == "blue-add" && i === scoreBlueTemp - 1) {
+				let star = document.createElement("div")
+				let line1 = document.createElement("div")
+				let line2 = document.createElement("div")
+
+				line1.style.backgroundColor = "#75c6ea";
+				line2.style.backgroundColor = "#75c6ea";
+
+				star.setAttribute("class", "star")
+				star.style.left = `${740 - (i * 50)}px`;
+
+				line1.setAttribute("class", "line1CrossLeft line1CircleToCrossLeftAnimation")
+				line2.setAttribute("class", "line2CrossLeft line2CircleToCrossLeftAnimation")
+
+				star.appendChild(line1)
+				star.appendChild(line2)
+				scoreBlue.appendChild(star)
+			} else {
+				let star = document.createElement("div")
+				let line1 = document.createElement("div")
+				let line2 = document.createElement("div")
+
+				line1.style.backgroundColor = "#75c6ea";
+				line2.style.backgroundColor = "#75c6ea";
+
+				star.setAttribute("class", "star")
+				star.style.left = `${740 - (i * 50)}px`;
+
+				line1.setAttribute("class", "line1CrossLeft")
+				line2.setAttribute("class", "line2CrossLeft")
+
+				star.appendChild(line1)
+				star.appendChild(line2)
+				scoreBlue.appendChild(star)
+			}
+		}
+
+		for (i; i < bestOfTemp; i++) {
+			if (starEvent == "blue-remove" && i == scoreBlueTemp) {
+				let star = document.createElement("div")
+				let line1 = document.createElement("div")
+				let line2 = document.createElement("div")
+
+				line1.style.backgroundColor = "#75c6ea";
+				line2.style.backgroundColor = "#75c6ea";
+
+				star.setAttribute("class", "star")
+				star.style.left = `${740 - (i * 50)}px`;
+
+				line1.setAttribute("class", "line1CircleLeft line1CrossToCircleLeftAnimation")
+				line2.setAttribute("class", "line2CircleLeft line2CrossToCircleLeftAnimation")
+
+				star.appendChild(line1)
+				star.appendChild(line2)
+				scoreBlue.appendChild(star)
+			} else {
+				let star = document.createElement("div")
+				let line1 = document.createElement("div")
+				let line2 = document.createElement("div")
+
+				line1.style.backgroundColor = "#75c6ea";
+				line2.style.backgroundColor = "#75c6ea";
+
+				star.setAttribute("class", "star")
+				star.style.left = `${740 - (i * 50)}px`;
+
+				line1.setAttribute("class", "line1CircleLeft")
+				line2.setAttribute("class", "line2CircleLeft")
+
+				star.appendChild(line1)
+				star.appendChild(line2)
+				scoreBlue.appendChild(star)
+			}
+		}
+
+		// Right Stars
 		scorePurpleTemp = data.tourney.manager.stars.right;
-		scoreNowPurple.innerHTML = scorePurpleTemp;
+		scorePurple.innerHTML = '';
+		for (var i = 0; i < scorePurpleTemp; i++) {
+			if (starEvent == "purple-add" && i === scorePurpleTemp - 1) {
+				let star = document.createElement("div")
+				let line1 = document.createElement("div")
+				let line2 = document.createElement("div")
+
+				line1.style.backgroundColor = "#936bf7";
+				line2.style.backgroundColor = "#936bf7";
+
+				star.setAttribute("class", "star")
+				star.style.right = `${728 - (i * 50)}px`;
+
+				line1.setAttribute("class", "line1CrossRight line1CircleToCrossRightAnimation")
+				line2.setAttribute("class", "line2CrossRight line2CircleToCrossRightAnimation")
+
+				star.appendChild(line1)
+				star.appendChild(line2)
+				scorePurple.appendChild(star)
+			} else {
+				let star = document.createElement("div")
+				let line1 = document.createElement("div")
+				let line2 = document.createElement("div")
+
+				line1.style.backgroundColor = "#936bf7";
+				line2.style.backgroundColor = "#936bf7";
+
+				star.setAttribute("class", "star")
+				star.style.right = `${728 - (i * 50)}px`;
+
+				line1.setAttribute("class", "line1CrossRight")
+				line2.setAttribute("class", "line2CrossRight")
+
+				star.appendChild(line1)
+				star.appendChild(line2)
+				scorePurple.appendChild(star)
+			}
+		}
+
+		for (i; i < bestOfTemp; i++) {
+			if (starEvent == "purple-remove" && i == scorePurpleTemp) {
+				let star = document.createElement("div")
+				let line1 = document.createElement("div")
+				let line2 = document.createElement("div")
+
+				line1.style.backgroundColor = "#936bf7";
+				line2.style.backgroundColor = "#936bf7";
+
+				star.setAttribute("class", "star")
+				star.style.right = `${728 - (i * 50)}px`;
+
+				line1.setAttribute("class", "line1CircleRight line1CrossToCircleRightAnimation")
+				line2.setAttribute("class", "line2CircleRight line2CrossToCircleRightAnimation")
+
+				star.appendChild(line1)
+				star.appendChild(line2)
+				scorePurple.appendChild(star)
+			} else {
+				let star = document.createElement("div")
+				let line1 = document.createElement("div")
+				let line2 = document.createElement("div")
+
+				line1.style.backgroundColor = "#936bf7";
+				line2.style.backgroundColor = "#936bf7";
+
+				star.setAttribute("class", "star")
+				star.style.right = `${728 - (i * 50)}px`;
+
+				line1.setAttribute("class", "line1CircleRight")
+				line2.setAttribute("class", "line2CircleRight")
+
+				star.appendChild(line1)
+				star.appendChild(line2)
+				scorePurple.appendChild(star)
+			}
+		}
 	}
 	if(teamNameBlueTemp !== data.tourney.manager.teamName.left) {
 		teamNameBlueTemp = data.tourney.manager.teamName.left;
@@ -136,9 +300,6 @@ socket.onmessage = event => {
 		numOfClients = data.tourney.ipcClients.length
 	}
 	if(scoreVisibleTemp) {
-		scoreBlueTemp = 0
-		scorePurpleTemp = 0
-
 		// MAKE SURE WHEN MAP IS PLAYED, SET A BOOL TO "isFreemod" TO TRUE/FALSE.
 		// Freemod Mod Multipliers
 		if (isFreemod) {
@@ -162,29 +323,29 @@ socket.onmessage = event => {
 		animation.playScoreBlue.update(scoreBlueTemp);
 		animation.playScorePurple.update(scorePurpleTemp);
 		
-		if(scoreBlueTemp > scorePurpleTemp) {
-			// Blue is Leading
-			playScoreBlue.style.backgroundColor = '#007E93';
-			playScoreBlue.style.color = 'white';
+		// if(scoreBlueTemp > scorePurpleTemp) {
+		// 	// Blue is Leading
+		// 	playScoreBlue.style.backgroundColor = '#007E93';
+		// 	playScoreBlue.style.color = 'white';
 			
-			playScorePurple.style.backgroundColor = 'transparent';
-			playScorePurple.style.color = '#8E0029';
-		} else if (scoreBlueTemp == scorePurpleTemp) {
-			// Tie
-			playScoreBlue.style.backgroundColor = '#007E93';
-			playScoreBlue.style.color = 'white';
+		// 	playScorePurple.style.backgroundColor = 'transparent';
+		// 	playScorePurple.style.color = '#8E0029';
+		// } else if (scoreBlueTemp == scorePurpleTemp) {
+		// 	// Tie
+		// 	playScoreBlue.style.backgroundColor = '#007E93';
+		// 	playScoreBlue.style.color = 'white';
 			
-			playScorePurple.style.backgroundColor = '#8E0029';
-			playScorePurple.style.color = 'white';
-		} else {
-			// Purple is Leading
-			playScoreBlue.style.backgroundColor = 'transparent';
-			playScoreBlue.style.color = '#007E93';
+		// 	playScorePurple.style.backgroundColor = '#8E0029';
+		// 	playScorePurple.style.color = 'white';
+		// } else {
+		// 	// Purple is Leading
+		// 	playScoreBlue.style.backgroundColor = 'transparent';
+		// 	playScoreBlue.style.color = '#007E93';
 			
-			playScorePurple.style.backgroundColor = '#8E0029';
-			playScorePurple.style.color = 'white';
+		// 	playScorePurple.style.backgroundColor = '#8E0029';
+		// 	playScorePurple.style.color = 'white';
 			
-		}
+		// }
 	}
 	if(!scoreVisibleTemp) {
 		if(chatLen != data.tourney.manager.chat.length) {

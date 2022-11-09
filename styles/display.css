@@ -4,7 +4,11 @@
 }
 @font-face {
 	font-family: "Coolvetica";
-	src: url("../fonts/Coolvetica.otf") format("opentype");
+	src: url("../fonts/Coolvetica-Regular.otf") format("opentype");
+}
+@font-face {
+	font-family: "RenogareSoft-Regular";
+	src: url("../fonts/RenogareSoft-Regular.ttf") format("opentype");
 }
 body,html{
     padding: 0;
@@ -81,14 +85,204 @@ body,html{
   margin-top: auto;
   padding-bottom: 20px;
 }
-#gameplay {
+
+.star {
 	position: absolute;
-	left: 0px;
-	top: 180px;
-	height: 720px;
-	width: 1920px;
-	background-color: #04F404;
+	top: 88px;
 }
+.starLine {
+	position: relative;
+	background-color: white;
+	width: 12px; height: 12px;
+	border-radius: 15px;
+	top: 0; left: 0;
+}
+.line1CircleLeft {
+	position: relative;
+	background-color: white;
+	width: 12px; height: 12px;
+	border-radius: 12px;
+	top: 0px;
+	transform: rotate(0deg)
+}
+.line2CircleLeft {
+	position: relative;
+	background-color: white;
+	width: 12px; height: 12px;
+	border-radius: 12px;
+	top: -12px; left: 0px; 
+	transform: rotate(0deg)
+}
+.line1CircleRight {
+	position: relative;
+	background-color: white;
+	width: 12px; height: 12px;
+	border-radius: 12px;
+	top: 0px;
+	transform: rotate(0deg)
+}
+.line2CircleRight {
+	position: relative;
+	background-color: white;
+	width: 12px; height: 12px;
+	border-radius: 12px;
+	top: -12px; right: 0px; 
+	transform: rotate(0deg)
+}
+.line1CrossLeft {
+	position: relative;
+	background-color: white;
+	width: 12px; height: 36px;
+	border-radius: 12px;
+	top: -12px;
+	transform: rotate(225deg)
+}
+.line2CrossLeft {
+	position: relative;
+	background-color: white;
+	width: 36px; height: 12px;
+	border-radius: 12px;
+	top: -36px; left: -12px;
+	transform: rotate(225deg)
+}
+.line1CrossRight {
+	position: relative;
+	background-color: white;
+	width: 12px; height: 36px;
+	border-radius: 12px;
+	top: -12px; right: -24px;
+	transform: rotate(225deg)
+}
+.line2CrossRight {
+	position: relative;
+	background-color: white;
+	width: 36px; height: 12px;
+	border-radius: 12px;
+	top: -36px; right: -12px;
+	transform: rotate(225deg)
+}
+.line1CircleToCrossLeftAnimation {
+	animation: line1CircleToCrossLeftAnimation 750ms forwards;
+}
+@keyframes line1CircleToCrossLeftAnimation {
+	from {
+		height: 12px;
+		top: 0;
+		transform: rotate(0deg)
+	}
+	to {
+		height: 36px;
+		top: -12px;
+		transform: rotate(225deg)
+	}
+}
+.line2CircleToCrossLeftAnimation {
+	animation: line2CircleToCrossLeftAnimation 750ms forwards;
+}
+@keyframes line2CircleToCrossLeftAnimation {
+	from {
+		width: 12px;
+		top: -12px; left: 0;
+		transform: rotate(0deg)
+	}
+	to {
+		width: 36px;
+		top: -36px; left: -12px;
+		transform: rotate(225deg)
+	}
+}
+.line1CrossToCircleLeftAnimation {
+	animation: line1CrossToCircleLeftAnimation 750ms forwards;
+}
+@keyframes line1CrossToCircleLeftAnimation {
+	from {
+		height: 36px;
+		top: -12px;
+		transform: rotate(225deg)
+	}
+	to {
+		height: 12px;
+		top: 0;
+		transform: rotate(0deg)
+	}
+}
+.line2CrossToCircleLeftAnimation {
+	animation: line2CrossToCircleLeftAnimation 750ms forwards;
+}
+@keyframes line2CrossToCircleLeftAnimation {
+	from {
+		width: 36px;
+		top: -36px; left: -12px;
+		transform: rotate(225deg)
+	}
+	to {
+		width: 12px;
+		top: -12px; left: 0;
+		transform: rotate(0deg)
+	}
+}
+.line1CircleToCrossRightAnimation {
+	animation: line1CircleToCrossRightAnimation 750ms forwards;
+}
+@keyframes line1CircleToCrossRightAnimation {
+	from {
+		height: 12px;
+		top: 0; right: 0px;
+		transform: rotate(0deg)
+	}
+	to {
+		height: 36px;
+		top: -12px;
+		transform: rotate(225deg)
+	}
+}
+.line2CircleToCrossRightAnimation {
+	animation: line2CircleToCrossRightAnimation 750ms forwards;
+}
+@keyframes line2CircleToCrossRightAnimation {
+	from {
+		width: 12px;
+		top: -12px; right: 0px;
+		transform: rotate(0deg)
+	}
+	to {
+		width: 36px;
+		top: -36px; right: -12px;
+		transform: rotate(225deg)
+	}
+}
+.line1CrossToCircleRightAnimation {
+	animation: line1CrossToCircleRightAnimation 750ms forwards;
+}
+@keyframes line1CrossToCircleRightAnimation {
+	from {
+		height: 36px;
+		top: -12px; right: -24px;
+		transform: rotate(225deg)
+	}
+	to {
+		height: 12px;
+		top: 0; right: 0px;
+		transform: rotate(0deg)
+	}
+}
+.line2CrossToCircleRightAnimation {
+	animation: line2CrossToCircleRightAnimation 750ms forwards;
+}
+@keyframes line2CrossToCircleRightAnimation {
+	from {
+		width: 36px;
+		top: -36px; right: -12px;
+		transform: rotate(225deg)
+
+	}
+	to {
+		width: 12px;
+		top: -12px; right: 0px;
+		transform: rotate(0deg)
+	}
+}
+
 #scorePurple {
 	position: absolute;
 	right: 50px;
@@ -205,9 +399,8 @@ height 150
 }
 #overlay {
 	position: fixed;
-	transform: translateY(-20px);
-	height: 120px;
-	width: 400px;
+	height: 130px;
+	width: 600px;
 	z-index: 0;
     background-color: rgba(0,0,0,0.50);
 	border-radius: 25px;
@@ -215,19 +408,23 @@ height 150
 #mapTitle, #mapDifficulty {
 	position: relative;
 	padding-left:5%;
+	top: 30px;
 	width: 90%;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	z-index: 0;
+	font-family: RenogareSoft-Regular;
+	font-size: 24px;
 }
 #chats {
-	background: gray;
+	background: #111;
 	position: absolute;
 	bottom: 0px;
 	left: 710px;
 	width: 500px;
 	height: 142px;
+	border: 3px white solid;
 	border-radius: 35px;
 	bottom: 20px;
 	overflow-y: scroll;
@@ -235,8 +432,10 @@ height 150
 	padding: 5px 15px;
 	font-size: 18px;
     font-family: Coolvetica;
+	text-shadow: 0px 0px 0px rgb(255, 255, 255);
     transition: ease-in-out 500ms;
-	display: block
+	display: block;
+	letter-spacing: 2px;
 }
 
 #panel {
@@ -260,12 +459,13 @@ height 150
 }
 
 .chatTime {
-	width: 5%;
+	width: 10%;
 	color: silver;
 	padding-right: 10px;
+	padding-left: 5px;
 }
 .wholeChat {
-	width: 95%;
+	width: 90%;
 	display: flex;
 }
 .chatName {
