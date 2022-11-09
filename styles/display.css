@@ -101,7 +101,6 @@ body,html{
 	position: absolute;
 	left: 200px;
 	top: 50px;
-    font-size: 30px;
 	color: white;
     transition: ease-in-out 500ms;
 	text-shadow: 0px 0px 20px #75c6ea;
@@ -112,7 +111,7 @@ body,html{
 	color: white;
 	border-radius: 25px;
 	text-shadow: 0px 0px 8px rgb(255, 255, 255);
-	font-size: 40px;
+	font-size: 31px;
 }
 #teamBlueText {
 	padding-left: 30px;
@@ -125,7 +124,6 @@ body,html{
 	right: 200px;
 	top: 50px;
 	text-align: right;
-    font-size: 30px;
 	color: white;
     transition: ease-in-out 500ms;
 	text-shadow: 0px 0px 20px #936bf7;
@@ -137,7 +135,7 @@ body,html{
 	color: white;
 	border-radius: 25px;
 	text-shadow: 0px 0px 8px rgb(255, 255, 255);
-	font-size: 40px;
+	font-size: 31px;
 }
 #nowPlayingContainer {
 	position: absolute;
@@ -236,7 +234,7 @@ height 150
 	overflow-x: hidden;
 	padding: 5px 15px;
 	font-size: 18px;
-    font-family: Round-Control, monospace;
+    font-family: Coolvetica;
     transition: ease-in-out 500ms;
 	display: block
 }
