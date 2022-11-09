@@ -293,8 +293,8 @@ body,html{
 }
 #teamBlue {
 	position: absolute;
-	left: 200px;
-	top: 50px;
+	left: 300px;
+	top: 30px;
 	color: white;
     transition: ease-in-out 500ms;
 	text-shadow: 0px 0px 20px #75c6ea;
@@ -315,8 +315,8 @@ body,html{
 }
 #teamPurple {
 	position: absolute;
-	right: 200px;
-	top: 50px;
+	right: 300px;
+	top: 30px;
 	text-align: right;
 	color: white;
     transition: ease-in-out 500ms;
@@ -342,6 +342,22 @@ body,html{
 	height: 80% ;
 	text-align: center;
 	align-content: center;
+}
+#teamBlueFlag {
+	position: relative;
+	top: 10px;
+	left: 50px;
+	height: 90px;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+#teamPurpleFlag {
+	position: relative;
+	top: -80px;
+	left: 1785px;
+	height: 90px;
+	background-size: contain;
+	background-repeat: no-repeat;
 }
 /*
 width 400
