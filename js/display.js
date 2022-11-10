@@ -65,7 +65,7 @@ let scorePurpleTemp = 0
 let teamNameBlueTemp;
 let teamNamePurpleTemp;
 let gameState;
-let isFreemod;
+let isFreemod = true;
 
 let numOfClients
 let starEvent 
@@ -220,17 +220,19 @@ socket.onmessage = event => {
 		teamNameBlueTemp = data.tourney.manager.teamName.left;
 		teamBlueName.innerHTML = teamNameBlueTemp;
 		if (teamNameBlueTemp !== "") {
-			console.log("hello")
 			teamBlueFlag.style.backgroundImage = `url("static/flags/${teamNameBlueTemp}.png")`
+		} else {
+			teamBlueFlag.style.backgroundImage = null
 		}
 	}
 	if(teamNamePurpleTemp !== data.tourney.manager.teamName.right) {
 		teamNamePurpleTemp = data.tourney.manager.teamName.right;
 		teamPurpleName.innerHTML = teamNamePurpleTemp;
 		if (teamNamePurpleTemp !== "") {
-			console.log("hello")
 			teamPurpleFlag.style.backgroundImage = `url("static/flags/${teamNamePurpleTemp}.png")`
-			}
+		} else {
+			teamPurpleFlag.style.backgroundImage = null
+		}
 	}
 	if (numOfClients !== data.tourney.ipcClients.length) {
 		numOfClients = data.tourney.ipcClients.length

@@ -300,7 +300,7 @@ body,html{
 }
 #teamBlue {
 	position: absolute;
-	left: 300px;
+	left: 150px;
 	top: 30px;
 	color: white;
     transition: ease-in-out 500ms;
@@ -322,7 +322,7 @@ body,html{
 }
 #teamPurple {
 	position: absolute;
-	right: 300px;
+	right: 150px;
 	top: 30px;
 	text-align: right;
 	color: white;
@@ -345,8 +345,8 @@ body,html{
 	background-size: contain;
 	background-repeat: no-repeat;
 	bottom: 20px;
-	width: 916px;
-	height: 80% ;
+	width: 516px;
+	height: 75% ;
 	text-align: center;
 	align-content: center;
 }
@@ -370,15 +370,6 @@ body,html{
 width 400
 height 150
 */
-#nowPlayingText {
-	position: relative;
-	padding: 5px 20px 5px 20px;
-	margin: 2px 50px 0px 50px;
-	margin-bottom: -10px;
-	color: white;
-	font-size: 12px;
-	z-index: 1;
-}
 #playScoreBlue {
 	position: absolute;
 	text-align: center;
@@ -413,7 +404,7 @@ height 150
 	top: 0;
 	left: 0;
 	height: 90%;
-	width: 550px;
+	width: 500px;
 	background-color: black;
     background-size: cover;
 	border-radius: 25px;
@@ -423,7 +414,7 @@ height 150
 #overlay {
 	position: fixed;
 	height: 130px;
-	width: 600px;
+	width: inherit;
 	z-index: 0;
     background-color: rgba(0,0,0,0.50);
 	border-radius: 25px;
@@ -431,7 +422,7 @@ height 150
 #mapTitle, #mapDifficulty {
 	position: relative;
 	padding-left:5%;
-	top: 30px;
+	top: 25px;
 	width: 90%;
 	white-space: nowrap;
 	overflow: hidden;
@@ -440,16 +431,39 @@ height 150
 	font-family: RenogareSoft-Regular;
 	font-size: 24px;
 }
+#mapStatsCS {
+	position: absolute;
+	top: 130px;
+	left: 327px;
+	font-size: 12px;
+}
+#mapStatsAR {
+	position: absolute;
+	top: 130px;
+	left: 388px;
+	font-size: 12px;
+}
+#mapStatsOD {
+	position: absolute;
+	top: 130px;
+	left: 450px;
+	font-size: 12px;
+}
+#mapStatsLEN {
+	position: absolute;
+	top: 130px;
+	left: 500px;
+	font-size: 12px;
+}
 #chats {
 	background: #111;
 	position: absolute;
-	bottom: 0px;
 	left: 710px;
 	width: 500px;
 	height: 142px;
 	border: 3px white solid;
 	border-radius: 35px;
-	bottom: 20px;
+	bottom: 11px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	padding: 5px 15px;
@@ -508,10 +522,10 @@ height 150
 	color: #FF66AA;
 }
 .left {
-	color: #1fd0ed;
+	color: #75c6ea;
 }
 .right {
-	color: #ed1855;
+	color: #936bf7;
 }
 .circle {
 	position: absolute;
