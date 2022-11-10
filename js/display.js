@@ -30,6 +30,10 @@ let bottom = document.getElementById("bottom");
 // Chats
 let chats = document.getElementById("chats");
 
+// Flags
+let teamPurpleFlag = document.getElementById("teamPurpleFlag");
+let teamBlueFlag = document.getElementById("teamBlueFlag");
+
 socket.onopen = () => {
     console.log("Successfully Connected");
 };
@@ -112,6 +116,28 @@ socket.onmessage = event => {
         tempMapDiff = '[' + data.menu.bm.metadata.difficulty + ']';
         mapDifficulty.innerHTML = tempMapDiff;
     }
+
+	function starGenerate(side, i) {
+		let star = document.createElement("div")
+		let line1 = document.createElement("div")
+		let line2 = document.createElement("div")
+
+		if (side == "left") {
+			line1.style.backgroundColor = "#75c6ea";
+			line2.style.backgroundColor = "#75c6ea";
+
+			star.style.left = `${740 - (i * 50)}px`;
+		} else {
+			line1.style.backgroundColor = "#936bf7";
+			line2.style.backgroundColor = "#936bf7";
+
+			star.style.right = `${728 - (i * 50)}px`;
+		}
+
+		star.setAttribute("class", "star");
+		let starGeneration = [star, line1, line2]
+		return starGeneration
+	}
 	if (bestOfTemp !== Math.ceil(data.tourney.manager.bestOF / 2) ||
 		scoreBlueTemp !== data.tourney.manager.stars.left ||
 		scorePurpleTemp !== data.tourney.manager.stars.right) {
@@ -133,168 +159,78 @@ socket.onmessage = event => {
 		// Left Stars
 		scoreBlueTemp = data.tourney.manager.stars.left;
 		scoreBlue.innerHTML = '';
+		// Pointed Achieved
 		for (var i = 0; i < scoreBlueTemp; i++) {
+			let generatedStar = starGenerate("left", i);
+			generatedStar[1].classList.add("line1CrossLeft");
+			generatedStar[2].classList.add("line2CrossLeft");
 			if (starEvent == "blue-add" && i === scoreBlueTemp - 1) {
-				let star = document.createElement("div")
-				let line1 = document.createElement("div")
-				let line2 = document.createElement("div")
-
-				line1.style.backgroundColor = "#75c6ea";
-				line2.style.backgroundColor = "#75c6ea";
-
-				star.setAttribute("class", "star")
-				star.style.left = `${740 - (i * 50)}px`;
-
-				line1.setAttribute("class", "line1CrossLeft line1CircleToCrossLeftAnimation")
-				line2.setAttribute("class", "line2CrossLeft line2CircleToCrossLeftAnimation")
-
-				star.appendChild(line1)
-				star.appendChild(line2)
-				scoreBlue.appendChild(star)
-			} else {
-				let star = document.createElement("div")
-				let line1 = document.createElement("div")
-				let line2 = document.createElement("div")
-
-				line1.style.backgroundColor = "#75c6ea";
-				line2.style.backgroundColor = "#75c6ea";
-
-				star.setAttribute("class", "star")
-				star.style.left = `${740 - (i * 50)}px`;
-
-				line1.setAttribute("class", "line1CrossLeft")
-				line2.setAttribute("class", "line2CrossLeft")
-
-				star.appendChild(line1)
-				star.appendChild(line2)
-				scoreBlue.appendChild(star)
+				generatedStar[1].classList.add("line1CircleToCrossLeftAnimation");
+				generatedStar[2].classList.add("line2CircleToCrossLeftAnimation");
 			}
+			generatedStar[0].appendChild(generatedStar[1])
+			generatedStar[0].appendChild(generatedStar[2])
+			scoreBlue.appendChild(generatedStar[0])
 		}
-
+		// Points not yet achieved
 		for (i; i < bestOfTemp; i++) {
+			let generatedStar = starGenerate("left", i);
+			generatedStar[1].classList.add("line1CircleLeft");
+			generatedStar[2].classList.add("line2CircleLeft");
 			if (starEvent == "blue-remove" && i == scoreBlueTemp) {
-				let star = document.createElement("div")
-				let line1 = document.createElement("div")
-				let line2 = document.createElement("div")
-
-				line1.style.backgroundColor = "#75c6ea";
-				line2.style.backgroundColor = "#75c6ea";
-
-				star.setAttribute("class", "star")
-				star.style.left = `${740 - (i * 50)}px`;
-
-				line1.setAttribute("class", "line1CircleLeft line1CrossToCircleLeftAnimation")
-				line2.setAttribute("class", "line2CircleLeft line2CrossToCircleLeftAnimation")
-
-				star.appendChild(line1)
-				star.appendChild(line2)
-				scoreBlue.appendChild(star)
-			} else {
-				let star = document.createElement("div")
-				let line1 = document.createElement("div")
-				let line2 = document.createElement("div")
-
-				line1.style.backgroundColor = "#75c6ea";
-				line2.style.backgroundColor = "#75c6ea";
-
-				star.setAttribute("class", "star")
-				star.style.left = `${740 - (i * 50)}px`;
-
-				line1.setAttribute("class", "line1CircleLeft")
-				line2.setAttribute("class", "line2CircleLeft")
-
-				star.appendChild(line1)
-				star.appendChild(line2)
-				scoreBlue.appendChild(star)
+				generatedStar[1].classList.add("line1CrossToCircleLeftAnimation")
+				generatedStar[2].classList.add("line2CrossToCircleLeftAnimation")
 			}
+			generatedStar[0].appendChild(generatedStar[1])
+			generatedStar[0].appendChild(generatedStar[2])
+			scoreBlue.appendChild(generatedStar[0])
 		}
 
 		// Right Stars
 		scorePurpleTemp = data.tourney.manager.stars.right;
 		scorePurple.innerHTML = '';
+		// Points Achieved
 		for (var i = 0; i < scorePurpleTemp; i++) {
+			let generatedStar = starGenerate("right", i);
+			generatedStar[1].classList.add("line1CrossRight");
+			generatedStar[2].classList.add("line2CrossRight");
 			if (starEvent == "purple-add" && i === scorePurpleTemp - 1) {
-				let star = document.createElement("div")
-				let line1 = document.createElement("div")
-				let line2 = document.createElement("div")
-
-				line1.style.backgroundColor = "#936bf7";
-				line2.style.backgroundColor = "#936bf7";
-
-				star.setAttribute("class", "star")
-				star.style.right = `${728 - (i * 50)}px`;
-
-				line1.setAttribute("class", "line1CrossRight line1CircleToCrossRightAnimation")
-				line2.setAttribute("class", "line2CrossRight line2CircleToCrossRightAnimation")
-
-				star.appendChild(line1)
-				star.appendChild(line2)
-				scorePurple.appendChild(star)
-			} else {
-				let star = document.createElement("div")
-				let line1 = document.createElement("div")
-				let line2 = document.createElement("div")
-
-				line1.style.backgroundColor = "#936bf7";
-				line2.style.backgroundColor = "#936bf7";
-
-				star.setAttribute("class", "star")
-				star.style.right = `${728 - (i * 50)}px`;
-
-				line1.setAttribute("class", "line1CrossRight")
-				line2.setAttribute("class", "line2CrossRight")
-
-				star.appendChild(line1)
-				star.appendChild(line2)
-				scorePurple.appendChild(star)
+				generatedStar[1].classList.add("line1CircleToCrossRightAnimation")
+				generatedStar[2].classList.add("line2CircleToCrossRightAnimation")
 			}
+			generatedStar[0].appendChild(generatedStar[1])
+			generatedStar[0].appendChild(generatedStar[2])
+			scorePurple.appendChild(generatedStar[0])
 		}
-
+		// Points not yet achieved
 		for (i; i < bestOfTemp; i++) {
+			let generatedStar = starGenerate("right", i);
+			generatedStar[1].classList.add("line1CircleRight");
+			generatedStar[2].classList.add("line2CircleRight");
 			if (starEvent == "purple-remove" && i == scorePurpleTemp) {
-				let star = document.createElement("div")
-				let line1 = document.createElement("div")
-				let line2 = document.createElement("div")
-
-				line1.style.backgroundColor = "#936bf7";
-				line2.style.backgroundColor = "#936bf7";
-
-				star.setAttribute("class", "star")
-				star.style.right = `${728 - (i * 50)}px`;
-
-				line1.setAttribute("class", "line1CircleRight line1CrossToCircleRightAnimation")
-				line2.setAttribute("class", "line2CircleRight line2CrossToCircleRightAnimation")
-
-				star.appendChild(line1)
-				star.appendChild(line2)
-				scorePurple.appendChild(star)
-			} else {
-				let star = document.createElement("div")
-				let line1 = document.createElement("div")
-				let line2 = document.createElement("div")
-
-				line1.style.backgroundColor = "#936bf7";
-				line2.style.backgroundColor = "#936bf7";
-
-				star.setAttribute("class", "star")
-				star.style.right = `${728 - (i * 50)}px`;
-
-				line1.setAttribute("class", "line1CircleRight")
-				line2.setAttribute("class", "line2CircleRight")
-
-				star.appendChild(line1)
-				star.appendChild(line2)
-				scorePurple.appendChild(star)
+				generatedStar[1].classList.add("line1CrossToCircleRightAnimation")
+				generatedStar[2].classList.add("line2CrossToCircleRightAnimation")
 			}
+			generatedStar[0].appendChild(generatedStar[1])
+			generatedStar[0].appendChild(generatedStar[2])
+			scorePurple.appendChild(generatedStar[0])
 		}
 	}
 	if(teamNameBlueTemp !== data.tourney.manager.teamName.left) {
 		teamNameBlueTemp = data.tourney.manager.teamName.left;
 		teamBlueName.innerHTML = teamNameBlueTemp;
+		if (teamNameBlueTemp !== "") {
+			console.log("hello")
+			teamBlueFlag.style.backgroundImage = `url("static/flags/${teamNameBlueTemp}.png")`
+		}
 	}
 	if(teamNamePurpleTemp !== data.tourney.manager.teamName.right) {
 		teamNamePurpleTemp = data.tourney.manager.teamName.right;
 		teamPurpleName.innerHTML = teamNamePurpleTemp;
+		if (teamNamePurpleTemp !== "") {
+			console.log("hello")
+			teamPurpleFlag.style.backgroundImage = `url("static/flags/${teamNamePurpleTemp}.png")`
+			}
 	}
 	if (numOfClients !== data.tourney.ipcClients.length) {
 		numOfClients = data.tourney.ipcClients.length
