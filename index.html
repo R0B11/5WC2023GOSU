@@ -46,11 +46,32 @@
                 </div>
                 <div id="panel">
                     <div id="paneltitle">Control Panel</div>
-                    <div id="navigation"></div>
-                    <div id="picks"></div>
-                    <div id="bans"></div>
-                    <div id="protects"></div>
-                    <div id="maps"></div>
+                    <div id="pickScreenView">
+                        <button class="panelButton" onclick="pickBlue();">Blue Pick</button>
+                        <button class="panelButton" onclick="pickPurple();">Purple Pick</button>
+                        <button class="panelButton" onclick="banBlue();">Blue Ban</button>
+                        <button class="panelButton" onclick="banPurple();">Purple Ban</button>
+                        <button class="panelButton" onclick="protectBlue();">Blue Protect</button>
+                        <button class="panelButton" onclick="protectPurple();">Purple Protect</button>
+                        <button class="panelButton" onclick="resetPicks();">Reset Picks</button>
+                        <button class="panelButton" onclick="resetBans();">Reset Bans</button>
+                        <button class="panelButton" onclick="resetProtects();">Reset Protects</button>
+                        <!-- Maybe someway to add the list of maps here idk so we can actually
+                        chose what get protect/banned/picked-->
+                    </div>
+                    <div id="navigation">
+                        <button class="panelButton" onclick="toPickScreenView();">Pick Screen View</button>
+                        <button class="panelButton" onclick="toGameplayView();">Gameplay View</button>
+                    </div>
+                    <div class="gameplayView">
+                        <button class="panelButton" onclick="teamLeftStarAdd();">+Star Left Team</button>
+                        <button class="panelButton" onclick="teamLeftStarRemove();">-Star Left Team</button>
+                        <button class="panelButton" onclick="teamRightStarAdd();">+Star Right Team</button>
+                        <button class="panelButton" onclick="teamRightStarRemove();">-Star Right Team</button>
+                    </div>
+                    
+                    
+
                 </div>
             </div>
             
