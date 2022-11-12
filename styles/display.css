@@ -399,10 +399,11 @@ body,html{
 #mapContainer {
 	position: relative;
 	text-align: center;
+	padding-left: 5%;
 	top: 0;
-	left: 0;
+	left: 20px;
 	height: 90%;
-	width: 500px;
+	width: 460px;
 	background-color: black;
     background-size: cover;
 	border-radius: 25px;
@@ -410,16 +411,16 @@ body,html{
 	box-shadow: 100px 5px 5px  black;
 }
 #overlay {
-	position: fixed;
+	position: absolute;
 	height: 130px;
-	width: inherit;
+	width: 480px;
 	z-index: 0;
     background-color: rgba(0,0,0,0.50);
 	border-radius: 25px;
+	left: -10px;
 }
 #mapTitle, #mapDifficulty {
 	position: relative;
-	padding-left:5%;
 	top: 25px;
 	width: 90%;
 	white-space: nowrap;

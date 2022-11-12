@@ -14,7 +14,7 @@ let scoreNowPurple = document.getElementById("scoreNowPurple");
 let scoreMaxBlue = document.getElementById("scoreMaxBlue");
 let scoreMaxPurple = document.getElementById("scoreMaxPurple");
 
-// For Star Visibility
+// STAR VISIBILITY
 let scoreBlue = document.getElementById("scoreBlue");
 let scorePurple = document.getElementById("scorePurple");
 let teamBlue = document.getElementById("teamBlue");
@@ -24,15 +24,21 @@ let teamPurple = document.getElementById("teamPurple");
 let playScoreBlue = document.getElementById("playScoreBlue");
 let playScorePurple = document.getElementById("playScorePurple");
 
-// Graphic components
+// GRAPHIC COMPONENTS
 let bottom = document.getElementById("bottom");
 
-// Chats
+// CHATS
 let chats = document.getElementById("chats");
 
-// Flags
+// FLAGS
 let teamPurpleFlag = document.getElementById("teamPurpleFlag");
 let teamBlueFlag = document.getElementById("teamBlueFlag");
+
+// MAP STATS
+let mapStatsCS = document.getElementById("mapStatsCS");
+let mapStatsAR = document.getElementById("mapStatsAR");
+let mapStatsOD = document.getElementById("mapStatsOD");
+let mapStatsLEN = document.getElementById("mapStatsLEN");
 
 socket.onopen = () => {
     console.log("Successfully Connected");
@@ -56,6 +62,7 @@ let bestOfTemp;
 let scoreVisibleTemp;
 let starsVisibleTemp;
 
+let tempMapID;
 let tempImg;
 let tempMapName;
 let tempMapDiff;
@@ -103,20 +110,50 @@ socket.onmessage = event => {
 			teamPurple.style.transform = "translateX(150px)";
 		}
 	}
-	if(tempImg !== data.menu.bm.path.full){
-        tempImg = data.menu.bm.path.full;
-        data.menu.bm.path.full = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/');
-        mapContainer.style.backgroundImage = `url('http://` + location.host + `/Songs/${data.menu.bm.path.full}?a=${Math.random(10000)}')`;
-    }
-    if(tempMapName !== data.menu.bm.metadata.title){
-        tempMapName = data.menu.bm.metadata.title;
-        mapTitle.innerHTML = tempMapName;
-    }
-    if(tempMapDiff !== '[' + data.menu.bm.metadata.difficulty + ']'){
-        tempMapDiff = '[' + data.menu.bm.metadata.difficulty + ']';
-        mapDifficulty.innerHTML = tempMapDiff;
-    }
+	if (tempMapID !== data.menu.bm.id) {
+		// MAP ID
+		tempMapID = data.menu.bm.id
 
+		// MAP MAIN SECTION
+		tempImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/');
+		mapContainer.style.backgroundImage = `url('http://` + location.host + `/Songs/${tempImg}?a=${Math.random(10000)}')`;
+		mapTitle.innerHTML = data.menu.bm.metadata.title;
+		mapDifficulty.innerHTML = `[${data.menu.bm.metadata.difficulty}]`;
+
+		// MAP STATS
+		let foundMapFromMappool = false;
+		let getMaps = new Promise((resolve, reject) => {
+			let allMaps = getAllMaps();
+			resolve(mapsArray); 
+		})
+
+		getMaps.then((allMaps => {
+			for (var i = 0; i < allMaps.length; i++) {
+				for (var j = 0; allMaps[i].length; j++) {
+					if (allMaps[i][j].beatmapID == data.menu.bm.id) {
+						currentMap = allMaps[i][j];
+						foundMapFromMappool = true;
+
+						mapStatsCS.innerText = Math.round((parseFloat(currentMap.cs) + Number.EPSILON) * 100) / 100;
+						mapStatsAR.innerText = Math.round((parseFloat(currentMap.ar) + Number.EPSILON) * 100) / 100;
+                        mapStatsOD.innerText = Math.round((parseFloat(currentMap.od) + Number.EPSILON) * 100) / 100;
+						mapStatsLEN.innerText = `${(Math.floor(parseFloat(currentMap.songLength) / 60))}:${("0" + Math.floor(parseInt(currentMap.songLength) % 60)).slice(-2)}`;
+					}
+					if (foundMapFromMappool) break;
+				}
+				if (foundMapFromMappool) break;
+			}
+		}))
+
+		if (!foundMapFromMappool) {
+			mapStatsCS.innerText = data.menu.bm.stats.CS;
+			mapStatsAR.innerText = data.menu.bm.stats.AR;
+			mapStatsOD.innerText = data.menu.bm.stats.OD;
+			let songLength = data.menu.bm.time.full;
+			let songLengthSec = songLength / 1000
+			mapStatsLEN.innerText = `${(Math.floor(parseFloat(songLengthSec) / 60))}:${("0" + Math.floor(parseInt(songLengthSec) % 60)).slice(-2)}`;
+		}
+	}
 	function starGenerate(side, i) {
 		let star = document.createElement("div")
 		let line1 = document.createElement("div")
