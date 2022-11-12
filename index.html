@@ -27,6 +27,10 @@
                 <div id="gameplay"></div>
                 <div id="bottom">
                     <div id="chats"></div>
+                    <div id="movingScoreBars">
+                        <div id="movingScoreBarBlue"></div>
+                        <div id="movingScoreBarPurple"></div>
+                    </div>
                     <div id="playScoreBlue"></div>
                     <div id="playScorePurple"></div>
                     <div id="nowPlayingContainer">
@@ -63,12 +67,6 @@
                         <button class="panelButton" onclick="toPickScreenView();">Pick Screen View</button>
                         <button class="panelButton" onclick="toGameplayView();">Gameplay View</button>
                     </div>
-                    <div class="gameplayView">
-                        <button class="panelButton" onclick="teamLeftStarAdd();">+Star Left Team</button>
-                        <button class="panelButton" onclick="teamLeftStarRemove();">-Star Left Team</button>
-                        <button class="panelButton" onclick="teamRightStarAdd();">+Star Right Team</button>
-                        <button class="panelButton" onclick="teamRightStarRemove();">-Star Right Team</button>
-                    </div>
                 </div>
             </div>
             
@@ -77,6 +75,5 @@
             <script src="deps/circle.js"></script>
             <script src="js/particles/particles.js"></script>
             <script src="js/particles/app.js"></script>
-        </body>
-        
-        </html>
+        </body>    
+    </html>

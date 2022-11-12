@@ -1,3 +1,8 @@
+:root {
+	--purple: #936bf7;
+	--blue: #75c6ea;
+}
+
 @font-face {
     font-family: "Round-Control";
     src: url("../fonts/RoundControl-Regular.otf") format("opentype");
@@ -82,7 +87,7 @@ body,html{
 	top: 50px;
     font-size: 30px;
 	display: flex;
-	color: #75c6ea;
+	color: var(--blue);
 	height: 100px;
 }
 #scoreNowBlue, #scoreNowPurple{
@@ -298,7 +303,7 @@ body,html{
 	top: 50px;
     font-size: 30px;
 	display: flex;
-	color: #936bf7;
+	color: var(--purple);
 }
 #teamBlue {
 	position: absolute;
@@ -306,7 +311,7 @@ body,html{
 	top: 30px;
 	color: white;
     transition: ease-in-out 500ms;
-	text-shadow: 0px 0px 20px #75c6ea;
+	text-shadow: 0px 0px 20px var(--blue);
 }
 #teamBlueName {
 	padding: 10px 30px 10px 30px;
@@ -329,7 +334,7 @@ body,html{
 	text-align: right;
 	color: white;
     transition: ease-in-out 500ms;
-	text-shadow: 0px 0px 20px #936bf7;
+	text-shadow: 0px 0px 20px var(--purple);
 	
 }
 #teamPurpleName {
@@ -346,7 +351,7 @@ body,html{
 	left: 20px;
 	background-size: contain;
 	background-repeat: no-repeat;
-	bottom: 20px;
+	bottom: 15px;
 	width: 516px;
 	height: 75% ;
 	text-align: center;
@@ -374,8 +379,8 @@ body,html{
 	left: 760px;
 	bottom: 100px;
 
-	text-shadow: 0px 0px 10px #75c6ea;
-	color: #75c6ea;
+	text-shadow: 0px 0px 10px var(--blue);
+	color: var(--blue);
     font-family: Round-Control, monospace;
 	font-size: 40px;
 	display: block;
@@ -388,8 +393,8 @@ body,html{
 	left: 1160px;
 	bottom: 100px;
 
-	text-shadow: 0px 0px 10px #936bf7;
-	color: #936bf7;
+	text-shadow: 0px 0px 10px var(--purple);
+	color: var(--purple);
     font-family: Round-Control, monospace;
 	font-size: 40px;
 	display: block;
@@ -432,32 +437,59 @@ body,html{
 }
 #mapStatsCS {
 	position: absolute;
-	top: 130px;
+	top: 135px;
 	left: 327px;
 	font-size: 12px;
 }
 #mapStatsAR {
 	position: absolute;
-	top: 130px;
+	top: 135px;
 	left: 388px;
 	font-size: 12px;
 }
 #mapStatsOD {
 	position: absolute;
-	top: 130px;
+	top: 135px;
 	left: 450px;
 	font-size: 12px;
 }
 #mapStatsLEN {
 	position: absolute;
-	top: 130px;
+	top: 135px;
 	left: 500px;
 	font-size: 12px;
 }
 
+#movingScoreBars {
+	position:absolute;
+	width:1920px;
+    height:20px;
+	top: -2px;
+    transition: 0.5s ease-in-out;
+}
+#movingScoreBarBlue {
+	float: right;
+	right: 50%;
+	background-color: var(--blue);
+	color: var(--blue);
+
+	position:absolute;
+	width:960px; height:20px;
+    max-width:50%;
+    transition: width 0.07s;
+}
+#movingScoreBarPurple {
+	left:50%;
+	background-color: var(--purple);
+	color: var(--purple);
+
+	position:absolute;
+	width:960px; height:20px;
+    max-width:50%;
+    transition: width 0.07s;
+}
+
 /* ~~~~~~~~~~~~~~~~~~~ BUTTON PANEL ~~~~~~~~~~~~~~~~~~~~~ */
-
-
 
 #panel {
 	width: 500px;
@@ -526,22 +558,11 @@ body,html{
 	color: #FF66AA;
 }
 .left {
-	color: #75c6ea;
+	color: var(--blue);
 }
 .right {
-	color: #936bf7;
+	color: var(--purple);
 }
-.circle {
-	position: absolute;
-	left: 100px; top: 100px;
-	width: 20px;
-	height: 20px;
-	border-radius: 20px;
-	background: #75c6ea;
-	transition-duration: 750ms;
-	box-shadow: 0px 0px 5px #75c6ea;
-}
-
 
 /*Scrollbar*/
 ::-webkit-scrollbar {
