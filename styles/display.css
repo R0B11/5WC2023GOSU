@@ -57,11 +57,9 @@ body,html{
 	bottom: 0px;
     width: 1920px;
     height: 178px;
-	background-image: url('../static/bottomplay.png');
 	background-repeat: no-repeat;	
     transition: ease-in-out 200ms;
 	z-index: 0;
-	background-size: cover;
 }
 #gameplay {
 	position: absolute;
@@ -280,7 +278,7 @@ body,html{
 /* ~~~~~~~~~~~~~~~~~~~~ NOW PLAYING CONTAINER ~~~~~~~~~~~~~~~~~~~~ */
 #nowPlayingContainer {
 	position: absolute;
-	background-image: url(../static/nowPlayingteamBlue.png);
+	background-image: url(../static/nowPlayingNeutral.png);
 	bottom: 15px; left: 20px;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -312,9 +310,9 @@ body,html{
 	text-align: center;
 	padding-left: 5%;
 	top: 0;
-	left: 20px;
+	left: 0px;
 	height: 90%;
-	width: 460px;
+	width: 450px;
 	background-color: black;
     background-size: cover;
 	border-radius: 25px;
@@ -328,11 +326,12 @@ body,html{
 	z-index: 0;
     background-color: rgba(0,0,0,0.50);
 	border-radius: 25px;
-	left: -10px;
+	left: -15px;
 }
 #mapTitle, #mapDifficulty {
 	position: relative;
-	top: 25px;
+	top: 20px;
+	left: 10px;
 	width: 90%;
 	white-space: nowrap;
 	overflow: hidden;
@@ -343,13 +342,15 @@ body,html{
 }
 .mapStat {
 	position: absolute;
-	top: 135px;
-	font-size: 12px;
+	top: 128px;
+	font-size: 13px;
+	text-shadow: none;
+	font-family: RenogareSoft-Regular;
 }
-#mapStatsCS { left: 327px; }
-#mapStatsAR { left: 388px; }
-#mapStatsOD { left: 450px; }
-#mapStatsLEN { left: 500px; }
+#mapStatsCS { left: 280px; }
+#mapStatsAR { left: 353px; }
+#mapStatsOD { left: 428px; }
+#mapStatsLEN { left: 493px; }
 
 #movingScoreBars {
 	position:absolute;
@@ -392,6 +393,14 @@ body,html{
 	text-shadow: none;
 }
 
+/* ~~~~~~~~~~~~~~~~~~~ SPONSOR ~~~~~~~~~~~~~~~~~~~~~ */
+
+#sponsor {
+	position: relative;
+	left: 1540px;
+	top: 80px;
+}
+
 /* ~~~~~~~~~~~~~~~~~~~ CHATS ~~~~~~~~~~~~~~~~~~~~~ */
 
 #chats {
@@ -399,7 +408,7 @@ body,html{
 	position: absolute;
 	left: 710px;
 	width: 500px;
-	height: 142px;
+	height: 130px;
 	border: 3px white solid;
 	border-radius: 35px;
 	bottom: 11px;
