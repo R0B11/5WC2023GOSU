@@ -13,6 +13,10 @@ let scoreNowBlue = document.getElementById("scoreNowBlue");
 let scoreNowPurple = document.getElementById("scoreNowPurple");
 let scoreMaxBlue = document.getElementById("scoreMaxBlue");
 let scoreMaxPurple = document.getElementById("scoreMaxPurple");
+// MOVING SCORE BAR
+let movingScoreBars = document.getElementById("movingScoreBars");
+let movingScoreBarBlue = document.getElementById("movingScoreBarBlue");
+let movingScoreBarPurple = document.getElementById("movingScoreBarPurple");
 
 // STAR VISIBILITY
 let scoreBlue = document.getElementById("scoreBlue");
@@ -39,6 +43,9 @@ let mapStatsCS = document.getElementById("mapStatsCS");
 let mapStatsAR = document.getElementById("mapStatsAR");
 let mapStatsOD = document.getElementById("mapStatsOD");
 let mapStatsLEN = document.getElementById("mapStatsLEN");
+let mapStatsSR = document.getElementById("mapStatsSR");
+
+
 
 socket.onopen = () => {
     console.log("Successfully Connected");
@@ -74,6 +81,9 @@ let teamNamePurpleTemp;
 let gameState;
 let isFreemod = true;
 
+let playScoreBlueTemp = 0
+let playScorePurpleTemp = 0
+
 let numOfClients
 let starEvent 
 
@@ -86,11 +96,13 @@ socket.onmessage = event => {
 		scoreVisibleTemp = data.tourney.manager.bools.scoreVisible;
 		if(scoreVisibleTemp) {
 			// Score visible -> Set bg bottom to full
+			movingScoreBars.style.opacity = 1;
 			chats.style.opacity = 0;
 			playScoreBlue.style.opacity = 1;
 			playScorePurple.style.opacity = 1;
 		} else {
 			// Score invisible -> Set bg to show chats
+			movingScoreBars.style.opacity = 0;
 			chats.style.opacity = 1;
 			playScoreBlue.style.opacity = 0;
 			playScorePurple.style.opacity = 0;
@@ -134,10 +146,11 @@ socket.onmessage = event => {
 						currentMap = allMaps[i][j];
 						foundMapFromMappool = true;
 
-						mapStatsCS.innerText = Math.round((parseFloat(currentMap.cs) + Number.EPSILON) * 100) / 100;
-						mapStatsAR.innerText = Math.round((parseFloat(currentMap.ar) + Number.EPSILON) * 100) / 100;
-                        mapStatsOD.innerText = Math.round((parseFloat(currentMap.od) + Number.EPSILON) * 100) / 100;
+						mapStatsCS.innerText = Math.round((parseFloat(currentMap.cs) + Number.EPSILON) * 10) / 10;
+						mapStatsAR.innerText = Math.round((parseFloat(currentMap.ar) + Number.EPSILON) * 10) / 10;
+                        mapStatsOD.innerText = Math.round((parseFloat(currentMap.od) + Number.EPSILON) * 10) / 10;
 						mapStatsLEN.innerText = `${(Math.floor(parseFloat(currentMap.songLength) / 60))}:${("0" + Math.floor(parseInt(currentMap.songLength) % 60)).slice(-2)}`;
+						mapStatsSR.innerText = Math.round((parseFloat(currentMap.difficultyrating) + Number.EPSILON) * 10) / 10;
 					}
 					if (foundMapFromMappool) break;
 				}
@@ -146,12 +159,13 @@ socket.onmessage = event => {
 		}))
 
 		if (!foundMapFromMappool) {
-			mapStatsCS.innerText = data.menu.bm.stats.CS;
-			mapStatsAR.innerText = data.menu.bm.stats.AR;
-			mapStatsOD.innerText = data.menu.bm.stats.OD;
+			mapStatsCS.innerText = Math.round((parseFloat(data.menu.bm.stats.CS) + Number.EPSILON) * 10) / 10;
+			mapStatsAR.innerText = Math.round((parseFloat(data.menu.bm.stats.AR) + Number.EPSILON) * 10) / 10;
+			mapStatsOD.innerText = Math.round((parseFloat(data.menu.bm.stats.OD) + Number.EPSILON) * 10) / 10;
 			let songLength = data.menu.bm.time.full;
 			let songLengthSec = songLength / 1000
 			mapStatsLEN.innerText = `${(Math.floor(parseFloat(songLengthSec) / 60))}:${("0" + Math.floor(parseInt(songLengthSec) % 60)).slice(-2)}`;
+			mapStatsSR.innerText = Math.round((parseFloat(data.menu.bm.stats.SR) + Number.EPSILON) * 10) / 10;
 		}
 	}
 	function starGenerate(side, i) {
@@ -191,7 +205,9 @@ socket.onmessage = event => {
             starEvent = "purple-add";
         } else if (scorePurpleTemp > data.tourney.manager.stars.right) {
             starEvent = "purple-remove"
-        }
+        } else {
+			starEvent = null
+		}
 
 		// Left Stars
 		scoreBlueTemp = data.tourney.manager.stars.left;
@@ -199,8 +215,8 @@ socket.onmessage = event => {
 		// Pointed Achieved
 		for (var i = 0; i < scoreBlueTemp; i++) {
 			let generatedStar = starGenerate("left", i);
-			generatedStar[1].classList.add("line1CrossLeft","starCrossLine1", "starCross");
-			generatedStar[2].classList.add("line2CrossLeft","starCrossLine2", "starCross");
+			generatedStar[1].classList.add("line1CrossLeft", "starCross");
+			generatedStar[2].classList.add("line2CrossLeft", "starCross");
 			if (starEvent == "blue-add" && i === scoreBlueTemp - 1) {
 				generatedStar[1].classList.add("line1CircleToCrossLeftAnimation");
 				generatedStar[2].classList.add("line2CircleToCrossLeftAnimation");
@@ -212,8 +228,8 @@ socket.onmessage = event => {
 		// Points not yet achieved
 		for (i; i < bestOfTemp; i++) {
 			let generatedStar = starGenerate("left", i);
-			generatedStar[1].classList.add("line1CircleLeft","starLine");
-			generatedStar[2].classList.add("line2CircleLeft","starLine");
+			generatedStar[1].classList.add("line1CircleLeft", "starCircle");
+			generatedStar[2].classList.add("line2CircleLeft", "starCircle");
 			if (starEvent == "blue-remove" && i == scoreBlueTemp) {
 				generatedStar[1].classList.add("line1CrossToCircleLeftAnimation")
 				generatedStar[2].classList.add("line2CrossToCircleLeftAnimation")
@@ -229,8 +245,8 @@ socket.onmessage = event => {
 		// Points Achieved
 		for (var i = 0; i < scorePurpleTemp; i++) {
 			let generatedStar = starGenerate("right", i);
-			generatedStar[1].classList.add("line1CrossRight","starCrossLine1", "starCross");
-			generatedStar[2].classList.add("line2CrossRight","starCrossLine2", "starCross");
+			generatedStar[1].classList.add("line1CrossRight", "starCross");
+			generatedStar[2].classList.add("line2CrossRight", "starCross");
 			if (starEvent == "purple-add" && i === scorePurpleTemp - 1) {
 				generatedStar[1].classList.add("line1CircleToCrossRightAnimation")
 				generatedStar[2].classList.add("line2CircleToCrossRightAnimation")
@@ -242,8 +258,8 @@ socket.onmessage = event => {
 		// Points not yet achieved
 		for (i; i < bestOfTemp; i++) {
 			let generatedStar = starGenerate("right", i);
-			generatedStar[1].classList.add("line1CircleRight","starLine");
-			generatedStar[2].classList.add("line2CircleRight","starLine");
+			generatedStar[1].classList.add("line1CircleRight", "starCircle");
+			generatedStar[2].classList.add("line2CircleRight", "starCircle");
 			if (starEvent == "purple-remove" && i == scorePurpleTemp) {
 				generatedStar[1].classList.add("line1CrossToCircleRightAnimation")
 				generatedStar[2].classList.add("line2CrossToCircleRightAnimation")
@@ -283,43 +299,52 @@ socket.onmessage = event => {
 				var tempScore = data.tourney.ipcClients[i].gameplay.score
 				if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZHD")) tempScore = tempScore * 1.9
 				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZ")) tempScore = tempScore * 1.75
+				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HDHR")) tempScore = tempScore * 1.03
 				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HR")) tempScore = tempScore * 1.05
 				// Separate FL as that gets added on top of the current multipliers(?)
 				if (data.tourney.ipcClients[i].gameplay.mods.str.includes("FL")) tempScore = tempScore * 1.4
-				if (i < numOfClients / 2) scoreBlueTemp += tempScore 
-				else scorePurpleTemp += tempScore  
+				if (i < numOfClients / 2) playScoreBlueTemp += tempScore 
+				else playScorePurpleTemp += tempScore  
 			}
 		} else {
-			scoreBlueTemp = data.tourney.manager.gameplay.score.left;
-			scorePurpleTemp = data.tourney.manager.gameplay.score.right;
+			playScoreBlueTemp = data.tourney.manager.gameplay.score.left;
+			playScorePurpleTemp = data.tourney.manager.gameplay.score.right;
 		}
 
-		animation.playScoreBlue.update(scoreBlueTemp);
-		animation.playScorePurple.update(scorePurpleTemp);
-		
-		// if(scoreBlueTemp > scorePurpleTemp) {
-		// 	// Blue is Leading
-		// 	playScoreBlue.style.backgroundColor = '#007E93';
-		// 	playScoreBlue.style.color = 'white';
-			
-		// 	playScorePurple.style.backgroundColor = 'transparent';
-		// 	playScorePurple.style.color = '#8E0029';
-		// } else if (scoreBlueTemp == scorePurpleTemp) {
-		// 	// Tie
-		// 	playScoreBlue.style.backgroundColor = '#007E93';
-		// 	playScoreBlue.style.color = 'white';
-			
-		// 	playScorePurple.style.backgroundColor = '#8E0029';
-		// 	playScorePurple.style.color = 'white';
-		// } else {
-		// 	// Purple is Leading
-		// 	playScoreBlue.style.backgroundColor = 'transparent';
-		// 	playScoreBlue.style.color = '#007E93';
-			
-		// 	playScorePurple.style.backgroundColor = '#8E0029';
-		// 	playScorePurple.style.color = 'white';
-			
-		// }
+		animation.playScoreBlue.update(playScoreBlueTemp);
+		animation.playScorePurple.update(playScorePurpleTemp);
+
+		let widthOfScoreBar = Math.abs(playScoreBlueTemp - playScorePurpleTemp) / 1000000 * 720;
+		if (widthOfScoreBar > 720) widthOfScoreBar = 720
+
+		if (playScoreBlueTemp > playScorePurpleTemp) {
+			// Blue is Leading
+			playScoreBlue.style.fontSize = "45px";
+			playScoreBlue.style.color = "#75c6ea";
+			playScorePurple.style.fontSize = "40px";
+			playScorePurple.style.color = "#fff";
+
+			movingScoreBarBlue.style.width = `${widthOfScoreBar}px`;
+			movingScoreBarPurple.style.width = "0px";
+		} else if (playScoreBlueTemp == playScorePurpleTemp) {
+			// Tie
+			playScoreBlue.style.fontSize = "40px";
+			playScoreBlue.style.color = "#fff";
+			playScorePurple.style.fontSize = "40px";
+			playScorePurple.style.color = "#fff";
+
+			movingScoreBarBlue.style.width = "0px";
+			movingScoreBarPurple.style.width = "0px";
+		} else {
+			// Purple is leading
+			playScoreBlue.style.fontSize = "40px";
+			playScoreBlue.style.color = "#fff";
+			playScorePurple.style.fontSize = "45px";
+			playScorePurple.style.color = "#936bf7";
+
+			movingScoreBarBlue.style.width = "0px";
+			movingScoreBarPurple.style.width = `${widthOfScoreBar}px`;
+		}
 	}
 	if(!scoreVisibleTemp) {
 		if(chatLen != data.tourney.manager.chat.length) {
