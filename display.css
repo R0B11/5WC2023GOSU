@@ -1,0 +1,466 @@
+:root {
+	--purple: #936bf7;
+	--blue: #75c6ea;
+}
+
+@font-face {
+    font-family: "Round-Control";
+    src: url("../fonts/RoundControl-Regular.otf") format("opentype");
+}
+@font-face {
+	font-family: "Coolvetica";
+	src: url("../fonts/Coolvetica-Regular.otf") format("opentype");
+}
+@font-face {
+	font-family: "RenogareSoft-Regular";
+	src: url("../fonts/RenogareSoft-Regular.ttf") format("opentype");
+}
+body,html{
+    padding: 0;
+    margin: 0;
+    overflow-y: hidden;
+}
+#main{
+    font-size: 30px;
+    font-family: Round-Control;
+    font-weight: normal;
+    color: white;
+	background-color: #000210;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+	text-shadow: 0px 0px 8px rgb(255, 255, 255);
+}
+
+
+/* ~~~~~~~~~~~~~~~~~~~~ GAMEPLAY SCREEN ~~~~~~~~~~~~~~~~~~~~ */
+#top {
+	position: absolute;
+    width: 1920px;
+    height: 182px;
+	background-image: url('../static/top.png');
+	background-repeat: no-repeat;
+    transition: ease-in-out 500ms;
+	z-index: 0;
+	background-size: cover;
+}
+#round {
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	top: 125px;
+	font-size: 22px;
+	text-shadow: 0px 0px 8px #2a4dad;
+}
+#bottom {
+	position: absolute;
+	bottom: 0px;
+    width: 1920px;
+    height: 178px;
+	background-image: url('../static/bottomplay.png');
+	background-repeat: no-repeat;	
+    transition: ease-in-out 200ms;
+	z-index: 0;
+	background-size: cover;
+}
+#gameplay {
+	position: absolute;
+	left: 0px;
+	top: 180px;
+	height: 720px;
+	width: 1920px;
+	background-color: #04F404;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~ STARS ~~~~~~~~~~~~~~~~~~~~ */
+.score {
+	position: absolute; top: 30px;
+	font-size: 30px;
+	display: flex;
+	height: 100px;
+}
+#scoreBlue {
+	left: 50px;
+	color: var(--blue);
+}
+#scorePurple {
+	right: 50px;
+	color: var(--purple);
+}
+
+.star {
+	position: absolute;
+	top: 88px;
+}
+.starLine {
+	position: relative;
+	background-color: white;
+	width: 12px; height: 12px;
+	border-radius: 12px;
+	transform: rotate(0deg)
+}
+.line1CircleLeft { top: 0px }
+.line2CircleLeft { top: -12px; left: 0px; }
+.line1CircleRight { top: 0px; }
+.line2CircleRight { top: -12px; right: 0px; }
+.starCross {
+	position: relative;
+	background-color: white;
+	width: 12px; height: 36px;
+	border-radius: 12px;
+	transform: rotate(225deg);
+}
+.starCrossLine1 { top: -12px; }
+.starCrossLine2 { top: -36px; }
+.line1CrossLeft {} /* Empty class, but there for consistency */
+.line2CrossLeft { left: -12px; }
+.line1CrossRight { right: -24px; }
+.line2CrossRight { right: -12px; }
+.line1CircleToCrossLeftAnimation {
+	animation: line1CircleToCrossLeftAnimation 750ms forwards;
+}
+@keyframes line1CircleToCrossLeftAnimation {
+	from {
+		height: 12px;
+		top: 0;
+		transform: rotate(0deg)
+	}
+	to {
+		height: 36px;
+		top: -12px;
+		transform: rotate(225deg)
+	}
+}
+.line2CircleToCrossLeftAnimation {
+	animation: line2CircleToCrossLeftAnimation 750ms forwards;
+}
+@keyframes line2CircleToCrossLeftAnimation {
+	from {
+		width: 12px;
+		top: -12px; left: 0;
+		transform: rotate(0deg)
+	}
+	to {
+		width: 36px;
+		top: -36px; left: -12px;
+		transform: rotate(225deg)
+	}
+}
+.line1CrossToCircleLeftAnimation {
+	animation: line1CrossToCircleLeftAnimation 750ms forwards;
+}
+@keyframes line1CrossToCircleLeftAnimation {
+	from {
+		height: 36px;
+		top: -12px;
+		transform: rotate(225deg)
+	}
+	to {
+		height: 12px;
+		top: 0;
+		transform: rotate(0deg)
+	}
+}
+.line2CrossToCircleLeftAnimation {
+	animation: line2CrossToCircleLeftAnimation 750ms forwards;
+}
+@keyframes line2CrossToCircleLeftAnimation {
+	from {
+		width: 36px;
+		top: -36px; left: -12px;
+		transform: rotate(225deg)
+	}
+	to {
+		width: 12px;
+		top: -12px; left: 0;
+		transform: rotate(0deg)
+	}
+}
+.line1CircleToCrossRightAnimation {
+	animation: line1CircleToCrossRightAnimation 750ms forwards;
+}
+@keyframes line1CircleToCrossRightAnimation {
+	from {
+		height: 12px;
+		top: 0; right: 0px;
+		transform: rotate(0deg)
+	}
+	to {
+		height: 36px;
+		top: -12px;
+		transform: rotate(225deg)
+	}
+}
+.line2CircleToCrossRightAnimation {
+	animation: line2CircleToCrossRightAnimation 750ms forwards;
+}
+@keyframes line2CircleToCrossRightAnimation {
+	from {
+		width: 12px;
+		top: -12px; right: 0px;
+		transform: rotate(0deg)
+	}
+	to {
+		width: 36px;
+		top: -36px; right: -12px;
+		transform: rotate(225deg)
+	}
+}
+.line1CrossToCircleRightAnimation {
+	animation: line1CrossToCircleRightAnimation 750ms forwards;
+}
+@keyframes line1CrossToCircleRightAnimation {
+	from {
+		height: 36px;
+		top: -12px; right: -24px;
+		transform: rotate(225deg)
+	}
+	to {
+		height: 12px;
+		top: 0; right: 0px;
+		transform: rotate(0deg)
+	}
+}
+.line2CrossToCircleRightAnimation {
+	animation: line2CrossToCircleRightAnimation 750ms forwards;
+}
+@keyframes line2CrossToCircleRightAnimation {
+	from {
+		width: 36px;
+		top: -36px; right: -12px;
+		transform: rotate(225deg)
+
+	}
+	to {
+		width: 12px;
+		top: -12px; right: 0px;
+		transform: rotate(0deg)
+	}
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~ FLAGS ~~~~~~~~~~~~~~~~~~~~ */
+.teamFlag {
+	position: relative;
+	height: 90px;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+#teamBlueFlag {
+	top: 10px;
+	left: 50px;
+}
+#teamPurpleFlag {
+	top: -80px;
+	left: 1785px;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~ TEAM NAME ~~~~~~~~~~~~~~~~~~~~ */
+.team {
+	position: absolute; top: 30px;
+	color: white;
+	transition: ease-in-out 500ms;
+}
+#teamBlue {
+	left: 150px;
+	text-shadow: 0px 0px 20px var(--blue);
+}
+#teamPurple {
+	right: 150px;
+	text-shadow: 0px 0px 20px var(--purple);
+}
+.teamName {
+	padding: 10px 30px 10px 30px;
+	width: 500px;
+	color: white;
+	border-radius: 25px;
+	text-shadow: 0px 0px 8px rgb(255, 255, 255);
+	font-size: 31px;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~ NOW PLAYING CONTAINER ~~~~~~~~~~~~~~~~~~~~ */
+#nowPlayingContainer {
+	position: absolute;
+	background-image: url(../static/nowPlayingteamBlue.png);
+	bottom: 15px; left: 20px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 516px; height: 75%;
+	text-align: center;
+	align-content: center;
+}
+.playScore {
+	position: absolute;
+	text-align: center;
+	bottom: 100px;
+	font-family: Round-Control, monospace;
+	font-size: 40px;
+	display: block;
+    transition: ease-in-out 500ms;
+}
+#playScoreBlue {
+	left: 760px;
+	text-shadow: 0px 0px 10px var(--blue);
+	color: var(--blue);
+}
+#playScorePurple {
+	left: 1160px;
+	text-shadow: 0px 0px 10px var(--purple);
+	color: var(--purple);
+}
+#mapContainer {
+	position: relative;
+	text-align: center;
+	padding-left: 5%;
+	top: 0;
+	left: 20px;
+	height: 90%;
+	width: 460px;
+	background-color: black;
+    background-size: cover;
+	border-radius: 25px;
+	z-index: -1;
+	box-shadow: 100px 5px 5px  black;
+}
+#overlay {
+	position: absolute;
+	height: 130px;
+	width: 480px;
+	z-index: 0;
+    background-color: rgba(0,0,0,0.50);
+	border-radius: 25px;
+	left: -10px;
+}
+#mapTitle, #mapDifficulty {
+	position: relative;
+	top: 25px;
+	width: 90%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	z-index: 0;
+	font-family: RenogareSoft-Regular;
+	font-size: 24px;
+}
+.mapStat {
+	position: absolute;
+	top: 132px;
+	font-size: 14px;
+	text-shadow: none;
+}
+#mapStatsCS { left: 290px; }
+#mapStatsAR { left: 360px; }
+#mapStatsOD { left: 430px; }
+#mapStatsLEN { left: 490px; }
+
+#movingScoreBars {
+	position:absolute;
+	width:1920px;
+    height:20px;
+	top: -2px;
+    transition: 0.5s ease-in-out;
+}
+.movingSoreBar {
+	position:absolute;
+	width:960px; height:20px;
+    max-width:50%;
+    transition: width 0.07s;
+}
+#movingScoreBarBlue {
+	float: right;
+	right: 50%;
+	background-color: var(--blue);
+	color: var(--blue);
+}
+#movingScoreBarPurple {
+	left:50%;
+	background-color: var(--purple);
+	color: var(--purple);
+}
+
+/* ~~~~~~~~~~~~~~~~~~~ BUTTON PANEL ~~~~~~~~~~~~~~~~~~~~~ */
+
+#panel {
+	width: 500px;
+	height: 1080px;
+	background-color: rgb(58, 56, 56);
+	position: absolute;
+	left: 1920px;
+	top: 0px;
+	font-family: Coolvetica; 
+}
+#paneltitle {
+	text-align: center;
+	text-shadow: none;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~ CHATS ~~~~~~~~~~~~~~~~~~~~~ */
+
+#chats {
+	background: #111;
+	position: absolute;
+	left: 710px;
+	width: 500px;
+	height: 130px;
+	border: 3px white solid;
+	border-radius: 35px;
+	bottom: 11px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding: 5px 15px;
+	font-size: 18px;
+    font-family: Coolvetica;
+	text-shadow: 0px 0px 0px rgb(255, 255, 255);
+    transition: ease-in-out 500ms;
+	display: block;
+	letter-spacing: 2px;
+}
+.chat {
+	display: flex;
+	text-align: left;
+}
+.chatTime {
+	width: 10%;
+	color: silver;
+	padding-right: 10px;
+	padding-left: 5px;
+}
+.wholeChat {
+	width: 90%;
+	display: flex;
+}
+.chatName {
+	color: white;
+	white-space: nowrap;
+	width: max-content;
+}
+.chatText {
+	white-space: normal;
+	word-wrap: break-word;
+	overflow: hidden;
+}
+.unknown { color: yellow; }
+.bot { color: #FF66AA; }
+.left { color: var(--blue); }
+.right { color: var(--purple); }
+
+/*Scrollbar*/
+::-webkit-scrollbar {
+	width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    margin-top: 25px;
+    margin-bottom: 25px;
+	visibility: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: grey;
+	border-radius: 10px;
+}
+.text{
+    display: flex;
+    justify-content: center;
+}
