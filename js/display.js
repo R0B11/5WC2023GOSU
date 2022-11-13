@@ -199,8 +199,8 @@ socket.onmessage = event => {
 		// Pointed Achieved
 		for (var i = 0; i < scoreBlueTemp; i++) {
 			let generatedStar = starGenerate("left", i);
-			generatedStar[1].classList.add("line1CrossLeft");
-			generatedStar[2].classList.add("line2CrossLeft");
+			generatedStar[1].classList.add("line1CrossLeft","starCrossLine1", "starCross");
+			generatedStar[2].classList.add("line2CrossLeft","starCrossLine2", "starCross");
 			if (starEvent == "blue-add" && i === scoreBlueTemp - 1) {
 				generatedStar[1].classList.add("line1CircleToCrossLeftAnimation");
 				generatedStar[2].classList.add("line2CircleToCrossLeftAnimation");
@@ -212,8 +212,8 @@ socket.onmessage = event => {
 		// Points not yet achieved
 		for (i; i < bestOfTemp; i++) {
 			let generatedStar = starGenerate("left", i);
-			generatedStar[1].classList.add("line1CircleLeft");
-			generatedStar[2].classList.add("line2CircleLeft");
+			generatedStar[1].classList.add("line1CircleLeft","starLine");
+			generatedStar[2].classList.add("line2CircleLeft","starLine");
 			if (starEvent == "blue-remove" && i == scoreBlueTemp) {
 				generatedStar[1].classList.add("line1CrossToCircleLeftAnimation")
 				generatedStar[2].classList.add("line2CrossToCircleLeftAnimation")
@@ -229,8 +229,8 @@ socket.onmessage = event => {
 		// Points Achieved
 		for (var i = 0; i < scorePurpleTemp; i++) {
 			let generatedStar = starGenerate("right", i);
-			generatedStar[1].classList.add("line1CrossRight");
-			generatedStar[2].classList.add("line2CrossRight");
+			generatedStar[1].classList.add("line1CrossRight","starCrossLine1", "starCross");
+			generatedStar[2].classList.add("line2CrossRight","starCrossLine2", "starCross");
 			if (starEvent == "purple-add" && i === scorePurpleTemp - 1) {
 				generatedStar[1].classList.add("line1CircleToCrossRightAnimation")
 				generatedStar[2].classList.add("line2CircleToCrossRightAnimation")
@@ -242,8 +242,8 @@ socket.onmessage = event => {
 		// Points not yet achieved
 		for (i; i < bestOfTemp; i++) {
 			let generatedStar = starGenerate("right", i);
-			generatedStar[1].classList.add("line1CircleRight");
-			generatedStar[2].classList.add("line2CircleRight");
+			generatedStar[1].classList.add("line1CircleRight","starLine");
+			generatedStar[2].classList.add("line2CircleRight","starLine");
 			if (starEvent == "purple-remove" && i == scorePurpleTemp) {
 				generatedStar[1].classList.add("line1CrossToCircleRightAnimation")
 				generatedStar[2].classList.add("line2CrossToCircleRightAnimation")
