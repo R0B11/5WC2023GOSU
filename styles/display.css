@@ -363,8 +363,9 @@ body,html{
 }
 #mapTitle, #mapDifficulty {
 	position: relative;
+	left: 10px;
 	top: 22px;
-	width: 100%;
+	width: 98%;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -380,7 +381,7 @@ body,html{
 	font-family: RenogareSoft-Regular;
 }
 #mapStatsSR {left: 227px; }
-#mapStatsCS { left: 305px; }
+#mapStatsCS { left: 308px; }
 #mapStatsAR { left: 386px; }
 #mapStatsOD { left: 468px; }
 #mapStatsLEN { left: 536px; }
