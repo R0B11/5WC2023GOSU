@@ -136,7 +136,7 @@ socket.onmessage = event => {
 		let foundMapFromMappool = false;
 		let getMaps = new Promise((resolve, reject) => {
 			let allMaps = getAllMaps();
-			resolve(mapsArray); 
+			resolve(allMaps); 
 		})
 
 		getMaps.then((allMaps => {
