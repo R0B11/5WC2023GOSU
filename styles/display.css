@@ -102,6 +102,8 @@ body,html{
 .star {
 	position: absolute;
 	top: 88px;
+	transition: ease-in-out 250ms;
+	opacity: 1;
 }
 .starCircle {
 	position: relative;

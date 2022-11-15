@@ -9,10 +9,6 @@ let mapDifficulty = document.getElementById("mapDifficulty");
 // TEAM OVERALL SCORE
 let teamBlueName = document.getElementById("teamBlueName");
 let teamPurpleName = document.getElementById("teamPurpleName");
-let scoreNowBlue = document.getElementById("scoreNowBlue");
-let scoreNowPurple = document.getElementById("scoreNowPurple");
-let scoreMaxBlue = document.getElementById("scoreMaxBlue");
-let scoreMaxPurple = document.getElementById("scoreMaxPurple");
 // MOVING SCORE BAR
 let movingScoreBars = document.getElementById("movingScoreBars");
 let movingScoreBarBlue = document.getElementById("movingScoreBarBlue");
@@ -21,6 +17,8 @@ let movingScoreBarPurple = document.getElementById("movingScoreBarPurple");
 // STAR VISIBILITY
 let scoreBlue = document.getElementById("scoreBlue");
 let scorePurple = document.getElementById("scorePurple");
+let blueStars = scoreBlue.getElementsByClassName("star");
+let purpleStars = scorePurple.getElementsByClassName("star");
 let teamBlue = document.getElementById("teamBlue");
 let teamPurple = document.getElementById("teamPurple");
 
@@ -44,8 +42,6 @@ let mapStatsAR = document.getElementById("mapStatsAR");
 let mapStatsOD = document.getElementById("mapStatsOD");
 let mapStatsLEN = document.getElementById("mapStatsLEN");
 let mapStatsSR = document.getElementById("mapStatsSR");
-
-
 
 socket.onopen = () => {
     console.log("Successfully Connected");
@@ -73,6 +69,12 @@ let tempMapID;
 let tempImg;
 let tempMapName;
 let tempMapDiff;
+let tempMapStatsCS;
+let tempMapStatsAR;
+let tempMapStatsOD;
+let tempMapStatsLEN;
+let tempMapStatsSR;
+let foundMapFromMappool;
 
 let scoreBlueTemp = 0
 let scorePurpleTemp = 0
@@ -90,8 +92,10 @@ let starEvent
 let chatLen = 0;
 let tempClass = 'unknown';
 
-socket.onmessage = event => {
+socket.onmessage = async event => {
     let data = JSON.parse(event.data);
+	console.log(data)
+
 	if(scoreVisibleTemp !== data.tourney.manager.bools.scoreVisible) {
 		scoreVisibleTemp = data.tourney.manager.bools.scoreVisible;
 		if(scoreVisibleTemp) {
@@ -113,19 +117,25 @@ socket.onmessage = event => {
 		if(starsVisibleTemp) {
 			scoreBlue.style.display = "flex";
 			scorePurple.style.display = "flex";
-			teamBlue.style.transform = "translateX(0)";
-			teamPurple.style.transform = "translateX(0)";
+			for (var i = 0; i < blueStars.length; i++) {
+				blueStars[i].style.opacity = 1;
+				purpleStars[i].style.opacity = 1
+				await new Promise(r => setTimeout(r, 100));
+			}
 		} else {
-			scoreBlue.style.display = "none";
+			for (var i = blueStars.length - 1; i >= 0; i--) {
+				blueStars[i].style.opacity = 0;
+				purpleStars[i].style.opacity = 0;
+				await new Promise(r => setTimeout(r, 100));
+			}
 			scorePurple.style.display = "none";
-			teamBlue.style.transform = "translateX(-150px)";
-			teamPurple.style.transform = "translateX(150px)";
+			scoreBlue.style.display = "none";
 		}
 	}
 	if (tempMapID !== data.menu.bm.id) {
 		// MAP ID
 		tempMapID = data.menu.bm.id
-
+		await new Promise(r => setTimeout(r, 1000));
 		// MAP MAIN SECTION
 		tempImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/');
 		mapContainer.style.backgroundImage = `url('http://` + location.host + `/Songs/${tempImg}?a=${Math.random(10000)}')`;
@@ -133,41 +143,53 @@ socket.onmessage = event => {
 		mapDifficulty.innerHTML = `[${data.menu.bm.metadata.difficulty}]`;
 
 		// MAP STATS
-		let foundMapFromMappool = false;
+		foundMapFromMappool = false;
 		let getMaps = new Promise((resolve, reject) => {
-			let allMaps = getAllMaps();
+			let allMaps = getAllBeatmaps();
+			console.log(allMaps);
 			resolve(allMaps); 
 		})
 
 		getMaps.then((allMaps => {
+			
 			for (var i = 0; i < allMaps.length; i++) {
-				for (var j = 0; allMaps[i].length; j++) {
-					if (allMaps[i][j].beatmapID == data.menu.bm.id) {
-						currentMap = allMaps[i][j];
-						foundMapFromMappool = true;
+				for (var j = 0; j < allMaps[i].length; j++) {
+						if (allMaps[i][j].beatmapID == data.menu.bm.id) {
+							currentMap = allMaps[i][j];
+							foundMapFromMappool = true;
+	
+							tempMapStatsCS = Math.round((parseFloat(currentMap.cs) + Number.EPSILON) * 10) / 10
+							tempMapStatsAR = Math.round((parseFloat(currentMap.ar) + Number.EPSILON) * 10) / 10
+							tempMapStatsOD = Math.round((parseFloat(currentMap.od) + Number.EPSILON) * 10) / 10
+							tempMapStatsLEN = parseFloat(currentMap.songLength)
+							tempMapStatsSR = Math.round((parseFloat(currentMap.difficultyrating) + Number.EPSILON) * 10) / 10
 
-						mapStatsCS.innerText = Math.round((parseFloat(currentMap.cs) + Number.EPSILON) * 10) / 10;
-						mapStatsAR.innerText = Math.round((parseFloat(currentMap.ar) + Number.EPSILON) * 10) / 10;
-                        mapStatsOD.innerText = Math.round((parseFloat(currentMap.od) + Number.EPSILON) * 10) / 10;
-						mapStatsLEN.innerText = `${(Math.floor(parseFloat(currentMap.songLength) / 60))}:${("0" + Math.floor(parseInt(currentMap.songLength) % 60)).slice(-2)}`;
-						mapStatsSR.innerText = Math.round((parseFloat(currentMap.difficultyrating) + Number.EPSILON) * 10) / 10;
-					}
-					if (foundMapFromMappool) break;
+							mapStatsCS.innerText = tempMapStatsCS;
+							mapStatsAR.innerText = tempMapStatsAR;
+							mapStatsOD.innerText = tempMapStatsOD;
+							mapStatsLEN.innerText = tempMapStatsLEN;
+							mapStatsLEN.innerText = `${(Math.floor(tempMapStatsLEN / 60))}:${("0" + Math.floor(tempMapStatsLEN % 60)).slice(-2)}`
+							mapStatsSR.innerText = tempMapStatsSR;
+						}
+						if (foundMapFromMappool) break;
 				}
 				if (foundMapFromMappool) break;
 			}
 		}))
-
-		if (!foundMapFromMappool) {
-			mapStatsCS.innerText = Math.round((parseFloat(data.menu.bm.stats.CS) + Number.EPSILON) * 10) / 10;
-			mapStatsAR.innerText = Math.round((parseFloat(data.menu.bm.stats.AR) + Number.EPSILON) * 10) / 10;
-			mapStatsOD.innerText = Math.round((parseFloat(data.menu.bm.stats.OD) + Number.EPSILON) * 10) / 10;
-			let songLength = data.menu.bm.time.full;
-			let songLengthSec = songLength / 1000
-			mapStatsLEN.innerText = `${(Math.floor(parseFloat(songLengthSec) / 60))}:${("0" + Math.floor(parseInt(songLengthSec) % 60)).slice(-2)}`;
-			mapStatsSR.innerText = Math.round((parseFloat(data.menu.bm.stats.SR) + Number.EPSILON) * 10) / 10;
-		}
 	}
+	if (!foundMapFromMappool) {
+
+		if (tempMapStatsCS !== data.menu.bm.stats.CS) mapStatsCS.innerText = data.menu.bm.stats.CS
+		if (tempMapStatsAR !== data.menu.bm.stats.HP) mapStatsAR.innerText = data.menu.bm.stats.HP
+		if (tempMapStatsOD !== data.menu.bm.stats.OD) mapStatsOD.innerText = data.menu.bm.stats.OD
+		if (tempMapStatsLEN !== data.menu.bm.time.full) {
+			tempMapStatsLEN = data.menu.bm.time.full;
+			let songLengthSec = tempMapStatsLEN / 1000
+			mapStatsLEN.innerText = `${(Math.floor(parseFloat(songLengthSec) / 60))}:${("0" + Math.floor(parseInt(songLengthSec) % 60)).slice(-2)}`;
+		}
+		if (tempMapStatsSR !== data.menu.bm.stats.SR) mapStatsSR.innerText = Math.round((parseFloat(data.menu.bm.stats.SR) + Number.EPSILON) * 10) / 10;
+	}
+
 	function starGenerate(side, i) {
 		let star = document.createElement("div")
 		let line1 = document.createElement("div")

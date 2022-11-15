@@ -1,44 +1,52 @@
 let modsLoadMappoolView
 let beatmapsLoadMappoolView
-let allBeatmaps
+let allBeatmaps = []
+let allBeatmapsDisplay
 
 function loadMaps() {
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:24050${window.location.pathname}modOrder.json`,true);
-    xhr.onload = () => {
-        if (this.status == 404) return
-        else if (this.status == 200) modsLoadMappoolView = JSON.parse(this.responseText)
-    }
-    xhr.send();
-    let beatmapRequest = new XMLHttpRequest();
-    beatmapRequest.open("GET",`http://localhost:24050${window.location.pathname}beatmaps.json`, true);
-    beatmapRequest.onload = () => {
-        if (this.status == 404) return
-        else if (this.status == 200) beatmapsLoadMappoolView = JSON.parse(this.responseText);
-    }
-    beatmapRequest.send();
-    configureMaps(modsLoadMappoolView, beatmapsLoadMappoolView)
+    let modOrderRequest = new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET",`http://localhost:24050${window.location.pathname}modOrder.json`, false);
+        xhr.onload = async function xhrLoad()  {
+            if (this.status == 200) modsLoadMappoolView = JSON.parse(this.responseText)
+            else if (this.status == 404) return
+        }
+        xhr.send();
+        resolve(modsLoadMappoolView);
+    })
+    modOrderRequest.then((modsLoadMappoolView) => {
+        var beatmapRequest = new XMLHttpRequest();
+        beatmapRequest.open("GET",`http://localhost:24050${window.location.pathname}beatmaps.json`, false);
+        beatmapRequest.onload = function() {
+            if (this.status == 404) return;
+            beatmapsLoadMappoolView = JSON.parse(this.responseText);
+            configureMaps(modsLoadMappoolView, beatmapsLoadMappoolView);
+        }
+        beatmapRequest.send();
+    })
+    return;
 }
 
 loadMaps()
 
 function configureMaps(mods, beatmaps) {
-    // FILTER MAPS
+    // get all maps 
     let filteredBeatmaps = [];
     for (var i = 0; i < beatmaps.length; i++) {
         if (beatmaps[i] && Object.keys(beatmaps[i]).length == 0 && Object.getPrototypeOf(beatmaps[i]) == Object.prototype) continue
         filteredBeatmaps.push(beatmaps[i]);
     }
 
-    // MAKE MUTLI-DIMENSIONAL ARRAY FOR MODS
     for (var i = 0; i < mods.length; i++) allBeatmaps[i] = filteredBeatmaps.filter(x => x.mod.toLowerCase() == mods[i].toLowerCase())
-
-    // SET MAPS BY ORDER
+    
+    // sort maps by order
     for (var i = 0; i < allBeatmaps.length; i++) allBeatmaps[i].sort((map1, map2) => map1.order - map2.order)
+
+    allBeatmapsDisplay = deepCopy(allBeatmaps);
 }
 
 // GET BEATMAPS
-let getAllBeatmaps = () => allBeatmaps
+var getAllBeatmaps = () => allBeatmapsDisplay
 
 // Sourced From https://medium.com/@ziyoshams/deep-copying-javascript-arrays-4d5fc45a6e3e
 const deepCopy = (arr) => {
