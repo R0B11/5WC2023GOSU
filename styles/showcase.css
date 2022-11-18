@@ -17,7 +17,7 @@ body,html{
     overflow-y: hidden;
 }
 
-#showcasemain{
+#showcaseMain{
     font-size: 30px;
     font-family: Round-Control;
     font-weight: normal;
@@ -25,17 +25,59 @@ body,html{
 	background-color: #000210;
     width: 1920px; height: 1080px;
     position: relative;
-	text-shadow: 0px 0px 8px rgb(255, 255, 255);
-    
 }
-canvas { position: absolute; top: 0; }
-
-#showcaseoverlay {
+canvas { position: absolute; top: 0; z-index: 0; }
+#gameplayScreen {
+    position: absolute; top: 145px; left: 75px;
+    background-color: #04F404;
+    width: 1380px; height: 775px;
+    z-index: 1;
+}
+#showcaseOverlay {
 	position: absolute; top: 0; left: 0;
     width: 1920px; height: 1080px;
-    background-image: url('../static/showcaseOverlay.png');
-    transition: ease-in-out 200ms;
-	z-index: 0;
-	background-size: cover;
+	z-index: 2;
 }
-#sponsor { position: relative; left: 20px; top: 980px; }
+#sponsor { position: relative; left: 20px; top: 0px; }
+
+#nowPlayingContainer {
+    position: absolute; top: 300px; right: 43px;
+    width: 364px; height: 205px;
+    background-color: transparent;
+    background-size: cover;
+    z-index: 1;
+    text-shadow: 0px 0px 16px #000;
+    text-align: center;
+}
+#nowPlayingOverlay {
+    position: absolute; top: 0; left: 0;
+    background-color: rgba(0,0,0,0.5);
+    width: inherit; height: inherit;
+}
+#mapTitleWrapper {
+    position: absolute; top: 110px; left: 20px;
+    width: 324px; 
+    font-size: 28px;
+    overflow: hidden;
+}
+#mapTitle {
+    width: max-content;
+    display: inline-block;
+}
+#mapDifficultyWrapper {
+    position: absolute; top: 140px; left: 20px;
+    width: 324px; 
+    font-size: 24px;
+    overflow: hidden;
+}
+#mapDifficulty {
+    width: max-content;
+    display: inline-block;
+}
+.mapInfoWrap { animation: mapTitleSlide 12s linear infinite; }
+@keyframes mapTitleSlide {
+    0% {transform: translate(0px);}
+    11% {transform: translate(0px);}
+    80% { transform: translate(calc(-100% + 324px)); }
+    100% { transform: translate(calc(-100% + 324px)); }
+} 

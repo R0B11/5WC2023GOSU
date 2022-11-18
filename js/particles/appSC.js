@@ -2,7 +2,7 @@
 /* How to use? : Check the GitHub README
 /* ----------------------------------------------- */
 
-particlesJS('showcasemain',
+particlesJS('showcaseMain',
   
   {
     "particles": {

@@ -7,13 +7,16 @@
         </head>
 
         <body>
-            <div id="showcasemain">
-                <div id="showcaseoverlay"></div>
-                <div id="mapcontainter">
-                    <div id="maptitle"></div>
-                    <div id="mapbackground"></div>
+            <div id="showcaseMain">
+                <div id="gameplayScreen"></div>
+                <img src="static/showcaseOverlay.png" id="showcaseOverlay">
+                <div id="showcaseOverlay"></div>
+                <div id="nowPlayingContainer">
+                    <div id="nowPlayingOverlay"></div>
+                    <div id="mapTitleWrapper"><span id="mapTitle"></span></div>
+                    <div id="mapDifficultyWrapper"><span id="mapDifficulty"></span></div>
                 </div>
-                <div id="mapstats">
+               <div id="mapstats">
                     <div id="mapStatsSR"></div>
                     <div id="mapStatsCS"></div>
                     <div id="mapStatsAR"></div>
@@ -22,7 +25,7 @@
                     <div id="mapStatsBPM"></div>
                 </div>
                 <div id="replayer"></div>
-                <div id="poolcomments"></div>
+                <div id="poolComments"></div>
                 <div id="sponsor">
                     <video loop autoplay width="400" height="130" >
                         <source src="static/sponsor.webm" type="video/webm">
@@ -30,6 +33,8 @@
                 </div>
             </div>
 
+            <script src="deps/reconnecting-websocket.min.js"></script>
+            <script src="js/showcase.js"></script>
             <script src="js/particles/particles.js"></script>
             <script src="js/particles/appSC.js"></script>
         </body>    
