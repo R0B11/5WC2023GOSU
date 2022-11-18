@@ -1,0 +1,50 @@
+@font-face {
+    font-family: "Round-Control";
+    src: url("../fonts/RoundControl-Regular.otf") format("opentype");
+}
+@font-face {
+	font-family: "Coolvetica";
+	src: url("../fonts/Coolvetica-Regular.otf") format("opentype");
+}
+@font-face {
+	font-family: "RenogareSoft-Regular";
+	src: url("../fonts/RenogareSoft-Regular.ttf") format("opentype");
+}
+
+body,html{
+    padding: 0;
+    margin: 0;
+    overflow-y: hidden;
+}
+
+#showcasemain{
+    font-size: 30px;
+    font-family: Round-Control;
+    font-weight: normal;
+    color: white;
+	background-color: #000210;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+	text-shadow: 0px 0px 8px rgb(255, 255, 255);
+    
+}
+
+#showcaseoverlay {
+	position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1920px;
+    height: 1080px;
+    background-image: url('../static/showcaseOverlay.png');
+	background-repeat: no-repeat;
+    transition: ease-in-out 200ms;
+	z-index: 0;
+	background-size: cover;
+}
+
+#sponsor {
+	position: relative;
+	left: 20px;
+	top: 980px;
+}
