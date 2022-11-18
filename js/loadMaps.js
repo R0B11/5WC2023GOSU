@@ -6,7 +6,7 @@ let allBeatmapsDisplay
 function loadMaps() {
     let modOrderRequest = new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET",`http://localhost:24050${window.location.pathname}modOrder.json`, false);
+        xhr.open("GET",`http://localhost:24050${window.location.pathname}data/modOrder.json`, false);
         xhr.onload = async function xhrLoad()  {
             if (this.status == 200) modsLoadMappoolView = JSON.parse(this.responseText)
             else if (this.status == 404) return
@@ -16,7 +16,7 @@ function loadMaps() {
     })
     modOrderRequest.then((modsLoadMappoolView) => {
         var beatmapRequest = new XMLHttpRequest();
-        beatmapRequest.open("GET",`http://localhost:24050${window.location.pathname}beatmaps.json`, false);
+        beatmapRequest.open("GET",`http://localhost:24050${window.location.pathname}data/beatmaps.json`, false);
         beatmapRequest.onload = function() {
             if (this.status == 404) return;
             beatmapsLoadMappoolView = JSON.parse(this.responseText);
