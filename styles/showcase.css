@@ -81,3 +81,19 @@ canvas { position: absolute; top: 0; z-index: 0; }
     80% { transform: translate(calc(-100% + 324px)); }
     100% { transform: translate(calc(-100% + 324px)); }
 } 
+#replayerBox {
+    position: absolute;
+    bottom: 255px; 
+    right: 50px;
+    width: 200px;
+    height: 29px;
+    background-color: transparent;
+    z-index: 2;
+}
+#replayer {
+    font-size: 18px;
+    position: inherit;
+    text-align: right;
+    bottom: 5px;
+    left: 5px;
+}
