@@ -42,6 +42,7 @@ let mapStatsAR = document.getElementById("mapStatsAR");
 let mapStatsOD = document.getElementById("mapStatsOD");
 let mapStatsLEN = document.getElementById("mapStatsLEN");
 let mapStatsSR = document.getElementById("mapStatsSR");
+let mapStatsBPM = document.getElementById("mapStatsBPM");
 
 socket.onopen = () => {
     console.log("Successfully Connected");
@@ -74,6 +75,7 @@ let tempMapStatsAR;
 let tempMapStatsOD;
 let tempMapStatsLEN;
 let tempMapStatsSR;
+let tempMapStatsBPM;
 let foundMapFromMappool;
 
 let scoreBlueTemp = 0
@@ -161,10 +163,12 @@ socket.onmessage = async event => {
 							tempMapStatsCS = Math.round((parseFloat(currentMap.cs) + Number.EPSILON) * 10) / 10
 							tempMapStatsAR = Math.round((parseFloat(currentMap.ar) + Number.EPSILON) * 10) / 10
 							tempMapStatsOD = Math.round((parseFloat(currentMap.od) + Number.EPSILON) * 10) / 10
+							tempMapStatsBPM = parseFloat(currentMap.bpm.max)
 							tempMapStatsLEN = parseFloat(currentMap.songLength)
-							tempMapStatsSR = Math.round((parseFloat(currentMap.difficultyrating) + Number.EPSILON) * 10) / 10
+							tempMapStatsSR = Math.round((parseFloat(currentMap.difficultyrating) + Number.EPSILON) * 100) / 100
 
 							mapStatsCS.innerText = tempMapStatsCS;
+							mapStatsBPM.innerText = tempMapStatsBPM;
 							mapStatsAR.innerText = tempMapStatsAR;
 							mapStatsOD.innerText = tempMapStatsOD;
 							mapStatsLEN.innerText = tempMapStatsLEN;
@@ -180,7 +184,7 @@ socket.onmessage = async event => {
 	if (!foundMapFromMappool) {
 
 		if (tempMapStatsCS !== data.menu.bm.stats.CS) mapStatsCS.innerText = data.menu.bm.stats.CS
-		if (tempMapStatsAR !== data.menu.bm.stats.HP) mapStatsAR.innerText = data.menu.bm.stats.HP
+		if (tempMapStatsAR !== data.menu.bm.stats.AR) mapStatsAR.innerText = data.menu.bm.stats.AR
 		if (tempMapStatsOD !== data.menu.bm.stats.OD) mapStatsOD.innerText = data.menu.bm.stats.OD
 		if (tempMapStatsLEN !== data.menu.bm.time.full) {
 			tempMapStatsLEN = data.menu.bm.time.full;
