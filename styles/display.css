@@ -375,18 +375,27 @@ body,html{
 	font-family: RenogareSoft-Regular;
 	font-size: 24px;
 }
-.mapStats {
+.mapStatsTop {
 	position: absolute;
-	top: 130px;
-	font-size: 18px;
+	top: 87px;
+	font-size: 15px;
 	text-shadow: none;
 	font-family: RenogareSoft-Regular;
 }
-#mapStatsSR {left: 227px; }
-#mapStatsCS { left: 308px; }
-#mapStatsAR { left: 386px; }
-#mapStatsOD { left: 468px; }
-#mapStatsLEN { left: 536px; }
+.mapStatsBot {
+	position: absolute;
+	top: 107px;
+	font-size: 15px;
+	text-shadow: none;
+	font-family: RenogareSoft-Regular;
+}
+#mapStatsSR {left: 176px; }
+#mapStatsCS { left: 108px; }
+#mapStatsAR { left: 176px; }
+#mapStatsOD { left: 240px; }
+#mapStatsLEN { left: 470px; }
+#mapStatsBPM { left: 470px; }
+
 /* ~~~~~~~~~~~~~~~~~~~~ MOVING SCORE BARS ~~~~~~~~~~~~~~~~~~~~ */
 
 #movingScoreBars {
