@@ -141,8 +141,10 @@ socket.onmessage = async event => {
 		// MAP MAIN SECTION
 		tempImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/');
 		mapContainer.style.backgroundImage = `url('http://` + location.host + `/Songs/${tempImg}?a=${Math.random(10000)}')`;
-		mapTitle.innerHTML = data.menu.bm.metadata.title;
-		mapDifficulty.innerHTML = `[${data.menu.bm.metadata.difficulty}]`;
+		mapTitle.innerHTML = `${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title} [ ${data.menu.bm.metadata.difficulty} ]`;
+		console.log()
+		if (mapTitle.getBoundingClientRect().width > 328) mapTitle.classList.add("mapTitleWrap")
+		else mapTitle.classList.remove("mapTitleWrap")
 
 		// MAP STATS
 		foundMapFromMappool = false;
@@ -163,7 +165,7 @@ socket.onmessage = async event => {
 							tempMapStatsCS = Math.round((parseFloat(currentMap.cs) + Number.EPSILON) * 10) / 10
 							tempMapStatsAR = Math.round((parseFloat(currentMap.ar) + Number.EPSILON) * 10) / 10
 							tempMapStatsOD = Math.round((parseFloat(currentMap.od) + Number.EPSILON) * 10) / 10
-							tempMapStatsBPM = parseFloat(currentMap.bpm.max)
+							tempMapStatsBPM = parseFloat(currentMap.bpm)
 							tempMapStatsLEN = parseFloat(currentMap.songLength)
 							tempMapStatsSR = Math.round((parseFloat(currentMap.difficultyrating) + Number.EPSILON) * 100) / 100
 
@@ -171,7 +173,6 @@ socket.onmessage = async event => {
 							mapStatsBPM.innerText = tempMapStatsBPM;
 							mapStatsAR.innerText = tempMapStatsAR;
 							mapStatsOD.innerText = tempMapStatsOD;
-							mapStatsLEN.innerText = tempMapStatsLEN;
 							mapStatsLEN.innerText = `${(Math.floor(tempMapStatsLEN / 60))}:${("0" + Math.floor(tempMapStatsLEN % 60)).slice(-2)}`
 							mapStatsSR.innerText = tempMapStatsSR;
 						}
@@ -190,6 +191,14 @@ socket.onmessage = async event => {
 			tempMapStatsLEN = data.menu.bm.time.full;
 			let songLengthSec = tempMapStatsLEN / 1000
 			mapStatsLEN.innerText = `${(Math.floor(parseFloat(songLengthSec) / 60))}:${("0" + Math.floor(parseInt(songLengthSec) % 60)).slice(-2)}`;
+		}
+		if (Math.abs(data.menu.bm.stats.BPM.min - data.menu.bm.stats.BPM.max) !== 0) {
+			if (tempMapStatsBPM !== `${data.menu.bm.stats.BPM.min} - ${data.menu.bm.stats.BPM.max}`) {
+				tempMapStatsBPM = `${data.menu.bm.stats.BPM.min} - ${data.menu.bm.stats.BPM.max}`
+				mapStatsBPM.innerText = tempMapStatsBPM
+			}
+		} else {
+			if (tempMapStatsBPM !== data.menu.bm.stats.BPM.min) mapStatsBPM.innerText = data.menu.bm.stats.BPM.min
 		}
 		if (tempMapStatsSR !== data.menu.bm.stats.SR) mapStatsSR.innerText = Math.round((parseFloat(data.menu.bm.stats.SR) + Number.EPSILON) * 10) / 10;
 	}

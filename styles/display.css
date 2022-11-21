@@ -347,7 +347,7 @@ body,html{
 	top: 0;
 	left: 0px;
 	height: 90%;
-	width: 490px;
+	width: 520px;
 	background-color: black;
     background-size: cover;
 	border-radius: 25px;
@@ -363,38 +363,40 @@ body,html{
 	border-radius: 25px;
 	left: -15px;
 }
-#mapTitle, #mapDifficulty {
-	position: relative;
-	left: 10px;
-	top: 22px;
-	width: 98%;
-	white-space: nowrap;
+#mapTitleWrapper {
+	position: absolute; top: 13px; left: 15px;
+	font-size: 20px;
+	width: 328px;
 	overflow: hidden;
-	text-overflow: ellipsis;
-	z-index: 0;
-	font-family: RenogareSoft-Regular;
-	font-size: 24px;
+	text-shadow: 0px 0px 0px rgba(255,255,255,0)
 }
-.mapStatsTop {
+#mapTitle {
+	display: inline-block;
+	width: max-content;
+	color: white;
+	z-index: 2;
+}
+.mapTitleWrap { animation: mapTitleSlide 12s linear infinite }
+@keyframes mapTitleSlide {
+	0% {transform: translate(0px);}
+    11% {transform: translate(0px);}
+    80% { transform: translate(calc(-100% + 328px)); }
+    100% { transform: translate(calc(-100% + 328px)); }
+}
+.mapStats {
 	position: absolute;
-	top: 87px;
 	font-size: 15px;
-	text-shadow: none;
 	font-family: RenogareSoft-Regular;
+	text-shadow: 0px 0px 8px rgba(255,255,255,1)
 }
-.mapStatsBot {
-	position: absolute;
-	top: 107px;
-	font-size: 15px;
-	text-shadow: none;
-	font-family: RenogareSoft-Regular;
-}
+.mapStatsTop { top: 87px; }
+.mapStatsBot { top: 107px; }
 #mapStatsSR {left: 176px; }
 #mapStatsCS { left: 108px; }
 #mapStatsAR { left: 176px; }
 #mapStatsOD { left: 240px; }
 #mapStatsLEN { left: 470px; }
-#mapStatsBPM { left: 470px; }
+#mapStatsBPM { left: 449px; }
 
 /* ~~~~~~~~~~~~~~~~~~~~ MOVING SCORE BARS ~~~~~~~~~~~~~~~~~~~~ */
 
@@ -482,22 +484,14 @@ body,html{
 	word-wrap: break-word;
 	overflow: hidden;
 }
-.unknown {
-	color: yellow;
-}
-.bot {
-	color: #FF66AA;
-}
-.left {
-	color: var(--blue);
-}
-.right {
-	color: var(--purple);
-}
+.unknown { color: yellow; }
+.bot { color: #FF66AA; }
+.left { color: var(--blue); }
+.right { color: var(--purple); }
 
 /*Scrollbar*/
 ::-webkit-scrollbar {
-	width: 0px;
+	width: 10px;
 }
 
 /* Track */
@@ -509,7 +503,7 @@ body,html{
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: grey;
+	background: rgba(0,0,0,0);
 	border-radius: 10px;
 }
 .text{
