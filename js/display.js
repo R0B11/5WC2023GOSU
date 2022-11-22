@@ -94,6 +94,8 @@ let starEvent
 let chatLen = 0;
 let tempClass = 'unknown';
 
+let mappoolAction = 'No Action';
+
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
 	console.log(data)
@@ -427,4 +429,6 @@ socket.onmessage = async event => {
 			chats.scrollTop = chats.scrollHeight;
 		}
 	}
+
+
 }
