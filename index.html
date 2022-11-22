@@ -56,18 +56,26 @@
                 </div>
                 <div id="panel">
                     <div id="paneltitle">Control Panel</div>
-                    <div id="mappoolAction">Next Action:</div>
-                    <div id="nextAction">Pick Blue</div>
+                    <div id="panelBreak"></div>
+                    <div id="nextActionText">Next Action:</div>
+                    <div id="nextAction"></div>
                     <div id="pickScreenView">
-                        <button class="panelButton blueButton pickButton" onclick="pickBlue();">Blue Pick</button>
-                        <button class="panelButton purpleButton pickButton" onclick="pickPurple();">Purple Pick</button>
-                        <button class="panelButton blueButton banButton" onclick="banBlue();">Blue Ban</button>
-                        <button class="panelButton purpleButton banButton" onclick="banPurple();">Purple Ban</button>
-                        <button class="panelButton blueButton protectButton" onclick="protectBlue();">Blue Protect</button>
-                        <button class="panelButton purpleButton protectButton" onclick="protectPurple();">Purple Protect</button>
-                        <button class="panelButton resetButton resetPicks" onclick="resetPicks();">Reset Picks</button>
-                        <button class="panelButton resetButton resetBans" onclick="resetBans();">Reset Bans</button>
-                        <button class="panelButton resetButton resetProtects" onclick="resetProtects();">Reset Protects</button>
+                        <button class="panelButton blueButton pickButton" onclick="changeAction('Blue Pick');">Blue Pick</button>
+                        <button class="panelButton purpleButton pickButton" onclick="changeAction('Purple Pick');">Purple Pick</button>
+                        <button class="panelButton blueButton banButton" onclick="changeAction('Blue Ban');">Blue Ban</button>
+                        <button class="panelButton purpleButton banButton" onclick="changeAction('Purple Ban');">Purple Ban</button>
+                        <button class="panelButton blueButton protectButton" onclick="changeAction('Blue Protect');">Blue Protect</button>
+                        <button class="panelButton purpleButton protectButton" onclick="changeAction('Purple Protect');">Purple Protect</button>
+                        <button class="panelButton resetButton resetPicks" onclick="reset();">Reset Picks</button>
+                        <button class="panelButton resetButton resetBans" onclick="reset();">Reset Bans</button>
+                        <button class="panelButton resetButton resetProtects" onclick="reset();">Reset Protects</button>
+                        <button class="panelButton roundButton ro32button" onclick="changeRound('Round of 32');">RO32</button>
+                        <button class="panelButton roundButton ro16button" onclick="changeRound('Round of 16');">RO16</button>
+                        <button class="panelButton roundButton qfbutton" onclick="changeRound('Quarterfinals');">QF</button>
+                        <button class="panelButton roundButton sfbutton" onclick="changeRound('Semifinals');">SF</button>
+                        <button class="panelButton roundButton fbutton" onclick="changeRound('Finals');">F</button>
+                        <button class="panelButton roundButton gfbutton" onclick="changeRound('Grand Finals');">GF</button>
+                        
                         <!-- Maybe someway to add the list of maps here idk so we can actually
                         chose what get protect/banned/picked-->
                     </div>
