@@ -94,7 +94,8 @@ let starEvent
 let chatLen = 0;
 let tempClass = 'unknown';
 
-let mappoolAction = 'No Action';
+let nextAction = document.getElementById("nextAction");
+let roundText = document.getElementById("round");
 
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
@@ -430,5 +431,13 @@ socket.onmessage = async event => {
 		}
 	}
 
-
 }
+
+function changeAction(actionText) {
+	nextAction.innerText = actionText;
+}
+
+function changeRound(round) {
+	roundText.innerText = round;
+}
+
