@@ -381,20 +381,14 @@ body,html{
 	white-space: nowrap;
 	text-transform: uppercase;
 }
-#mapTitle1 {
+.mapTitles {
 	display: inline-block;
-	animation-name: scrolling-left-1;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 	padding-right: 50px;
 }
-#mapTitle2 {
-	display: inline-block;
-	animation-name: scrolling-left-2;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
-	padding-right: 50px;
-}
+#mapTitle1 { animation-name: scrolling-left-1; }
+#mapTitle2 { animation-name: scrolling-left-2; }
 @keyframes scrolling-left-1 {
     0% {transform: translateX(100%); }
     100% {transform: translateX(-100%); }
