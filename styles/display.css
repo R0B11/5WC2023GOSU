@@ -363,26 +363,17 @@ body,html{
 	border-radius: 25px;
 	left: -15px;
 }
-#mapTitleWrapper {
-	position: absolute; top: 12px; left: 15px;
-	font-size: 20px;
-	width: 328px;
-	overflow: hidden;
-	text-shadow: 0px 0px 0px rgba(255,255,255,0);
-	display: none;
-}
-#mapTitle {
-	display: inline-block;
-	width: max-content;
-	color: white;
-	z-index: 2;
-}
-#mapTitleWrapper2 {
+.mapTitleWrapper {
 	position: absolute; top: 12px; left: 15px;
 	font-size: 20px;
 	width: 328px; height: 20px;
 	overflow: hidden;
 	text-shadow: 0px 0px 0px rgba(255,255,255,0);
+}
+#mapTitle {
+	display: inline-block;
+	width: max-content;
+	color: white;
 	z-index: 2;
 }
 #mapTitles {
