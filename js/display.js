@@ -3,8 +3,11 @@ let mapid = document.getElementById('mapid');
 
 // NOW PLAYING
 let mapContainer = document.getElementById("mapContainer");
+let mapTitleWrapper = document.getElementById("mapTitleWrapper");
+let mapTitleWrapper2 = document.getElementById("mapTitleWrapper2");
 let mapTitle = document.getElementById("mapTitle");
-let mapDifficulty = document.getElementById("mapDifficulty");
+let mapTitle1 = document.getElementById("mapTitle1");
+let mapTitle2 = document.getElementById("mapTitle2");
 
 // TEAM OVERALL SCORE
 let teamBlueName = document.getElementById("teamBlueName");
@@ -144,10 +147,30 @@ socket.onmessage = async event => {
 		// MAP MAIN SECTION
 		tempImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/');
 		mapContainer.style.backgroundImage = `url('http://` + location.host + `/Songs/${tempImg}?a=${Math.random(10000)}')`;
-		mapTitle.innerHTML = `${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title} [ ${data.menu.bm.metadata.difficulty} ]`;
-		console.log()
-		if (mapTitle.getBoundingClientRect().width > 328) mapTitle.classList.add("mapTitleWrap")
-		else mapTitle.classList.remove("mapTitleWrap")
+		
+		// MAP TEXT
+		let replaceText = new Promise((resolve, reject) => {
+			tempMapTitle = `${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title} [${data.menu.bm.metadata.difficulty}]`.replaceAll("(", "( ").replaceAll(")", " )").replaceAll("[", "[ ").replaceAll("]", " ]")
+			mapTitle.innerText = tempMapTitle;
+			mapTitle1.innerText = tempMapTitle;
+			mapTitle2.innerText = tempMapTitle;
+			resolve(mapTitle.innerText)
+		})
+		replaceText.then(function() {
+			if (mapTitle1.clientWidth > 348 || mapTitle.clientWidth > 328 ) {
+				mapTitleWrapper.style.display = "none";
+				mapTitleWrapper2.style.display = "block"
+
+				// Client Width, Divide 175 and * 6 for default seconds (175px for 6 seconds), and then get the milliseconds. 
+				let mapTitleScrollTime = Math.round(mapTitle1.clientWidth / 175 * 6 * 1000)
+				mapTitle1.style.animationDuration = `${mapTitleScrollTime}ms`
+				mapTitle2.style.animationDuration = `${mapTitleScrollTime}ms`
+				mapTitle2.style.animationDelay = `${mapTitleScrollTime / 2}ms`
+			} else {
+				mapTitleWrapper.style.display = "block";
+				mapTitleWrapper2.style.display = "none"
+			}
+		})
 
 		// MAP STATS
 		foundMapFromMappool = false;
