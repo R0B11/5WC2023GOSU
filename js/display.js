@@ -157,7 +157,7 @@ socket.onmessage = async event => {
 			resolve(mapTitle.innerText)
 		})
 		replaceText.then(function() {
-			if (mapTitle1.clientWidth > 398 || mapTitle.clientWidth > 328 ) {
+			if (mapTitle1.clientWidth > 378 || mapTitle.clientWidth > 328 ) {
 				mapTitleWrapper.style.display = "none";
 				mapTitleWrapper2.style.display = "block"
 
