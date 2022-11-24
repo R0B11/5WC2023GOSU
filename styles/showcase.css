@@ -97,3 +97,71 @@ canvas { position: absolute; top: 0; z-index: 0; }
     bottom: 5px;
     left: 5px;
 }
+
+/* ~~~~~~~~~~~~~~~~~~~~ MAP STATS ~~~~~~~~~~~~~~~~~~~~ */
+
+#mapstats {
+    position: absolute;
+    width: 366px;
+    height: 250px;
+    top: 515px;
+    right: 42px;
+}
+
+#mapStatsSRtitle, #mapStatsCStitle, #mapStatsARtitle, #mapStatsODtitle {
+    position: absolute;
+    top: 10px;
+    font-size: 19px;
+}
+ 
+#mapStatsSR, #mapStatsOD, #mapStatsCS, #mapStatsAR  {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    height: 50px;
+    width: 366px;
+}
+
+#mapStatsSRnum, #mapStatsODnum, #mapStatsCSnum, #mapStatsARnum {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    font-size: 19px;
+}
+
+#mapStatsbox {
+    position: absolute;
+    top: 30px;
+    left: 0px;
+    height: 22px;
+    width: 366px;
+    outline: 4px;
+    outline-offset: -4px;
+    outline-style: solid;
+    outline-color: white;
+}
+
+#mapStatsLEN, #mapStatsBPM {
+    position: relative;
+    top: 20px;
+}
+
+#mapStatsLENtitle, #mapStatsBPMtitle, #mapStatsLENnum, #mapStatsBPMnum {
+    position: absolute;
+    font-size: 19px;
+}
+
+#mapStatsLENtitle {
+    left: 160px;
+}
+
+#mapStatsBPMtitle {
+    left: 0px;
+}
+
+#mapStatsLENnum {
+    left: 260px;
+}
+#mapStatsBPMnum {
+    left: 60px;
+}
