@@ -354,6 +354,9 @@ socket.onmessage = async event => {
 	if(scoreVisibleTemp) {
 		// MAKE SURE WHEN MAP IS PLAYED, SET A BOOL TO "isFreemod" TO TRUE/FALSE.
 		// Freemod Mod Multipliers
+		playScoreBlueTemp = 0;
+		playScorePurpleTemp = 0;
+
 		if (isFreemod) {
 			for (var i = 0; i < numOfClients; i++) {
 				// All mod combination multipliers
