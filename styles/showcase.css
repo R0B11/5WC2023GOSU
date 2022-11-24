@@ -40,6 +40,69 @@ canvas { position: absolute; top: 0; z-index: 0; }
 }
 #sponsor { position: relative; left: 20px; top: 0px; }
 
+/* ~~~~~~~~~~~~~~~~~~~~ ROUND INFO ~~~~~~~~~~~~~~~~~~~~ */
+#roundMapSlotContainer {
+    width: 377px; height: 90px;
+    position: absolute; top: 144px; right: 30px;
+    z-index: 2;
+}
+#round {
+    width: 243px; height: inherit;
+    line-height: 90px; 
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    z-index: 2;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~ MAP SLOT ~~~~~~~~~~~~~~~~~~~~ */
+#currentMapWheel {
+    width: 113px; height: 90px;
+    position: absolute;
+    top: 0; left: 265px;
+    text-align:center
+}
+.aboveAll {
+    position: absolute;
+    color: black;
+    font-size: 20px;
+    left: 50%; transform: translateX(-50%);
+    top: -10px;
+    opacity: 0;
+}
+.above {
+    position: absolute;
+    color: grey;
+    font-size: 20px;
+    left: 50%; transform: translateX(-50%);
+    top: 10px; opacity: 1;
+}
+.current {
+    position: absolute;
+    color: white;
+    font-size: 28px;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    opacity: 1;
+}
+.below {
+    position: absolute;
+    color: grey;
+    font-size: 20px;
+    left: 50%; transform: translateX(-50%);
+    bottom: 10px;
+    opacity: 1;
+}
+.belowAll {
+    position: absolute;
+    color: black;
+    font-size: 16px;
+    left: 50%; transform: translateX(-50%);
+    bottom: -10px;
+    opacity: 0;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~ NOW PLAYING ~~~~~~~~~~~~~~~~~~~~ */
+
 #nowPlayingContainer {
     position: absolute; top: 300px; right: 43px;
     width: 364px; height: 205px;

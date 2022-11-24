@@ -4,6 +4,7 @@
         <head>
             <meta charset="UTF-8">
             <link href="styles/showcase.css" rel="stylesheet" type="text/css" />
+            <script src="deps/reconnecting-websocket.min.js"></script>
         </head>
 
         <body>
@@ -11,8 +12,10 @@
                 <div id="gameplayScreen"></div>
                 <img src="static/showcaseOverlay.png" id="showcaseOverlay">
                 <div id="showcaseOverlay"></div>
-                <div id="showcaseRound"></div>
-                <div id="mapSlots"></div>
+                <div id="roundMapSlotContainer">
+                    <div id="round">Quarterfinals</div>
+                    <div id="currentMapWheel"></div>
+                </div>
                 <div id="nowPlayingContainer">
                     <div id="nowPlayingOverlay"></div>
                     <div id="mapTitleWrapper"><span id="mapTitle"></span></div>
@@ -63,7 +66,7 @@
                 </div>
             </div>
 
-            <script src="deps/reconnecting-websocket.min.js"></script>
+            <script src="js/loadMaps.js"></script>
             <script src="js/showcase.js"></script>
             <script src="js/particles/particles.js"></script>
             <script src="js/particles/appSC.js"></script>

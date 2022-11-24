@@ -6,19 +6,25 @@ let allBeatmapsDisplay
 function loadMaps() {
     let modOrderRequest = new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET",`http://localhost:24050${window.location.pathname}data/modOrder.json`, false);
+        xhr.open("GET",`http://localhost:24050/5WC2023GOSU/data/modOrder.json`, false);
         xhr.onload = async function xhrLoad()  {
-            if (this.status == 200) modsLoadMappoolView = JSON.parse(this.responseText)
-            else if (this.status == 404) return
+            if (this.status == 404) {
+                console.log("Mod Order Data Not Found")
+                return;
+            }
+            else if (this.status == 200) modsLoadMappoolView = JSON.parse(this.responseText)
         }
         xhr.send();
         resolve(modsLoadMappoolView);
     })
     modOrderRequest.then((modsLoadMappoolView) => {
         var beatmapRequest = new XMLHttpRequest();
-        beatmapRequest.open("GET",`http://localhost:24050${window.location.pathname}data/beatmaps.json`, false);
+        beatmapRequest.open("GET",`http://localhost:24050/5WC2023GOSU/data/beatmaps.json`, false);
         beatmapRequest.onload = function() {
-            if (this.status == 404) return;
+            if (this.status == 404) {
+                console.log("Beatmap Data Not Found")
+                return;
+            }
             beatmapsLoadMappoolView = JSON.parse(this.responseText);
             configureMaps(modsLoadMappoolView, beatmapsLoadMappoolView);
         }
