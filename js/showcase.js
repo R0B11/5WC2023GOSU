@@ -24,6 +24,27 @@ let tempLENms;
 let tempLENs;
 let currBPM;
 
+let mapStatsCS = document.getElementById("mapStatsCSnum");
+let mapStatsAR = document.getElementById("mapStatsARnum");
+let mapStatsOD = document.getElementById("mapStatsODnum");
+let mapStatsLEN = document.getElementById("mapStatsLENnum");
+let mapStatsSR = document.getElementById("mapStatsSRnum");
+let mapStatsBPM = document.getElementById("mapStatsBPMnum");
+
+let srBar = document.getElementById("mapStatsSRbar");
+let arBar = document.getElementById("mapStatsARbar");
+let csBar = document.getElementById("mapStatsCSbar");
+let odBar = document.getElementById("mapStatsODbar");
+
+let srbarPercent;
+let srbarPix;
+let arbarPercent;
+let arbarPix;
+let odbarPercent;
+let odbarPix;
+let csbarPercent;
+let csbarPix;
+
 let getMaps = new Promise(async (resolve, reject) => {
     let allMaps = getAllBeatmaps();
     console.log(getAllBeatmaps())
@@ -69,24 +90,62 @@ socket.onmessage = event => {
     }
 
     // SR, CS, AR, OD
-    if (currSR !== data.menu.bm.stats.SR) currSR = data.menu.bm.stats.SR
-    if (currCS !== data.menu.bm.stats.CS) currCS = data.menu.bm.stats.CS
-    if (currAR !== data.menu.bm.stats.AR) currAR = data.menu.bm.stats.AR
-    if (currOD !== data.menu.bm.stats.OD) currOD = data.menu.bm.stats.OD
+    if (currSR !== data.menu.bm.stats.SR) {
+        currSR = data.menu.bm.stats.SR;
+        mapStatsSR.innerText = currSR;
+        if (currSR > 4) {
+            srbarPercent = (currSR - 4) / 3.1;
+            srbarPix = srbarPercent * 352;
+            srBar.style.width = `${srbarPix}px`;
+        }
+        else {
+            srBar.style.width = `0px`;
+        }
+    }
+    if (currCS !== data.menu.bm.stats.CS) {
+        currCS = data.menu.bm.stats.CS;
+        mapStatsCS.innerText = currCS;
+        csbarPercent = (currCS - 2) / 5.15;
+        csbarPix = csbarPercent * 352;
+        csBar.style.width = `${csbarPix}px`;
+    }
+    if (currAR !== data.menu.bm.stats.AR) {
+        currAR = data.menu.bm.stats.AR;
+        mapStatsAR.innerText = currAR;
+        arbarPercent = (currAR - 5) / 5.2;
+        arbarPix = arbarPercent * 352;
+        arBar.style.width = `${arbarPix}px`;
+    }
+    if (currOD !== data.menu.bm.stats.OD) {
+        currOD = data.menu.bm.stats.OD
+        mapStatsOD.innerText = currOD;
+        odbarPercent = (currOD - 5) / 5;
+        odbarPix = odbarPercent * 352;
+        odBar.style.width = `${odbarPix}px`;
+    }
 
     // Length
     if (currLENms !== data.menu.bm.time.full) {
         // Get Time in MS
-        currLENms = data.menu.bm.time.full
-        tempLENms = (data.menu.mods.str.includes("DT")) ? tempLENms / 3 * 2 : tempLENms;
+        currLENms = data.menu.bm.time.full;
+        tempLENms = (data.menu.mods.str.includes("DT")) ? currLENms / 3 * 2 : currLENms;
         // Get Time in S and apply
-        tempLENs = tempLENms / 1000
-        currLENs = `${(Math.floor(tempLENs / 60))}:${("0" + Math.floor(tempLENs % 60)).slice(-2)}`
+        tempLENs = tempLENms / 1000;
+        currLENs = `${(Math.floor(tempLENs / 60))}:${("0" + Math.floor(tempLENs % 60)).slice(-2)}`;
+        mapStatsLEN.innerText = currLENs;
     }
 
     // BPM
-    if (Math.abs(data.menu.bm.stats.BPM.min - data.menu.bm.stats.BPM.max) !== 0  
-        && currBPM !== `${data.menu.bm.stats.BPM.min} - ${data.menu.bm.stats.BPM.max}`) {
-            currBPM = `${data.menu.bm.stats.BPM.min} - ${data.menu.bm.stats.BPM.max}`
-    } else if (currBPM !== data.menu.bm.stats.BPM.min) currBPM = data.menu.bm.stats.BPM.min
+    if (Math.abs(data.menu.bm.stats.BPM.min - data.menu.bm.stats.BPM.max) !== 0){ 
+        if (currBPM !== `${data.menu.bm.stats.BPM.min} - ${data.menu.bm.stats.BPM.max}`) {
+            currBPM = `${data.menu.bm.stats.BPM.min} - ${data.menu.bm.stats.BPM.max}`;
+            mapStatsBPM.innerText = currBPM;
+            console.log(currBPM !== `${data.menu.bm.stats.BPM.min} - ${data.menu.bm.stats.BPM.max}`);
+        }
+    } 
+    else if (currBPM !== data.menu.bm.stats.BPM.min) {
+        currBPM = data.menu.bm.stats.BPM.min;
+        mapStatsBPM.innerText = currBPM;
+    }
+
 }
