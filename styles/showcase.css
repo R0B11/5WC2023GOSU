@@ -1,3 +1,12 @@
+:root {
+	--purple: #936bf7;
+	--blue: #75c6ea;
+    --my-sr-num: 352px;
+    --my-cs-num: 300px;
+    --my-ar-num: 250px;
+    --my-od-num: 100px;
+}
+
 @font-face {
     font-family: "Round-Control";
     src: url("../fonts/RoundControl-Regular.otf") format("opentype");
@@ -38,7 +47,7 @@ canvas { position: absolute; top: 0; z-index: 0; }
     width: 1920px; height: 1080px;
 	z-index: 2;
 }
-#sponsor { position: relative; left: 20px; top: 0px; }
+#sponsor { position: relative; left: 20px; top: 0px; z-index: 1; }
 
 /* ~~~~~~~~~~~~~~~~~~~~ ROUND INFO ~~~~~~~~~~~~~~~~~~~~ */
 #roundMapSlotContainer {
@@ -160,6 +169,24 @@ canvas { position: absolute; top: 0; z-index: 0; }
     bottom: 5px;
     left: 5px;
 }
+/* ~~~~~~~~~~~~~~~~~~~~ POOLER COMMENTS ~~~~~~~~~~~~~~~~~~~~ */
+
+#poolComments {
+    background-color: transparent;
+    position: absolute;
+    bottom: 115px;
+    left: 950px;
+    width: 600px;
+    height: 90px;
+    z-index: 2;
+
+}
+
+#comments {
+    position: relative;
+    top: 35px;
+    font-size: 18px;
+}
 
 /* ~~~~~~~~~~~~~~~~~~~~ MAP STATS ~~~~~~~~~~~~~~~~~~~~ */
 
@@ -175,7 +202,41 @@ canvas { position: absolute; top: 0; z-index: 0; }
 .mapStatsBarContainer  {
     position: relative; top: 0px; left: 0px;
     height: 50px; width: 366px;
+    z-index: 1;
 }
+
+#mapStatsSRbar {
+    position: relative;
+    height: 9px; width: 0px;
+    top: 37px; left: 7px;
+    background-color: var(--purple);
+    z-index: 1;
+    max-width: 352px;
+    transition: width 1s;
+}
+
+#mapStatsCSbar, #mapStatsARbar, #mapStatsODbar {
+    position: relative;
+    height: 10px;
+    top: 36px; left: 7px;
+    background-color: var(--blue);
+    z-index: 1;
+    transition: width 1s;
+}
+
+#mapStatsCSbar {
+    width: 0px;
+    max-width: 352px;
+}
+#mapStatsARbar {
+    width: 0px;
+    max-width: 352px;
+}
+#mapStatsODbar {
+    width: 0px;
+    max-width: 352px;
+}
+
 
 .mapStatsBarNum {
     position: absolute; top: 10px; right: 0px;
@@ -202,7 +263,7 @@ canvas { position: absolute; top: 0; z-index: 0; }
     font-size: 19px;
 }
 
-#mapStatsLENtitle { left: 160px; }
+#mapStatsLENtitle { left: 180px; }
 #mapStatsBPMtitle { left: 0px; }
-#mapStatsLENnum { left: 260px; }
+#mapStatsLENnum { left: 280px; }
 #mapStatsBPMnum { left: 60px; }
