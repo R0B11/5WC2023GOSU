@@ -172,19 +172,13 @@ canvas { position: absolute; top: 0; z-index: 0; }
 /* ~~~~~~~~~~~~~~~~~~~~ POOLER COMMENTS ~~~~~~~~~~~~~~~~~~~~ */
 
 #poolComments {
-    background-color: transparent;
-    position: absolute;
-    bottom: 115px;
-    left: 950px;
-    width: 600px;
-    height: 90px;
+    position: absolute; bottom: 115px; left: 950px;
+    width: 600px; height: 90px;
     z-index: 2;
-
 }
 
 #comments {
-    position: relative;
-    top: 35px;
+    line-height: 90px;
     font-size: 18px;
 }
 
@@ -215,28 +209,14 @@ canvas { position: absolute; top: 0; z-index: 0; }
     transition: width 1s;
 }
 
-#mapStatsCSbar, #mapStatsARbar, #mapStatsODbar {
+.mapStatsBar {
     position: relative;
-    height: 10px;
+    width: 0px; max-width: 352px; height: 10px;
     top: 36px; left: 7px;
     background-color: var(--blue);
     z-index: 1;
     transition: width 1s;
 }
-
-#mapStatsCSbar {
-    width: 0px;
-    max-width: 352px;
-}
-#mapStatsARbar {
-    width: 0px;
-    max-width: 352px;
-}
-#mapStatsODbar {
-    width: 0px;
-    max-width: 352px;
-}
-
 
 .mapStatsBarNum {
     position: absolute; top: 10px; right: 0px;
