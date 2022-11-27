@@ -54,23 +54,31 @@ let animTime;
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 let getMaps = new Promise(async (resolve, reject) => {
-    let allMaps = getAllBeatmaps();
-    console.log(getAllBeatmaps())
+    let allMaps;
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET",`http://localhost:24050/5WC2023GOSU/data/showcaseBeatmaps.json`, false);
+    xhr.onload = function xhrLoad()  {
+        if (this.status == 404) {
+            console.log("Showcase Beatmaps Data Not Found")
+            return;
+        }
+        else if (this.status == 200) allMaps = JSON.parse(this.responseText)
+    }
+    xhr.send();
     resolve(allMaps); 
 })
 getMaps.then(allMaps => {
     for (var i = 0; i < allMaps.length; i++) {
-        for (var j = 0; j < allMaps[i].length; j++) {
-            let newMapTitle = document.createElement("div")
-            newMapTitle.setAttribute("id", allMaps[i][j].beatmapID)
-            newMapTitle.innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
-            
-            if (i == 0 && j == 0) newMapTitle.classList.add("current")
-            else if (i == 0 && j == 1) newMapTitle.classList.add("below")
-            else newMapTitle.classList.add("belowAll")
+        let newMapTitle = document.createElement("div")
+        newMapTitle.setAttribute("id", allMaps[i].beatmapID)
+        newMapTitle.innerText = `${allMaps[i].modID.toUpperCase()}`
+        newMapTitle.classList.add("mapSlot")
 
-            currentMapWheel.append(newMapTitle)
-        }
+        if (i == 0) newMapTitle.classList.add("current")
+        else if (i == 1) newMapTitle.classList.add("below")
+        else newMapTitle.classList.add("belowAll")
+
+        currentMapWheel.append(newMapTitle)
     }
 })
 
@@ -80,6 +88,8 @@ socket.onmessage = async event => {
 
     // Now Playing Container Data
     if (mapID !== data.menu.bm.id) {
+        console.log(data.menu.bm.id)
+        console.log(mapID)
         mapID = data.menu.bm.id;
         // Map Image
         currImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/');
@@ -98,6 +108,7 @@ socket.onmessage = async event => {
         for (var i = 0; i < allMapSlots.length; i++) {
             if (allMapSlots[i].id == mapID) {
                 toMapSlot = i;
+                console.log(toMapSlot)
                 break;
             }
         }

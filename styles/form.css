@@ -1,0 +1,24 @@
+.formWrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top:30px;
+    margin-bottom:30px;
+    font-size:2.5em;
+    width:1000px;
+}
+.formWrapper input {
+    border-bottom-color:grey;
+    border-width: 0 0 3px 0;
+    font-size:0.7em;
+}
+.formWrapper input:focus {
+    border-bottom-color:black;
+    border-width: 0 0 3px 0;
+}
+
+#mappoolSizeForm h1 {
+    text-align:center;
+    font-size:2.5em;
+    font-weight:400;
+}
