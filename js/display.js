@@ -47,6 +47,9 @@ let mapStatsLEN = document.getElementById("mapStatsLEN");
 let mapStatsSR = document.getElementById("mapStatsSR");
 let mapStatsBPM = document.getElementById("mapStatsBPM");
 
+// TOP SECTION
+let topSection = document.getElementById("top")
+
 socket.onopen = () => {
     console.log("Successfully Connected");
 };
@@ -474,5 +477,26 @@ function reset(text) {
 		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0;
 		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0;
 		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 1;
+	}
+}
+
+function toPickScreenView() {
+	topSection.style.backgroundImage = "url('static/mappoolView.png')"
+	for (var i = 0; i < blueStars.length; i++) {
+		blueStars[i].style.top = "-25px";
+		blueStars[i].style.left = `${615 - (i * 55)}px`;
+		purpleStars[i].style.top = "-25px";
+		purpleStars[i].style.right = `${615 - (i * 55)}px`;
+		
+	}
+}
+
+function toGameplayView() {
+	topSection.style.backgroundImage = "url('static/gameplayView.png')";
+	for (var i = 0; i < blueStars.length; i++) {
+		blueStars[i].style.top = "88px";
+		blueStars[i].style.left = `${740 - (i * 50)}px`;
+		purpleStars[i].style.top = "88px";
+		purpleStars[i].style.right = `${728 - (i * 50)}px`;
 	}
 }
