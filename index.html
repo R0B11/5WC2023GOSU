@@ -34,7 +34,9 @@
                     <div class="playScores" id="playScoreBlue"></div>
                     <div class="playScores" id="playScorePurple"></div>
                     <div id="nowPlayingContainer">
-                        <img id="nowPlayingWrapperImage" src="static/nowPlayingteamBlue.png">
+                        <img class="nowPlayingWrapperImage" id="nowPlayingWrapperImageNeutral" src="static/nowPlayingNeutral.png">
+                        <img class="nowPlayingWrapperImage" style="opacity: 0" id="nowPlayingWrapperImageBlue" src="static/nowPlayingteamBlue.png">
+                        <img class="nowPlayingWrapperImage" style="opacity: 0" id="nowPlayingWrapperImagePurple" src="static/nowPlayingteamPurple.png">
                         <div id="mapContainer"></div>
                         <div class="mapTitleWrapper" id="mapTitleWrapper"><div id="mapTitle"></div></div>
                         <div class="mapTitleWrapper" id="mapTitleWrapper2">
@@ -72,15 +74,15 @@
                         <button class="panelButton purpleButton banButton" onclick="changeAction('Purple Ban');">Purple Ban</button>
                         <button class="panelButton blueButton protectButton" onclick="changeAction('Blue Protect');">Blue Protect</button>
                         <button class="panelButton purpleButton protectButton" onclick="changeAction('Purple Protect');">Purple Protect</button>
-                        <button class="panelButton resetButton resetPicks" onclick="reset();">Reset Picks</button>
-                        <button class="panelButton resetButton resetBans" onclick="reset();">Reset Bans</button>
-                        <button class="panelButton resetButton resetProtects" onclick="reset();">Reset Protects</button>
+                        <button class="panelButton resetButton resetPicks" onclick="reset('neutral');">Reset Picks</button>
+                        <button class="panelButton resetButton resetBans" onclick="reset('blue');">Reset Bans</button>
+                        <button class="panelButton resetButton resetProtects" onclick="reset('purple');">Reset Protects</button>
                         <button class="panelButton roundButton ro32button" onclick="changeRound('Round of 32');">RO32</button>
                         <button class="panelButton roundButton ro16button" onclick="changeRound('Round of 16');">RO16</button>
                         <button class="panelButton roundButton qfbutton" onclick="changeRound('Quarterfinals');">QF</button>
-                        <button class="panelButton roundButton sfbutton" onclick="changeRound('Semifinals');">SF</button>
-                        <button class="panelButton roundButton fbutton" onclick="changeRound('Finals');">F</button>
-                        <button class="panelButton roundButton gfbutton" onclick="changeRound('Grand Finals');">GF</button>
+                        <button class="panelButton roundButton bottomRoundButton sfbutton" onclick="changeRound('Semifinals');">SF</button>
+                        <button class="panelButton roundButton bottomRoundButton fbutton" onclick="changeRound('Finals');">F</button>
+                        <button class="panelButton roundButton bottomRoundButton gfbutton" onclick="changeRound('Grand Finals');">GF</button>
                         
                         <!-- Maybe someway to add the list of maps here idk so we can actually
                         chose what get protect/banned/picked-->

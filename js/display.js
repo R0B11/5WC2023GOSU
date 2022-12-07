@@ -255,7 +255,7 @@ socket.onmessage = async event => {
 		scorePurpleTemp !== data.tourney.manager.stars.right) {
 		
 		// Best of
-		bestOfTemp =Math.ceil(data.tourney.manager.bestOF / 2)
+		bestOfTemp = Math.ceil(data.tourney.manager.bestOF / 2)
 
 		// Add Event
         if (scoreBlueTemp < data.tourney.manager.stars.left) {
@@ -459,11 +459,20 @@ socket.onmessage = async event => {
 
 }
 
-function changeAction(actionText) {
-	nextAction.innerText = actionText;
+function changeAction(actionText) { nextAction.innerText = actionText; }
+function changeRound(round) { roundText.innerText = round; }
+function reset(text) {
+	if (text == "neutral") {
+		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 1;
+		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0;
+		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0;
+	} else if (text == "blue") {
+		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0;
+		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 1;
+		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0;
+	} else {
+		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0;
+		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0;
+		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 1;
+	}
 }
-
-function changeRound(round) {
-	roundText.innerText = round;
-}
-

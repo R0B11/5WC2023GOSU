@@ -331,14 +331,16 @@ body,html{
 	bottom: 15px; left: 20px;
 	background-size: contain;
 	background-repeat: no-repeat;
-	width: 416px; height: 75%;
+	width: 556px; height: 75%;
 	text-align: center;
 	align-content: center;
+	background-color: rgba(0,0,0,0.5);
 }
-#nowPlayingWrapperImage {
+.nowPlayingWrapperImage {
 	position: absolute;
 	width: 566px; height: 100%;
 	top: 0px; left: 0px;
+	transition-duration: 500ms;
 }
 #mapContainer {
 	position: relative;
@@ -353,15 +355,6 @@ body,html{
 	border-radius: 25px;
 	z-index: -1;
 	box-shadow: 100px 5px 5px  black;
-}
-#overlay {
-	position: absolute;
-	height: 130px;
-	width: 552px;
-	z-index: 0;
-    background-color: rgba(0,0,0,0.50);
-	border-radius: 25px;
-	left: -15px;
 }
 .mapTitleWrapper {
 	position: absolute; top: 12px; left: 15px;
@@ -499,65 +492,37 @@ body,html{
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.panelButton:hover {
-	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 60px 0 rgba(0,0,0,0.19);
-}
+.panelButton:hover { box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 60px 0 rgba(0,0,0,0.19); }
 
 .panelButton:active {
 	background-color: black;
 	color: white;
 }
 
-.pickButton {
-	top: 250px;
-}
-
-.banButton {
-	top: 350px;
-}
-
-.protectButton {
-	top: 450px
-}
+.pickButton { top: 250px; }
+.banButton { top: 350px; }
+.protectButton { top: 450px }
 
 .blueButton {
 	background-color: var(--blue);
 	left: 30px;
 }
-
 .purpleButton {
 	background-color: var(--purple);
 	left: 135px;
 }
-
 .resetButton {
 	width: 183px;
 	left: 30px;
 }
 
-.resetPicks {
-	top: 550px;
-}
+.resetPicks { top: 550px; }
+.resetBans { top: 650px; }
+.resetProtects { top: 750px; }
 
-.resetBans {
-	top: 650px;
-}
-
-.resetProtects {
-	top: 750px;
-}
-
-.viewButton {
-	bottom: 30px
-}
-
-.pickView {
-	left: 30px;
-}
-
-.gameView {
-	left: 135px;
-}
+.viewButton { bottom: 30px }
+.pickView { left: 30px; } 
+.gameView { left: 135px; }
 .roundButton {
 	width: 55px;
 	height: 50px;
@@ -566,29 +531,12 @@ body,html{
 	background-color: #FF66AA;
 }
 
-.ro16button {
-	left: 95px;
-}
-
-.qfbutton {
-	left: 158px;
-}
-
-.sfbutton {
-	top: 910px;
-	left: 30px;
-}
-
-.fbutton {
-	top: 910px;
-	left: 95px;
-}
-
-.gfbutton {
-	top: 910px;
-	left: 158px;
-}
-
+.ro16button { left: 95px; }
+.qfbutton { left: 158px; }
+.bottomRoundButton { top: 910px; }
+.sfbutton { left: 30px; }
+.fbutton { left: 95px; } 
+.gfbutton { left: 158px; }
 
 /* CHAT DISPLAY */
 #chats {
@@ -638,28 +586,6 @@ body,html{
 .bot { color: #FF66AA; }
 .left { color: var(--blue); }
 .right { color: var(--purple); }
-
-/*Scrollbar*/
-::-webkit-scrollbar {
-	width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    margin-top: 25px;
-    margin-bottom: 25px;
-	visibility: 0;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-	background: rgba(0,0,0,0);
-	border-radius: 10px;
-}
-.text{
-    display: flex;
-    justify-content: center;
-}
 
 /* ~~~~~~~~~~~~~~~~~~~ SPONSOR ~~~~~~~~~~~~~~~~~~~~~ */
 
