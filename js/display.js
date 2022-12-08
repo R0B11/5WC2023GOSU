@@ -48,7 +48,8 @@ let mapStatsSR = document.getElementById("mapStatsSR");
 let mapStatsBPM = document.getElementById("mapStatsBPM");
 
 // TOP SECTION
-let topSection = document.getElementById("top")
+let topSection = document.getElementById("top");
+let gameplaySection = document.getElementById("gameplay");
 
 socket.onopen = () => {
     console.log("Successfully Connected");
@@ -131,13 +132,13 @@ socket.onmessage = async event => {
 			for (var i = 0; i < blueStars.length; i++) {
 				blueStars[i].style.opacity = 1;
 				purpleStars[i].style.opacity = 1
-				await new Promise(r => setTimeout(r, 100));
+				await new Promise(r => setTimeout(r, 500));
 			}
 		} else {
 			for (var i = blueStars.length - 1; i >= 0; i--) {
 				blueStars[i].style.opacity = 0;
 				purpleStars[i].style.opacity = 0;
-				await new Promise(r => setTimeout(r, 100));
+				await new Promise(r => setTimeout(r, 500));
 			}
 			scorePurple.style.display = "none";
 			scoreBlue.style.display = "none";
@@ -482,6 +483,7 @@ function reset(text) {
 
 function toPickScreenView() {
 	topSection.style.backgroundImage = "url('static/mappoolView.png')"
+	gameplaySection.style.left = "-1920px";
 	for (var i = 0; i < blueStars.length; i++) {
 		blueStars[i].style.top = "-25px";
 		blueStars[i].style.left = `${615 - (i * 55)}px`;
@@ -493,6 +495,7 @@ function toPickScreenView() {
 
 function toGameplayView() {
 	topSection.style.backgroundImage = "url('static/gameplayView.png')";
+	gameplaySection.style.left = 0;
 	for (var i = 0; i < blueStars.length; i++) {
 		blueStars[i].style.top = "88px";
 		blueStars[i].style.left = `${740 - (i * 50)}px`;
