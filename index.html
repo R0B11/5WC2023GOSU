@@ -63,11 +63,11 @@
                     </div>
                 </div>
                 <div id="panel">
-                    <div id="paneltitle">Control Panel</div>
-                    <div id="panelBreak"></div>
-                    <div id="nextActionText">Next Action:</div>
-                    <div id="nextAction"></div>
-                    <div id="pickScreenView">
+                    <section id="paneltitle">Control Panel</section>
+                    <section id="panelBreak"></section>
+                    <section id="nextActionText">Next Action:</section>
+                    <section id="nextAction"></section>
+                    <section id="pickScreenView">
                         <button class="panelButton blueButton pickButton" onclick="changeAction('Blue Pick');">Blue Pick</button>
                         <button class="panelButton purpleButton pickButton" onclick="changeAction('Purple Pick');">Purple Pick</button>
                         <button class="panelButton blueButton banButton" onclick="changeAction('Blue Ban');">Blue Ban</button>
@@ -86,11 +86,22 @@
                         
                         <!-- Maybe someway to add the list of maps here idk so we can actually
                         chose what get protect/banned/picked-->
-                    </div>
-                    <div id="navigation">
+                    </section>
+                    <section id="navigation">
                         <button class="panelButton viewButton pickView" onclick="toPickScreenView();">Pick Screen View</button>
                         <button class="panelButton viewButton gameView" onclick="toGameplayView();">Game View</button>
-                    </div>
+                    </section>
+                    <section class="rightHandSide" id="starControl">
+                        Stars:<br>
+                        <div id="blueStarControl">Blue Stars:</div>
+                        <button class="panelButton largeTextButton greenButton" id="blueStarControlPlus" onclick="changeScore('blue','add')">+</button>
+                        <button class="panelButton largeTextButton redButton" id="blueStarControlSubtract" onclick="changeScore('blue','remove')">-</button>
+                        <div class="rightHandSide" id="purpleStarControl">Purple Stars:</div>
+                        <button class="panelButton largeTextButton greenButton" id="purpleStarControlPlus" onclick="changeScore('purple','add')">+</button>
+                        <button class="panelButton largeTextButton redButton" id="purpleStarControlSubtract" onclick="changeScore('purple','remove')">-</button>
+                        <div class="rightHandSide" id="starToggleText">Stars are currently:</div>
+                        <button class="panelButton resetButton starToggle" id="starToggle" onclick="starToggleOnOff('turnOff');">ON</button>
+                    </section>
                 </div>
             </div>
             

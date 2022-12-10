@@ -1,6 +1,9 @@
 :root {
 	--purple: #936bf7;
 	--blue: #75c6ea;
+	--green: #6ACE0C;
+	--red: #FF4141;
+	--darkGreen: #1F9B29;
 }
 
 @font-face {
@@ -113,18 +116,10 @@ body,html{
 	border-radius: 12px;
 	transform: rotate(0deg)
 }
-.line1CircleLeft {
-	top: 0px;
-}
-.line2CircleLeft {
-	top: -12px; left: 0px; 
-}
-.line1CircleRight {
-	top: 0px;
-}
-.line2CircleRight {
-	top: -12px; right: 0px; 
-}
+.line1CircleLeft { top: 0px; }
+.line2CircleLeft { top: -12px; left: 0px;  }
+.line1CircleRight { top: 0px; }
+.line2CircleRight { top: -12px; right: 0px;  }
 .starCross {
 	position: relative;
 	background-color: white;
@@ -407,8 +402,7 @@ body,html{
 #mapStatsLEN { left: 470px; }
 #mapStatsBPM { left: 449px; }
 
-/* ~~~~~~~~~~~~~~~~~~~~ MOVING SCORE BARS ~~~~~~~~~~~~~~~~~~~~ */
-
+/* ~~~~~~~~~~~~~~~~~~~ MOVING SCORE BARS ~~~~~~~~~~~~~~~~~~~~ */
 #movingScoreBars {
 	position:absolute;
 	width:1920px;
@@ -469,7 +463,7 @@ body,html{
 	left: 30px;
 	font-size: 20px;
 }
-
+/* Next Action */
 #nextAction {
 	width: 183px;
 	position: absolute;
@@ -479,7 +473,6 @@ body,html{
 	left: 30px;
 	font-size: 30px;
 }
-
 .panelButton {
 	position: absolute;
 	height: 75px;
@@ -500,10 +493,12 @@ body,html{
 	color: white;
 }
 
+/* Pick, Ban, and Protect Buttons */
 .pickButton { top: 250px; }
 .banButton { top: 350px; }
 .protectButton { top: 450px }
 
+/* Coloured Buttons */
 .blueButton {
 	background-color: var(--blue);
 	left: 30px;
@@ -511,6 +506,17 @@ body,html{
 .purpleButton {
 	background-color: var(--purple);
 	left: 135px;
+}
+.greenButton {
+	background-color: var(--green);
+	left: 30px;
+}
+.redButton {
+	background-color: var(--red);
+	left: 135px;
+}
+.largeTextButton {
+	font-size: 32px;
 }
 .resetButton {
 	width: 183px;
@@ -532,12 +538,40 @@ body,html{
 	background-color: #FF66AA;
 }
 
+/* Round Buttons */
 .ro16button { left: 95px; }
 .qfbutton { left: 158px; }
 .bottomRoundButton { top: 910px; }
 .sfbutton { left: 30px; }
 .fbutton { left: 95px; } 
 .gfbutton { left: 158px; }
+
+/* Star Control */
+#starControl {
+	top: 100px; right: 0;
+	font-family: RenogareSoft-Regular; 
+	color: white;
+	font-size: 20px;
+}
+.rightHandSide {
+	position: absolute;
+	width: 250px;
+	text-align: center;
+}
+#blueStarControl { 
+	color: var(--blue);
+	line-height: 50px;
+}
+#purpleStarControl { 
+	top: 165px;
+	color: var(--purple);
+	line-height: 40px;
+}
+#starToggleText { top: 310px; }
+#purpleStarControlPlus { top: 210px; }
+#purpleStarControlSubtract { top: 210px; }
+.starToggle { top: 355px; }
+
 
 /* CHAT DISPLAY */
 #chats {

@@ -24,6 +24,18 @@ let blueStars = scoreBlue.getElementsByClassName("star");
 let purpleStars = scorePurple.getElementsByClassName("star");
 let teamBlue = document.getElementById("teamBlue");
 let teamPurple = document.getElementById("teamPurple");
+let starToggle = document.getElementById("starToggle");
+let starToggleState = true;
+
+// STAR CONTROL
+let blueStarControlPlus = document.getElementById("blueStarControlPlus");
+let blueStarControlSubtract = document.getElementById("blueStarControlSubtract");
+let purpleStarControlPlus = document.getElementById("purpleStarControlPlus");
+let purpleStarControlSubtract = document.getElementById("purpleStarControlSubtract");
+
+// TOURNEY CONTROL
+let ipcState;
+let pointAwarded;
 
 // TEAM PLAYING SCORE
 let playScoreBlue = document.getElementById("playScoreBlue");
@@ -69,7 +81,7 @@ socket.onerror = error => {
     console.log("Socket Error: ", error);
 };
 
-let bestOfTemp;
+let bestOfTemp = 5;
 let scoreVisibleTemp;
 let starsVisibleTemp;
 
@@ -124,8 +136,8 @@ socket.onmessage = async event => {
 			playScorePurple.style.opacity = 0;
 		}
 	}
-	if(starsVisibleTemp !== data.tourney.manager.bools.starsVisible) {
-		starsVisibleTemp = data.tourney.manager.bools.starsVisible;
+	if(starsVisibleTemp !== starToggleState) {
+		starsVisibleTemp = starToggleState;
 		if(starsVisibleTemp) {
 			scoreBlue.style.display = "flex";
 			scorePurple.style.display = "flex";
@@ -133,12 +145,14 @@ socket.onmessage = async event => {
 				blueStars[i].style.opacity = 1;
 				purpleStars[i].style.opacity = 1
 				await new Promise(r => setTimeout(r, 500));
+				console.log(starsVisibleTemp)
 			}
 		} else {
 			for (var i = blueStars.length - 1; i >= 0; i--) {
 				blueStars[i].style.opacity = 0;
 				purpleStars[i].style.opacity = 0;
 				await new Promise(r => setTimeout(r, 500));
+				console.log(starsVisibleTemp)
 			}
 			scorePurple.style.display = "none";
 			scoreBlue.style.display = "none";
@@ -232,108 +246,6 @@ socket.onmessage = async event => {
 		}
 		if (tempMapStatsSR !== data.menu.bm.stats.SR) mapStatsSR.innerText = Math.round((parseFloat(data.menu.bm.stats.SR) + Number.EPSILON) * 10) / 10;
 	}
-
-	function starGenerate(side, i) {
-		let star = document.createElement("div")
-		let line1 = document.createElement("div")
-		let line2 = document.createElement("div")
-
-		if (side == "left") {
-			line1.style.backgroundColor = "#75c6ea";
-			line2.style.backgroundColor = "#75c6ea";
-
-			star.style.left = `${740 - (i * 50)}px`;
-		} else {
-			line1.style.backgroundColor = "#936bf7";
-			line2.style.backgroundColor = "#936bf7";
-
-			star.style.right = `${728 - (i * 50)}px`;
-		}
-
-		star.setAttribute("class", "star");
-		let starGeneration = [star, line1, line2]
-		return starGeneration
-	}
-	if (bestOfTemp !== Math.ceil(data.tourney.manager.bestOF / 2) ||
-		scoreBlueTemp !== data.tourney.manager.stars.left ||
-		scorePurpleTemp !== data.tourney.manager.stars.right) {
-		
-		// Best of
-		bestOfTemp = Math.ceil(data.tourney.manager.bestOF / 2)
-
-		// Add Event
-        if (scoreBlueTemp < data.tourney.manager.stars.left) {
-            starEvent = "blue-add";
-        } else if (scoreBlueTemp > data.tourney.manager.stars.left) {
-            starEvent = "blue-remove";
-        } else if (scorePurpleTemp < data.tourney.manager.stars.right) {
-            starEvent = "purple-add";
-        } else if (scorePurpleTemp > data.tourney.manager.stars.right) {
-            starEvent = "purple-remove"
-        } else {
-			starEvent = null
-		}
-
-		// Left Stars
-		scoreBlueTemp = data.tourney.manager.stars.left;
-		scoreBlue.innerHTML = '';
-		// Pointed Achieved
-		for (var i = 0; i < scoreBlueTemp; i++) {
-			let generatedStar = starGenerate("left", i);
-			generatedStar[1].classList.add("line1CrossLeft", "starCross");
-			generatedStar[2].classList.add("line2CrossLeft", "starCross");
-			if (starEvent == "blue-add" && i === scoreBlueTemp - 1) {
-				generatedStar[1].classList.add("line1CircleToCrossLeftAnimation");
-				generatedStar[2].classList.add("line2CircleToCrossLeftAnimation");
-			}
-			generatedStar[0].appendChild(generatedStar[1])
-			generatedStar[0].appendChild(generatedStar[2])
-			scoreBlue.appendChild(generatedStar[0])
-		}
-		// Points not yet achieved
-		for (i; i < bestOfTemp; i++) {
-			let generatedStar = starGenerate("left", i);
-			generatedStar[1].classList.add("line1CircleLeft", "starCircle");
-			generatedStar[2].classList.add("line2CircleLeft", "starCircle");
-			if (starEvent == "blue-remove" && i == scoreBlueTemp) {
-				generatedStar[1].classList.add("line1CrossToCircleLeftAnimation")
-				generatedStar[2].classList.add("line2CrossToCircleLeftAnimation")
-			}
-			generatedStar[0].appendChild(generatedStar[1])
-			generatedStar[0].appendChild(generatedStar[2])
-			scoreBlue.appendChild(generatedStar[0])
-		}
-
-		// Right Stars
-		scorePurpleTemp = data.tourney.manager.stars.right;
-		scorePurple.innerHTML = '';
-		// Points Achieved
-		for (var i = 0; i < scorePurpleTemp; i++) {
-			let generatedStar = starGenerate("right", i);
-			generatedStar[1].classList.add("line1CrossRight", "starCross");
-			generatedStar[2].classList.add("line2CrossRight", "starCross");
-			if (starEvent == "purple-add" && i === scorePurpleTemp - 1) {
-				generatedStar[1].classList.add("line1CircleToCrossRightAnimation")
-				generatedStar[2].classList.add("line2CircleToCrossRightAnimation")
-			}
-			generatedStar[0].appendChild(generatedStar[1])
-			generatedStar[0].appendChild(generatedStar[2])
-			scorePurple.appendChild(generatedStar[0])
-		}
-		// Points not yet achieved
-		for (i; i < bestOfTemp; i++) {
-			let generatedStar = starGenerate("right", i);
-			generatedStar[1].classList.add("line1CircleRight", "starCircle");
-			generatedStar[2].classList.add("line2CircleRight", "starCircle");
-			if (starEvent == "purple-remove" && i == scorePurpleTemp) {
-				generatedStar[1].classList.add("line1CrossToCircleRightAnimation")
-				generatedStar[2].classList.add("line2CrossToCircleRightAnimation")
-			}
-			generatedStar[0].appendChild(generatedStar[1])
-			generatedStar[0].appendChild(generatedStar[2])
-			scorePurple.appendChild(generatedStar[0])
-		}
-	}
 	if(teamNameBlueTemp !== data.tourney.manager.teamName.left) {
 		teamNameBlueTemp = data.tourney.manager.teamName.left;
 		teamBlueName.innerHTML = teamNameBlueTemp;
@@ -352,8 +264,30 @@ socket.onmessage = async event => {
 			teamPurpleFlag.style.backgroundImage = null
 		}
 	}
-	if (numOfClients !== data.tourney.ipcClients.length) {
-		numOfClients = data.tourney.ipcClients.length
+	if (numOfClients !== data.tourney.ipcClients.length) numOfClients = data.tourney.ipcClients.length
+	if (ipcState !== data.tourney.manager.ipcState) {
+		ipcState = data.tourney.manager.ipcState
+		if (ipcState == 1) pointAwarded = false;
+		else if (ipcState == 4) {
+			if (pointAwarded == false) {
+				pointAwarded = true;
+				if (playScoreBlueTemp > playScorePurpleTemp) blueStarControlPlus.click()
+				else if (playScoreBlueTemp < playScorePurpleTemp) purpleStarControlPlus.click()
+				else if (playScoreBlueTemp == playScorePurpleTemp) {
+					let blueTeamAccuracy = 0;
+					let purpleTeamAccuracy = 0;
+
+					for (var i = 0; i < numOfClients; i++) {
+						let currentAccuracy = parseFloat(data.tourney.ipcClients[i].gameplay.accuracy)
+						if (i < numOfClients / 2) blueTeamAccuracy += currentAccuracy
+						else purpleTeamAccuracy += currentAccuracy
+					}
+
+					if (blueTeamAccuracy > purpleTeamAccuracy) blueStarControlPlus.click()
+					else if (blueTeamAccuracy < purpleTeamAccuracy) purpleStarControlPlus.click()
+				}
+			}
+		}
 	}
 	if(scoreVisibleTemp) {
 		// MAKE SURE WHEN MAP IS PLAYED, SET A BOOL TO "isFreemod" TO TRUE/FALSE.
@@ -378,6 +312,9 @@ socket.onmessage = async event => {
 			playScoreBlueTemp = data.tourney.manager.gameplay.score.left;
 			playScorePurpleTemp = data.tourney.manager.gameplay.score.right;
 		}
+
+		playScoreBlueTemp = parseInt(playScoreBlueTemp);
+		playScorePurpleTemp = parseInt(playScorePurpleTemp); 
 
 		animation.playScoreBlue.update(playScoreBlueTemp);
 		animation.playScorePurple.update(playScorePurpleTemp);
@@ -464,7 +401,121 @@ socket.onmessage = async event => {
 }
 
 function changeAction(actionText) { nextAction.innerText = actionText; }
-function changeRound(round) { roundText.innerText = round; }
+function changeRound(round) {
+	// Changing Round Text
+	roundText.innerText = round;
+
+	// Changing Best Of
+	if (round == "Round of 32" || round == "Round of 16") bestOfTemp = 5
+	else if (round == "Quarterfinals" || round == "Semifinals") bestOfTemp = 6
+	else bestOfTemp = 7
+
+	// Changing Stars
+	changeStars(null);
+}
+function changeScore(side, scoreEvent) {
+	let animation = true;
+	if (side == "blue" && scoreEvent == "add") scoreBlueTemp++
+	else if (side == "blue" && scoreEvent == "remove") scoreBlueTemp--
+	else if (side == "purple" && scoreEvent == "add") scorePurpleTemp++
+	else if (side == "purple" && scoreEvent == "remove") scorePurpleTemp--
+	
+	if (scoreBlueTemp < 0) {
+		scoreBlueTemp = 0
+		animation = false;
+	} else if (scoreBlueTemp > bestOfTemp) {
+		scoreBlueTemp = bestOfTemp
+		animation = false;
+	}
+	if (scorePurpleTemp < 0) {
+		scorePurpleTemp = 0
+		animation = false;
+	} else if (scorePurpleTemp > bestOfTemp) {
+		scorePurpleTemp = bestOfTemp;
+		animation = false;
+	}
+
+	if (animation) changeStars(`${side}-${scoreEvent}`)
+}
+function changeStars(starEvent) {
+	// Left Stars
+	scoreBlue.innerHTML = '';
+	// Pointed Achieved
+	for (var i = 0; i < scoreBlueTemp; i++) {
+		let generatedStar = starGenerate("left", i);
+		generatedStar[1].classList.add("line1CrossLeft", "starCross");
+		generatedStar[2].classList.add("line2CrossLeft", "starCross");
+		if (starEvent == "blue-add" && i === scoreBlueTemp - 1) {
+			generatedStar[1].classList.add("line1CircleToCrossLeftAnimation");
+			generatedStar[2].classList.add("line2CircleToCrossLeftAnimation");
+		}
+		generatedStar[0].appendChild(generatedStar[1])
+		generatedStar[0].appendChild(generatedStar[2])
+		scoreBlue.appendChild(generatedStar[0])
+	}
+	// Points not yet achieved
+	for (i; i < bestOfTemp; i++) {
+		let generatedStar = starGenerate("left", i);
+		generatedStar[1].classList.add("line1CircleLeft", "starCircle");
+		generatedStar[2].classList.add("line2CircleLeft", "starCircle");
+		if (starEvent == "blue-remove" && i == scoreBlueTemp) {
+			generatedStar[1].classList.add("line1CrossToCircleLeftAnimation")
+			generatedStar[2].classList.add("line2CrossToCircleLeftAnimation")
+		}
+		generatedStar[0].appendChild(generatedStar[1])
+		generatedStar[0].appendChild(generatedStar[2])
+		scoreBlue.appendChild(generatedStar[0])
+	}
+	// Right Stars
+	scorePurple.innerHTML = '';
+	// Points Achieved
+	for (var i = 0; i < scorePurpleTemp; i++) {
+		let generatedStar = starGenerate("right", i);
+		generatedStar[1].classList.add("line1CrossRight", "starCross");
+		generatedStar[2].classList.add("line2CrossRight", "starCross");
+		if (starEvent == "purple-add" && i === scorePurpleTemp - 1) {
+			generatedStar[1].classList.add("line1CircleToCrossRightAnimation")
+			generatedStar[2].classList.add("line2CircleToCrossRightAnimation")
+		}
+		generatedStar[0].appendChild(generatedStar[1])
+		generatedStar[0].appendChild(generatedStar[2])
+		scorePurple.appendChild(generatedStar[0])
+	}
+	// Points not yet achieved
+	for (i; i < bestOfTemp; i++) {
+		let generatedStar = starGenerate("right", i);
+		generatedStar[1].classList.add("line1CircleRight", "starCircle");
+		generatedStar[2].classList.add("line2CircleRight", "starCircle");
+		if (starEvent == "purple-remove" && i == scorePurpleTemp) {
+			generatedStar[1].classList.add("line1CrossToCircleRightAnimation")
+			generatedStar[2].classList.add("line2CrossToCircleRightAnimation")
+		}
+		generatedStar[0].appendChild(generatedStar[1])
+		generatedStar[0].appendChild(generatedStar[2])
+		scorePurple.appendChild(generatedStar[0])
+	}
+}
+function starGenerate(side, i) {
+	let star = document.createElement("div")
+	let line1 = document.createElement("div")
+	let line2 = document.createElement("div")
+
+	if (side == "left") {
+		line1.style.backgroundColor = "#75c6ea";
+		line2.style.backgroundColor = "#75c6ea";
+
+		star.style.left = `${740 - (i * 50)}px`;
+	} else {
+		line1.style.backgroundColor = "#936bf7";
+		line2.style.backgroundColor = "#936bf7";
+
+		star.style.right = `${728 - (i * 50)}px`;
+	}
+
+	star.setAttribute("class", "star");
+	let starGeneration = [star, line1, line2]
+	return starGeneration
+}
 function reset(text) {
 	if (text == "neutral") {
 		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 1;
@@ -481,18 +532,28 @@ function reset(text) {
 	}
 }
 
-function toPickScreenView() {
-	topSection.style.backgroundImage = "url('static/mappoolView.png')"
-	gameplaySection.style.left = "-1920px";
-	for (var i = 0; i < blueStars.length; i++) {
-		blueStars[i].style.top = "-25px";
-		blueStars[i].style.left = `${615 - (i * 55)}px`;
-		purpleStars[i].style.top = "-25px";
-		purpleStars[i].style.right = `${615 - (i * 55)}px`;
-		
+function starToggleOnOff(toggle) {
+	if (toggle == "turnOff") {
+		starToggleState = false;
+		starToggle.innerText = "OFF";
+		starToggle.setAttribute("onclick", "starToggleOnOff('turnOn')")
+	} else if (toggle == "turnOn") {
+		starToggleState = true;
+		starToggle.innerText = "ON";
+		starToggle.setAttribute("onclick", "starToggleOnOff('turnOff')")
 	}
 }
 
+function toPickScreenView() {
+	topSection.style.backgroundImage = "url('static/mappoolView.png')"
+	gameplaySection.style.left = "-1920px"
+	for (var i = 0; i < blueStars.length; i++) {
+		blueStars[i].style.top = "-25px"
+		blueStars[i].style.left = `${615 - (i * 55)}px`
+		purpleStars[i].style.top = "-25px"
+		purpleStars[i].style.right = `${615 - (i * 55)}px`	
+	}
+}
 function toGameplayView() {
 	topSection.style.backgroundImage = "url('static/gameplayView.png')";
 	gameplaySection.style.left = 0;
@@ -503,3 +564,5 @@ function toGameplayView() {
 		purpleStars[i].style.right = `${728 - (i * 50)}px`;
 	}
 }
+
+changeStars(null)
