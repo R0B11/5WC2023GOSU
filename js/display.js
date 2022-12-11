@@ -9,9 +9,11 @@ let mapTitle = document.getElementById("mapTitle");
 let mapTitle1 = document.getElementById("mapTitle1");
 let mapTitle2 = document.getElementById("mapTitle2");
 
-// TEAM OVERALL SCORE
+// TEAM NAME
 let teamBlueName = document.getElementById("teamBlueName");
 let teamPurpleName = document.getElementById("teamPurpleName");
+let teamNames = document.getElementsByClassName("teamNames")
+
 // MOVING SCORE BAR
 let movingScoreBars = document.getElementById("movingScoreBars");
 let movingScoreBarBlue = document.getElementById("movingScoreBarBlue");
@@ -50,6 +52,7 @@ let chats = document.getElementById("chats");
 // FLAGS
 let teamPurpleFlag = document.getElementById("teamPurpleFlag");
 let teamBlueFlag = document.getElementById("teamBlueFlag");
+let teamFlags = document.getElementsByClassName("teamFlags")
 
 // MAP STATS
 let nowPlayingContainer = document.getElementById("nowPlayingContainer");
@@ -244,28 +247,21 @@ socket.onmessage = async event => {
 				tempMapStatsBPM = `${data.menu.bm.stats.BPM.min} - ${data.menu.bm.stats.BPM.max}`
 				mapStatsBPM.innerText = tempMapStatsBPM
 			}
-		} else {
-			if (tempMapStatsBPM !== data.menu.bm.stats.BPM.min) mapStatsBPM.innerText = data.menu.bm.stats.BPM.min
-		}
+		} 
+		else if (tempMapStatsBPM !== data.menu.bm.stats.BPM.min) mapStatsBPM.innerText = data.menu.bm.stats.BPM.min
 		if (tempMapStatsSR !== data.menu.bm.stats.SR) mapStatsSR.innerText = Math.round((parseFloat(data.menu.bm.stats.SR) + Number.EPSILON) * 10) / 10;
 	}
 	if(teamNameBlueTemp !== data.tourney.manager.teamName.left) {
 		teamNameBlueTemp = data.tourney.manager.teamName.left;
 		teamBlueName.innerHTML = teamNameBlueTemp;
-		if (teamNameBlueTemp !== "") {
-			teamBlueFlag.style.backgroundImage = `url("static/flags/${teamNameBlueTemp}.png")`
-		} else {
-			teamBlueFlag.style.backgroundImage = null
-		}
+		if (teamNameBlueTemp !== "") teamBlueFlag.style.backgroundImage = `url("static/flags/${teamNameBlueTemp}.png")`
+		else teamBlueFlag.style.backgroundImage = null
 	}
 	if(teamNamePurpleTemp !== data.tourney.manager.teamName.right) {
 		teamNamePurpleTemp = data.tourney.manager.teamName.right;
 		teamPurpleName.innerHTML = teamNamePurpleTemp;
-		if (teamNamePurpleTemp !== "") {
-			teamPurpleFlag.style.backgroundImage = `url("static/flags/${teamNamePurpleTemp}.png")`
-		} else {
-			teamPurpleFlag.style.backgroundImage = null
-		}
+		if (teamNamePurpleTemp !== "") teamPurpleFlag.style.backgroundImage = `url("static/flags/${teamNamePurpleTemp}.png")`
+		else teamPurpleFlag.style.backgroundImage = null
 	}
 	if (numOfClients !== data.tourney.ipcClients.length) numOfClients = data.tourney.ipcClients.length
 	if (ipcState !== data.tourney.manager.ipcState) {
@@ -548,32 +544,81 @@ function starToggleOnOff(toggle) {
 }
 
 function toPickScreenView() {
+	// Changing Background Image
 	topSection.style.backgroundImage = "url('static/mappoolView.png')"
+	// Gameplay Greenscreen 
 	gameplaySection.style.left = "-1920px"
+	// Round Text
 	roundText.style.opacity = 0
+	// Now Playing Container
 	nowPlayingContainer.style.bottom = "-135px"
 	for (var i = 0; i < mapStatsTop.length; i++) mapStatsTop[i].style.top = "237px"
 	for (var i = 0; i < mapStatsBot.length; i++) mapStatsBot[i].style.top = "256px"
+	// Stars
 	for (var i = 0; i < blueStars.length; i++) {
 		blueStars[i].style.top = "-25px"
 		blueStars[i].style.left = `${615 - (i * 55)}px`
 		purpleStars[i].style.top = "-25px"
 		purpleStars[i].style.right = `${615 - (i * 55)}px`	
 	}
+	// Team Names
+	for (var i = 0; i < teamNames.length; i++) {
+		teamNames[i].style.top = "310px"
+		teamNames[i].style.fontSize = "40px"
+		teamNames[i].style.width = "350px"
+	}
+	teamBlueName.style.transform = "translateX(-50%)"
+	teamBlueName.style.left = "185px"
+	teamBlueName.style.textShadow = "0px 0px 10px var(--blue75Opacity), 0px 0px 20px var(--blue75Opacity), 0px 0px 30px var(--blue75Opacity)"
+	teamPurpleName.style.transform = "translateX(50%)"
+	teamPurpleName.style.right = "185px"
+	teamPurpleName.style.textShadow = "0px 0px 10px var(--purple75Opacity), 0px 0px 20px var(--purple75Opacity), 0px 0px 30px var(--purple75Opacity)"
+	// Team Flags
+	for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "210px";
+	teamBlueFlag.style.top = "128px"
+	teamBlueFlag.style.left = "83px"
+	teamPurpleFlag.style.left = "1630px"
+	// Chat
+	chats.style.bottom = "45px"
+	chats.style.height = "145px"
 }
 function toGameplayView() {
+	// Changing Background Image
 	topSection.style.backgroundImage = "url('static/gameplayView.png')";
+	// Gameplay greenscreen
 	gameplaySection.style.left = 0;
+	// Round Text
 	roundText.style.opacity = 1;
+	// Now Playing Container
 	nowPlayingContainer.style.bottom = "15px";
 	for (var i = 0; i < mapStatsTop.length; i++) mapStatsTop[i].style.top = "87px"
 	for (var i = 0; i < mapStatsBot.length; i++) mapStatsBot[i].style.top = "106px"
+	// Stars
 	for (var i = 0; i < blueStars.length; i++) {
 		blueStars[i].style.top = "88px";
 		blueStars[i].style.left = `${740 - (i * 50)}px`;
 		purpleStars[i].style.top = "88px";
 		purpleStars[i].style.right = `${728 - (i * 50)}px`;
 	}
+	// Team Names
+	for (var i = 0; i < teamNames.length; i++) {
+		teamNames[i].style.top = "10px"
+		teamNames[i].style.width = "max-content"
+		teamNames[i].style.fontSize = "31px"
+		teamNames[i].style.transform = "translateX(0)"
+	}
+	teamBlueName.style.left = "170px"
+	teamPurpleName.style.right = "185px"
+	teamBlueName.style.textShadow = "0px 0px 0px #ffffff"
+	teamPurpleName.style.textShadow = "0px 0px 0px #ffffff"
+	// Team Flags
+	for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "90px";
+	teamBlueFlag.style.top = "10px"
+	teamBlueFlag.style.left = "50px"
+	teamPurpleFlag.style.left = "1785px"
+	// Chat
+	chats.style.bottom = "10px"
+	chats.style.height = "130px"
 }
 
 changeStars(null)
