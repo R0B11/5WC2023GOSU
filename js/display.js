@@ -52,12 +52,15 @@ let teamPurpleFlag = document.getElementById("teamPurpleFlag");
 let teamBlueFlag = document.getElementById("teamBlueFlag");
 
 // MAP STATS
+let nowPlayingContainer = document.getElementById("nowPlayingContainer");
 let mapStatsCS = document.getElementById("mapStatsCS");
 let mapStatsAR = document.getElementById("mapStatsAR");
 let mapStatsOD = document.getElementById("mapStatsOD");
 let mapStatsLEN = document.getElementById("mapStatsLEN");
 let mapStatsSR = document.getElementById("mapStatsSR");
 let mapStatsBPM = document.getElementById("mapStatsBPM");
+let mapStatsTop = document.getElementsByClassName("mapStatsTop");
+let mapStatsBot = document.getElementsByClassName("mapStatsBot")
 
 // TOP SECTION
 let topSection = document.getElementById("top");
@@ -547,6 +550,10 @@ function starToggleOnOff(toggle) {
 function toPickScreenView() {
 	topSection.style.backgroundImage = "url('static/mappoolView.png')"
 	gameplaySection.style.left = "-1920px"
+	roundText.style.opacity = 0
+	nowPlayingContainer.style.bottom = "-135px"
+	for (var i = 0; i < mapStatsTop.length; i++) mapStatsTop[i].style.top = "237px"
+	for (var i = 0; i < mapStatsBot.length; i++) mapStatsBot[i].style.top = "256px"
 	for (var i = 0; i < blueStars.length; i++) {
 		blueStars[i].style.top = "-25px"
 		blueStars[i].style.left = `${615 - (i * 55)}px`
@@ -557,6 +564,10 @@ function toPickScreenView() {
 function toGameplayView() {
 	topSection.style.backgroundImage = "url('static/gameplayView.png')";
 	gameplaySection.style.left = 0;
+	roundText.style.opacity = 1;
+	nowPlayingContainer.style.bottom = "15px";
+	for (var i = 0; i < mapStatsTop.length; i++) mapStatsTop[i].style.top = "87px"
+	for (var i = 0; i < mapStatsBot.length; i++) mapStatsBot[i].style.top = "106px"
 	for (var i = 0; i < blueStars.length; i++) {
 		blueStars[i].style.top = "88px";
 		blueStars[i].style.left = `${740 - (i * 50)}px`;
