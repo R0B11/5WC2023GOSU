@@ -14,6 +14,34 @@ let teamBlueName = document.getElementById("teamBlueName");
 let teamPurpleName = document.getElementById("teamPurpleName");
 let teamNames = document.getElementsByClassName("teamNames")
 
+// TEAM STATS
+let blueTeamStatsAimNum = document.getElementById("blueTeamStatsAimNum")
+let blueTeamStatsSpeedNum = document.getElementById("blueTeamStatsSpeedNum")
+let blueTeamStatsStaminaNum = document.getElementById("blueTeamStatsStaminaNum")
+let blueTeamStatsFingerControlNum = document.getElementById("blueTeamStatsFingerControlNum")
+let blueTeamStatsPrecisionNum = document.getElementById("blueTeamStatsPrecisionNum")
+let blueTeamStatsReadingNum = document.getElementById("blueTeamStatsReadingNum")
+let purpleTeamStatsAimNum = document.getElementById("purpleTeamStatsAimNum")
+let purpleTeamStatsSpeedNum = document.getElementById("purpleTeamStatsSpeedNum")
+let purpleTeamStatsStaminaNum = document.getElementById("purpleTeamStatsStaminaNum")
+let purpleTeamStatsFingerControlNum = document.getElementById("purpleTeamStatsFingerControlNum")
+let purpleTeamStatsPrecisionNum = document.getElementById("purpleTeamStatsPrecisionNum")
+let purpleTeamStatsReadingNum = document.getElementById("purpleTeamStatsReadingNum")
+
+// TEAM STATS BARS
+let blueTeamStatsAimBar = document.getElementById("blueTeamStatsAimBar")
+let blueTeamStatsSpeedBar = document.getElementById("blueTeamStatsSpeedBar")
+let blueTeamStatsStaminaBar = document.getElementById("blueTeamStatsStaminaBar")
+let blueTeamStatsFingerControlBar = document.getElementById("blueTeamStatsFingerControlBar")
+let blueTeamStatsPrecisionBar = document.getElementById("blueTeamStatsPrecisionBar")
+let blueTeamStatsReadingBar = document.getElementById("blueTeamStatsReadingBar")
+let purpleTeamStatsAimBar = document.getElementById("purpleTeamStatsAimBar")
+let purpleTeamStatsSpeedBar = document.getElementById("purpleTeamStatsSpeedBar")
+let purpleTeamStatsStaminaBar = document.getElementById("purpleTeamStatsStaminaBar")
+let purpleTeamStatsFingerControlBar = document.getElementById("purpleTeamStatsFingerControlBar")
+let purpleTeamStatsPrecisionBar = document.getElementById("purpleTeamStatsPrecisionBar")
+let purpleTeamStatsReadingBar = document.getElementById("purpleTeamStatsReadingBar")
+
 // MOVING SCORE BAR
 let movingScoreBars = document.getElementById("movingScoreBars");
 let movingScoreBarBlue = document.getElementById("movingScoreBarBlue");
@@ -106,6 +134,19 @@ let tempMapStatsLEN;
 let tempMapStatsSR;
 let tempMapStatsBPM;
 let foundMapFromMappool;
+
+let blueTeamStatsAim
+let blueTeamStatsSpeed
+let blueTeamStatsStamina
+let blueTeamStatsFingerControl
+let blueTeamStatsPrecision
+let blueTeamStatsReading
+let purpleTeamStatsAim
+let purpleTeamStatsSpeed
+let purpleTeamStatsStamina
+let purpleTeamStatsFingerControl
+let purpleTeamStatsPrecision
+let purpleTeamStatsReading
 
 let scoreBlueTemp = 0
 let scorePurpleTemp = 0
@@ -260,12 +301,54 @@ socket.onmessage = async event => {
 		teamBlueName.innerHTML = teamNameBlueTemp;
 		if (teamNameBlueTemp !== "") teamBlueFlag.style.backgroundImage = `url("static/flags/${teamNameBlueTemp}.png")`
 		else teamBlueFlag.style.backgroundImage = null
+
+		blueTeamStatsAim = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+		blueTeamStatsSpeed = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+		blueTeamStatsStamina = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+		blueTeamStatsFingerControl = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+		blueTeamStatsPrecision = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+		blueTeamStatsReading = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+
+		blueTeamStatsAimNum.innerText = blueTeamStatsAim
+		blueTeamStatsSpeedNum.innerText = blueTeamStatsSpeed 
+		blueTeamStatsStaminaNum.innerText = blueTeamStatsStamina
+		blueTeamStatsFingerControlNum.innerText = blueTeamStatsFingerControl 
+		blueTeamStatsPrecisionNum.innerText = blueTeamStatsPrecision 
+		blueTeamStatsReadingNum.innerText = blueTeamStatsReading
+
+		blueTeamStatsAimBar.style.width = `${(blueTeamStatsAim - 3) / 7 * 256}px`
+		blueTeamStatsSpeedBar.style.width = `${(blueTeamStatsSpeed - 3) / 7 * 256}px`
+		blueTeamStatsStaminaBar.style.width = `${(blueTeamStatsStamina - 3) / 7 * 256}px`
+		blueTeamStatsFingerControlBar.style.width = `${(blueTeamStatsFingerControl - 3) / 7 * 256}px`
+		blueTeamStatsPrecisionBar.style.width = `${(blueTeamStatsPrecision - 3) / 7 * 256}px`
+		blueTeamStatsReadingBar.style.width = `${(blueTeamStatsReading - 3) / 7 * 256}px`
 	}
 	if(teamNamePurpleTemp !== data.tourney.manager.teamName.right) {
 		teamNamePurpleTemp = data.tourney.manager.teamName.right;
 		teamPurpleName.innerHTML = teamNamePurpleTemp;
 		if (teamNamePurpleTemp !== "") teamPurpleFlag.style.backgroundImage = `url("static/flags/${teamNamePurpleTemp}.png")`
 		else teamPurpleFlag.style.backgroundImage = null
+
+		purpleTeamStatsAim = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+		purpleTeamStatsSpeed = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+		purpleTeamStatsStamina = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+		purpleTeamStatsFingerControl = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+		purpleTeamStatsPrecision = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+		purpleTeamStatsReading = Math.round((Math.random() * 7 + 3 + Number.EPSILON) * 10) / 10;
+
+		purpleTeamStatsAimNum.innerText = purpleTeamStatsAim
+		purpleTeamStatsSpeedNum.innerText = purpleTeamStatsSpeed 
+		purpleTeamStatsStaminaNum.innerText = purpleTeamStatsStamina
+		purpleTeamStatsFingerControlNum.innerText = purpleTeamStatsFingerControl 
+		purpleTeamStatsPrecisionNum.innerText = purpleTeamStatsPrecision 
+		purpleTeamStatsReadingNum.innerText = purpleTeamStatsReading
+
+		purpleTeamStatsAimBar.style.width = `${(purpleTeamStatsAim - 3) / 7 * 256}px`
+		purpleTeamStatsSpeedBar.style.width = `${(purpleTeamStatsSpeed - 3) / 7 * 256}px`
+		purpleTeamStatsStaminaBar.style.width = `${(purpleTeamStatsStamina - 3) / 7 * 256}px`
+		purpleTeamStatsFingerControlBar.style.width = `${(purpleTeamStatsFingerControl - 3) / 7 * 256}px`
+		purpleTeamStatsPrecisionBar.style.width = `${(purpleTeamStatsPrecision - 3) / 7 * 256}px`
+		purpleTeamStatsReadingBar.style.width = `${(purpleTeamStatsReading - 3) / 7 * 256}px`
 	}
 	if (numOfClients !== data.tourney.ipcClients.length) numOfClients = data.tourney.ipcClients.length
 	if (ipcState !== data.tourney.manager.ipcState) {

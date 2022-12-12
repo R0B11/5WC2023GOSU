@@ -1,8 +1,49 @@
+/* Sponsor */
+
 #mappoolSponsor {
-	position: absolute;
-	left: 50%; transform: translateX(-50%);
-	top: 20px;
+	position: absolute; left: 50%; transform: translateX(-50%); top: 20px;
 	z-index: 1;
 	opacity: 0;
 	transition: 750ms
+}
+
+/* Team Stats */
+#blueTeamStats { position: absolute; left: 60px; top: 600px; z-index: 0; }
+#purpleTeamStats { position: absolute; right: 60px; top: 600px; z-index: 0; }
+.teamStatsContainer  {
+    position: relative; top: 0px; left: 0px;
+    height: 50px; width: 260px;
+}
+.teamStatsLeftText {
+	position: absolute;
+    font-size: 19px;
+}
+.teamStatsRightText {
+    position: absolute;  right: 0px;
+    font-size: 19px;
+}
+.teamStatsBox {
+	position: absolute;
+    top: 20px;
+    left: -2px;
+    height: 20px;
+    width: 266px;
+    outline: 2px solid white;
+    outline-offset: -4px;
+}
+.teamStatsBar {
+    position: relative;
+    width: 0px; max-width: 256px; height: 9px;
+    top: 25.5px;
+    z-index: 1;
+    transition: width 1s;
+}
+.blueTeamStatsBar { 
+	background-color: var(--blue);
+	left: 3px;
+}
+.purpleTeamStatsBar { 
+	background-color: var(--purple);
+	right: 1px;
+	float: right;
 }
