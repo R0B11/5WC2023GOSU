@@ -1,113 +1,120 @@
 <!DOCTYPE html>
-        <html lang="en">
-        
-        <head>
-            <meta charset="UTF-8">
-            <link href="styles/display.css" rel="stylesheet" type="text/css" />
-
-            <script src="deps/countUp.js"></script>
-            <script src="deps/reconnecting-websocket.min.js"></script>
-        </head>
-        
-        <body>
-            <div id="main">
-                <div id="top">
-                    <div id="round">Round of 32</div>
-                    <div class="scores" id="scoreBlue"></div>
-                    <div class="teamFlags" id="teamBlueFlag"></div>
-                    <div class="teams" id="teamBlue">
-                        <div class="teamNames" id="teamBlueName"></div>  
-                    </div>
-                    <div class="teamFlags" id="teamPurpleFlag"></div>
-                    <div class="teams" id="teamPurple">
-                        <div class="teamNames" id="teamPurpleName"></div>
-                    </div>
-                    <div class="scores" id="scorePurple"></div>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <link href="styles/display.css" rel="stylesheet" type="text/css" />
+        <link href="styles/mappool.css" rel="stylesheet" type="text/css">
+        <script src="deps/countUp.js"></script>
+        <script src="deps/reconnecting-websocket.min.js"></script>
+    </head>
+    
+    <body>
+        <div id="main">
+            <div id="top">
+                <div id="round">Round of 32</div>
+                <div class="scores" id="scoreBlue"></div>
+                <div class="teamFlags" id="teamBlueFlag"></div>
+                <div class="teams" id="teamBlue">
+                    <div class="teamNames" id="teamBlueName"></div>  
                 </div>
-                <div id="gameplay"></div>
-                <div id="bottom">
-                    <div id="chats"></div>
-                    <div id="movingScoreBars">
-                        <div class="movingScoreBars" id="movingScoreBarBlue"></div>
-                        <div class="movingScoreBars" id="movingScoreBarPurple"></div>
-                    </div>
-                    <div class="playScores" id="playScoreBlue"></div>
-                    <div class="playScores" id="playScorePurple"></div>
-                    <div id="nowPlayingContainer">
-                        <img class="nowPlayingWrapperImage" id="nowPlayingWrapperImageNeutral" src="static/nowPlayingNeutral.png">
-                        <img class="nowPlayingWrapperImage" style="opacity: 0" id="nowPlayingWrapperImageBlue" src="static/nowPlayingteamBlue.png">
-                        <img class="nowPlayingWrapperImage" style="opacity: 0" id="nowPlayingWrapperImagePurple" src="static/nowPlayingteamPurple.png">
-                        <div id="mapContainer"></div>
-                        <div class="mapTitleWrapper" id="mapTitleWrapper"><div id="mapTitle"></div></div>
-                        <div class="mapTitleWrapper" id="mapTitleWrapper2">
-                            <div id="mapTitles">
-                                <span class="mapTitles" id="mapTitle1"></span>
-                                <span class="mapTitles" id="mapTitle2"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="mapStatsTop">
-                        <div class="mapStats mapStatsTop" id="mapStatsCS"></div>
-                        <div class="mapStats mapStatsTop" id="mapStatsOD"></div>
-                        <div class="mapStats mapStatsTop" id="mapStatsAR"></div>
-                        <div class="mapStats mapStatsTop" id="mapStatsLEN"></div>
-                    </div>
-                    <div id="mapStatsBot">
-                        <div class="mapStats mapStatsBot" id="mapStatsSR"></div>
-                        <div class="mapStats mapStatsBot" id="mapStatsBPM"></div>
-                    </div>
-                    <div id="sponsor">
-                        <video loop autoplay width="400" height="130" >
-                            <source src="static/sponsor.webm" type="video/webm">
-                        </video>
-                    </div>
+                <div class="teamFlags" id="teamPurpleFlag"></div>
+                <div class="teams" id="teamPurple">
+                    <div class="teamNames" id="teamPurpleName"></div>
                 </div>
-                <div id="panel">
-                    <section id="paneltitle">Control Panel</section>
-                    <section id="panelBreak"></section>
-                    <section id="nextActionText">Next Action:</section>
-                    <section id="nextAction"></section>
-                    <section id="pickScreenView">
-                        <button class="panelButton blueButton pickButton" onclick="changeAction('Blue Pick');">Blue Pick</button>
-                        <button class="panelButton purpleButton pickButton" onclick="changeAction('Purple Pick');">Purple Pick</button>
-                        <button class="panelButton blueButton banButton" onclick="changeAction('Blue Ban');">Blue Ban</button>
-                        <button class="panelButton purpleButton banButton" onclick="changeAction('Purple Ban');">Purple Ban</button>
-                        <button class="panelButton blueButton protectButton" onclick="changeAction('Blue Protect');">Blue Protect</button>
-                        <button class="panelButton purpleButton protectButton" onclick="changeAction('Purple Protect');">Purple Protect</button>
-                        <button class="panelButton resetButton resetPicks" onclick="reset('neutral');">Reset Picks</button>
-                        <button class="panelButton resetButton resetBans" onclick="reset('blue');">Reset Bans</button>
-                        <button class="panelButton resetButton resetProtects" onclick="reset('purple');">Reset Protects</button>
-                        <button class="panelButton roundButton ro32button" onclick="changeRound('Round of 32');">RO32</button>
-                        <button class="panelButton roundButton ro16button" onclick="changeRound('Round of 16');">RO16</button>
-                        <button class="panelButton roundButton qfbutton" onclick="changeRound('Quarterfinals');">QF</button>
-                        <button class="panelButton roundButton bottomRoundButton sfbutton" onclick="changeRound('Semifinals');">SF</button>
-                        <button class="panelButton roundButton bottomRoundButton fbutton" onclick="changeRound('Finals');">F</button>
-                        <button class="panelButton roundButton bottomRoundButton gfbutton" onclick="changeRound('Grand Finals');">GF</button>
-                        
-                        <!-- Maybe someway to add the list of maps here idk so we can actually
-                        chose what get protect/banned/picked-->
-                    </section>
-                    <section id="navigation">
-                        <button class="panelButton viewButton pickView" onclick="toPickScreenView();">Pick Screen View</button>
-                        <button class="panelButton viewButton gameView" onclick="toGameplayView();">Game View</button>
-                    </section>
-                    <section class="rightHandSide" id="starControl">
-                        Stars:<br>
-                        <div id="blueStarControl">Blue Stars:</div>
-                        <button class="panelButton largeTextButton greenButton" id="blueStarControlPlus" onclick="changeScore('blue','add')">+</button>
-                        <button class="panelButton largeTextButton redButton" id="blueStarControlSubtract" onclick="changeScore('blue','remove')">-</button>
-                        <div class="rightHandSide" id="purpleStarControl">Purple Stars:</div>
-                        <button class="panelButton largeTextButton greenButton" id="purpleStarControlPlus" onclick="changeScore('purple','add')">+</button>
-                        <button class="panelButton largeTextButton redButton" id="purpleStarControlSubtract" onclick="changeScore('purple','remove')">-</button>
-                        <div class="rightHandSide" id="starToggleText">Stars are currently:</div>
-                        <button class="panelButton resetButton starToggle" id="starToggle" onclick="starToggleOnOff('turnOff');">ON</button>
-                    </section>
+                <div class="scores" id="scorePurple"></div>
+            </div>
+            <div id="gameplay"></div>
+            <div id="mappool">
+                <div id="mappoolSponsor">
+                    <video loop autoplay width="400" height="130" >
+                        <source src="static/sponsor.webm" type="video/webm">
+                    </video>
                 </div>
             </div>
-            
-            <script src="js/loadMaps.js"></script>
-            <script src="js/display.js"></script>
-            <script src="js/particles/particles.js"></script>
-            <script src="js/particles/appMain.js"></script>
-        </body>    
-    </html>
+            <div id="bottom">
+                <div id="chats"></div>
+                <div id="movingScoreBars">
+                    <div class="movingScoreBars" id="movingScoreBarBlue"></div>
+                    <div class="movingScoreBars" id="movingScoreBarPurple"></div>
+                </div>
+                <div class="playScores" id="playScoreBlue"></div>
+                <div class="playScores" id="playScorePurple"></div>
+                <div id="nowPlayingContainer">
+                    <img class="nowPlayingWrapperImage" id="nowPlayingWrapperImageNeutral" src="static/nowPlayingNeutral.png">
+                    <img class="nowPlayingWrapperImage" style="opacity: 0" id="nowPlayingWrapperImageBlue" src="static/nowPlayingteamBlue.png">
+                    <img class="nowPlayingWrapperImage" style="opacity: 0" id="nowPlayingWrapperImagePurple" src="static/nowPlayingteamPurple.png">
+                    <div id="mapContainer"></div>
+                    <div class="mapTitleWrapper" id="mapTitleWrapper"><div id="mapTitle"></div></div>
+                    <div class="mapTitleWrapper" id="mapTitleWrapper2">
+                        <div id="mapTitles">
+                            <span class="mapTitles" id="mapTitle1"></span>
+                            <span class="mapTitles" id="mapTitle2"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="mapStatsTop">
+                    <div class="mapStats mapStatsTop" id="mapStatsCS"></div>
+                    <div class="mapStats mapStatsTop" id="mapStatsOD"></div>
+                    <div class="mapStats mapStatsTop" id="mapStatsAR"></div>
+                    <div class="mapStats mapStatsTop" id="mapStatsLEN"></div>
+                </div>
+                <div id="mapStatsBot">
+                    <div class="mapStats mapStatsBot" id="mapStatsSR"></div>
+                    <div class="mapStats mapStatsBot" id="mapStatsBPM"></div>
+                </div>
+                <div id="sponsor">
+                    <video loop autoplay width="400" height="130" >
+                        <source src="static/sponsor.webm" type="video/webm">
+                    </video>
+                </div>
+            </div>
+            <div id="panel">
+                <section id="paneltitle">Control Panel</section>
+                <section id="panelBreak"></section>
+                <section id="nextActionText">Next Action:</section>
+                <section id="nextAction"></section>
+                <section id="pickScreenView">
+                    <button class="panelButton blueButton pickButton" onclick="changeAction('Blue Pick');">Blue Pick</button>
+                    <button class="panelButton purpleButton pickButton" onclick="changeAction('Purple Pick');">Purple Pick</button>
+                    <button class="panelButton blueButton banButton" onclick="changeAction('Blue Ban');">Blue Ban</button>
+                    <button class="panelButton purpleButton banButton" onclick="changeAction('Purple Ban');">Purple Ban</button>
+                    <button class="panelButton blueButton protectButton" onclick="changeAction('Blue Protect');">Blue Protect</button>
+                    <button class="panelButton purpleButton protectButton" onclick="changeAction('Purple Protect');">Purple Protect</button>
+                    <button class="panelButton resetButton resetPicks" onclick="reset('neutral');">Reset Picks</button>
+                    <button class="panelButton resetButton resetBans" onclick="reset('blue');">Reset Bans</button>
+                    <button class="panelButton resetButton resetProtects" onclick="reset('purple');">Reset Protects</button>
+                    <button class="panelButton roundButton ro32button" onclick="changeRound('Round of 32');">RO32</button>
+                    <button class="panelButton roundButton ro16button" onclick="changeRound('Round of 16');">RO16</button>
+                    <button class="panelButton roundButton qfbutton" onclick="changeRound('Quarterfinals');">QF</button>
+                    <button class="panelButton roundButton bottomRoundButton sfbutton" onclick="changeRound('Semifinals');">SF</button>
+                    <button class="panelButton roundButton bottomRoundButton fbutton" onclick="changeRound('Finals');">F</button>
+                    <button class="panelButton roundButton bottomRoundButton gfbutton" onclick="changeRound('Grand Finals');">GF</button>
+                    
+                    <!-- Maybe someway to add the list of maps here idk so we can actually
+                    chose what get protect/banned/picked-->
+                </section>
+                <section id="navigation">
+                    <button class="panelButton viewButton pickView" onclick="toPickScreenView();">Pick Screen View</button>
+                    <button class="panelButton viewButton gameView" onclick="toGameplayView();">Game View</button>
+                </section>
+                <section class="rightHandSide" id="starControl">
+                    Stars:<br>
+                    <div id="blueStarControl">Blue Stars:</div>
+                    <button class="panelButton largeTextButton greenButton" id="blueStarControlPlus" onclick="changeScore('blue','add')">+</button>
+                    <button class="panelButton largeTextButton redButton" id="blueStarControlSubtract" onclick="changeScore('blue','remove')">-</button>
+                    <div class="rightHandSide" id="purpleStarControl">Purple Stars:</div>
+                    <button class="panelButton largeTextButton greenButton" id="purpleStarControlPlus" onclick="changeScore('purple','add')">+</button>
+                    <button class="panelButton largeTextButton redButton" id="purpleStarControlSubtract" onclick="changeScore('purple','remove')">-</button>
+                    <div class="rightHandSide" id="starToggleText">Stars are currently:</div>
+                    <button class="panelButton resetButton starToggle" id="starToggle" onclick="starToggleOnOff('turnOff');">ON</button>
+                </section>
+            </div>
+        </div>
+        
+        <script src="js/loadMaps.js"></script>
+        <script src="js/display.js"></script>
+        <script src="js/particles/particles.js"></script>
+        <script src="js/particles/appMain.js"></script>
+    </body>    
+</html>

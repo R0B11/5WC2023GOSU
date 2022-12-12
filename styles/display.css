@@ -56,7 +56,7 @@ body,html{
 	background-size: cover;
 	width: 1920px; height: 1080px;
 	background-repeat: no-repeat;
-	transition: ease-in-out 500ms;
+	transition: ease-in-out 750ms;
 	z-index: 0;
 }
 #round {
@@ -291,7 +291,7 @@ body,html{
 	position: absolute;
 	top: 30px;
 	color: white;
-    transition: ease-in-out 500ms;
+    transition: ease-in-out 750ms;
 }
 #teamBlue {
 	left: 0;
@@ -322,7 +322,7 @@ body,html{
 	font-family: Round-Control, monospace;
 	font-size: 40px;
 	display: block;
-    transition: ease-in-out 500ms;
+    transition: ease-in-out 750ms;
 	width: 300px;
 }
 #playScoreBlue {
@@ -636,9 +636,10 @@ body,html{
 /* ~~~~~~~~~~~~~~~~~~~ SPONSOR ~~~~~~~~~~~~~~~~~~~~~ */
 
 #sponsor {
-	position: relative;
+	position: absolute;
 	left: 1540px;
 	top: 80px;
+	transition: 750ms;
 }
 
 /* Scrollbar Related Things - Taken from https://github.com/VictimCrasher/static/tree/master/WaveTournament */

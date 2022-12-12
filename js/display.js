@@ -69,6 +69,10 @@ let mapStatsBot = document.getElementsByClassName("mapStatsBot")
 let topSection = document.getElementById("top");
 let gameplaySection = document.getElementById("gameplay");
 
+// SPONSORS
+let sponsor = document.getElementById("sponsor")
+let mappoolSponsor = document.getElementById("mappoolSponsor")
+
 socket.onopen = () => {
     console.log("Successfully Connected");
 };
@@ -581,6 +585,9 @@ function toPickScreenView() {
 	// Chat
 	chats.style.bottom = "45px"
 	chats.style.height = "145px"
+	// Sponsors
+	sponsor.style.opacity = 0;
+	mappoolSponsor.style.opacity = 1;
 }
 function toGameplayView() {
 	// Changing Background Image
@@ -619,6 +626,9 @@ function toGameplayView() {
 	// Chat
 	chats.style.bottom = "10px"
 	chats.style.height = "130px"
+	// Sponsors
+	sponsor.style.opacity = 1;
+	mappoolSponsor.style.opacity = 0;
 }
 
 changeStars(null)

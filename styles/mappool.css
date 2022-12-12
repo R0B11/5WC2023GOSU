@@ -1,0 +1,8 @@
+#mappoolSponsor {
+	position: absolute;
+	left: 50%; transform: translateX(-50%);
+	top: 20px;
+	z-index: 1;
+	opacity: 0;
+	transition: 750ms
+}
