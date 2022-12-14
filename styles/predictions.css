@@ -1,0 +1,47 @@
+:root {
+	--purple: #936bf7;
+	--purple75Opacity: #936bf77F;
+	--blue: #75c6ea;
+	--blue75Opacity: #75c7ea7F;
+	--green: #6ACE0C;
+	--red: #FF4141;
+	--darkGreen: #1F9B29;
+}
+
+@font-face {
+    font-family: "Round-Control";
+    src: url("../fonts/RoundControl-Regular.otf") format("opentype");
+}
+@font-face {
+	font-family: "Coolvetica";
+	src: url("../fonts/Coolvetica-Regular.otf") format("opentype");
+}
+@font-face {
+	font-family: "RenogareSoft-Regular";
+	src: url("../fonts/RenogareSoft-Regular.ttf") format("opentype");
+}
+
+body,html{
+    padding: 0;
+    margin: 0;
+    overflow-y: hidden;
+}
+
+#main{
+    font-size: 30px;
+    font-family: Round-Control;
+    font-weight: normal;
+    color: white;
+	background-color: #000210;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+}
+
+#tierList{
+    position: absolute;
+    right: 100px;
+    bottom: 100px;
+    width: 500px;
+    height: 500px;
+}
