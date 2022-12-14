@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Team Stats Maker</title>
+
+        <link rel="stylesheet" href="styles/teamStatsMaker.css">
+    </head>
+    <body>
+        <div id="teamStatsMaker">
+            What to put into the team stats maker. Separate each stats with a //. <br><br>
+            Please input them like so: Country // Aim Stat // Speed Stat // Stamina Stat // Finger Control Stat // Precision Stat // Reading Stat // Tech Stat // Captain // Player 2 // Player 3 // Player 4 // Player 5 // Player 6 // (Player 7) // (Player 8)<br><br>
+            Players 7 and 8 are optional<br>
+            Separate all entries by new line<br><br>
+            <textarea rows="7" cols = "60" id="teamStatsTextArea"></textarea><br><br>
+            <button id="teamStatsMakerButton" onclick="teamStatsMaker()">Make JSON File</button>
+        </div>
+
+        <script src="js/teamStatsMaker.js"></script>
+    </body>
+</html>
