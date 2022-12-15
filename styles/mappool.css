@@ -8,20 +8,21 @@
 }
 
 /* Team Stats */
-#blueTeamStats { position: absolute; left: 60px; top: 600px; z-index: 0; }
-#purpleTeamStats { position: absolute; right: 60px; top: 600px; z-index: 0; }
+.teamStatsTeamsContainer {
+    position: absolute; top: 580px;
+    z-index: 0;
+}
+#blueTeamStats { left: 60px; }
+#purpleTeamStats { right: 60px; }
 .teamStatsContainer  {
     position: relative; top: 0px; left: 0px;
-    height: 50px; width: 260px;
+    height: 47px; width: 260px;
 }
-.teamStatsLeftText {
+.teamStatsText {
 	position: absolute;
     font-size: 19px;
 }
-.teamStatsRightText {
-    position: absolute;  right: 0px;
-    font-size: 19px;
-}
+.teamStatsRightText { right: 0px; }
 .teamStatsBox {
 	position: absolute;
     top: 20px;
@@ -33,8 +34,8 @@
 }
 .teamStatsBar {
     position: relative;
-    width: 0px; max-width: 256px; height: 9px;
-    top: 25.5px;
+    width: 0px; max-width: 256px; height: 10px;
+    top: 25px;
     z-index: 1;
     transition: width 1s;
 }
@@ -47,3 +48,13 @@
 	right: 1px;
 	float: right;
 }
+
+.teamSeedContainer {
+    position: absolute; top: 455px; 
+    font-size: 40px;
+    width: 300px;
+    text-align: center;
+    text-shadow: 0 0 0 rgba(0,0,0,0)
+}
+#blueTeamSeed { left: 40px; }
+#purpleTeamSeed { right: 40px; }

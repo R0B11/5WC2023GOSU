@@ -1,5 +1,6 @@
 let modsLoadMappoolView
 let beatmapsLoadMappoolView
+let teamStatsView
 let allBeatmaps = []
 let allBeatmapsDisplay
 
@@ -29,6 +30,17 @@ function loadMaps() {
             configureMaps(modsLoadMappoolView, beatmapsLoadMappoolView);
         }
         beatmapRequest.send();
+
+        var teamStatsRequest = new XMLHttpRequest();
+        teamStatsRequest.open("GET", "http://localhost:24050/5WC2023GOSU/data/teamStats.json", false)
+        teamStatsRequest.onload = function() {
+            if (this.stats == 404) {
+                console.log("Team Stats Data Not Found")
+                return;
+            }
+            teamStatsView = JSON.parse(this.responseText)
+        }
+        teamStatsRequest.send()
     })
     return;
 }
@@ -53,6 +65,7 @@ function configureMaps(mods, beatmaps) {
 
 // GET BEATMAPS
 var getAllBeatmaps = () => allBeatmapsDisplay
+var getAllTeams = () => teamStatsView
 
 // Sourced From https://medium.com/@ziyoshams/deep-copying-javascript-arrays-4d5fc45a6e3e
 const deepCopy = (arr) => {

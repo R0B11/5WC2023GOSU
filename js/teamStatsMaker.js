@@ -5,40 +5,49 @@ let teamStatsMakerButton = document.getElementById("teamStatsMakerButton")
 function teamStatsMaker() {
     let teamStatsTeamSplit = teamStatsTextArea.value.split("\n")
     let hasInformation = false;
-    let error = false;
-    let errorMessage = "";
-    let arrayOfTeams = [];
+    let error = false
+    let errorMessage = ""
+    let arrayOfTeams = []
 
     for (var i = 0; i < teamStatsTeamSplit.length; i++) {
         if (teamStatsTeamSplit[i].trim() == "") continue
         hasInformation = true;
         let teamStatsItemSplit = teamStatsTeamSplit[i].split("//")
+        let teamStatItemSplitOriginal = teamStatsTeamSplit[i].split("//")
         for (var j = 0; j < teamStatsItemSplit.length; j++) teamStatsItemSplit[j] = teamStatsItemSplit[j].trim()
-        for (var j = 1; j <= 7; j++) teamStatsItemSplit[j] = Math.round((parseFloat(teamStatsItemSplit[j]) + Number.EPSILON) * 10) / 10
-        if (teamStatsItemSplit.length < 14) {
+        for (var j = 2; j <= 8; j++) teamStatsItemSplit[j] = Math.round((parseFloat(teamStatsItemSplit[j]) + Number.EPSILON) * 10) / 10
+        for (var j = 1; j <= 8; j++) {
+            if (!teamStatItemSplitOriginal[j]) continue;
+            if (isNaN(teamStatsItemSplit[j])) {
+                errorMessage += `Item ${j + 1} for Country ${teamStatsItemSplit[0]} is not being counted as a number.\n`
+                error = true
+            }
+        }
+        if (teamStatsItemSplit.length < 15) {
             errorMessage += `You are missing some key information for team: ${teamStatsItemSplit[0]}.\n`
             error = true
         }
 
         let teamStatsObj = {
             countryName: teamStatsItemSplit[0],
-            aim: teamStatsItemSplit[1],
-            speed: teamStatsItemSplit[2],
-            stamina: teamStatsItemSplit[3],
-            fingerControl: teamStatsItemSplit[4],
-            precision: teamStatsItemSplit[5],
-            reading: teamStatsItemSplit[6],
-            tech: teamStatsItemSplit[7],
-            captain: teamStatsItemSplit[8],
-            player2: teamStatsItemSplit[9],
-            player3: teamStatsItemSplit[10],
-            player4: teamStatsItemSplit[11],
-            player5: teamStatsItemSplit[12],
-            player6: teamStatsItemSplit[13]
+            seed: teamStatsItemSplit[1],
+            aim: teamStatsItemSplit[2],
+            speed: teamStatsItemSplit[3],
+            stamina: teamStatsItemSplit[4],
+            fingerControl: teamStatsItemSplit[5],
+            precision: teamStatsItemSplit[6],
+            reading: teamStatsItemSplit[7],
+            tech: teamStatsItemSplit[8],
+            captain: teamStatsItemSplit[9],
+            player2: teamStatsItemSplit[10],
+            player3: teamStatsItemSplit[11],
+            player4: teamStatsItemSplit[12],
+            player5: teamStatsItemSplit[13],
+            player6: teamStatsItemSplit[14]
         }
 
-        if (typeof teamStatsItemSplit[14] !== undefined) teamStatsObj.player7 = teamStatsItemSplit[14]
-        if (typeof teamStatsItemSplit[15] !== undefined) teamStatsObj.player8 = teamStatsItemSplit[15]
+        if (typeof teamStatsItemSplit[15] !== undefined) teamStatsObj.player7 = teamStatsItemSplit[15]
+        if (typeof teamStatsItemSplit[16] !== undefined) teamStatsObj.player8 = teamStatsItemSplit[16]
 
         arrayOfTeams.push(teamStatsObj)
     }
@@ -62,4 +71,6 @@ function teamStatsMaker() {
     teamStatsMakerDiv.append(document.createElement("br"))
     teamStatsMakerDiv.append(document.createElement("br"))
     teamStatsMakerDiv.append(confirmLink)
+
+    download.click()
 }
