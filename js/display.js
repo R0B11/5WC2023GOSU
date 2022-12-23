@@ -101,6 +101,11 @@ let mapStatsBPM = document.getElementById("mapStatsBPM");
 let mapStatsTop = document.getElementsByClassName("mapStatsTop");
 let mapStatsBot = document.getElementsByClassName("mapStatsBot")
 
+// MAP PICKS
+let mapPickCardsBlue = document.getElementById("mapPickCardsBlue");
+let mapPickCardsPurple = document.getElementById("mapPickCardsPurple");
+let mapChoices = document.getElementById("mapChoices")
+
 // TOP SECTION
 let topSection = document.getElementById("top");
 let gameplaySection = document.getElementById("gameplay");
@@ -127,6 +132,7 @@ socket.onerror = error => {
     console.log("Socket Error: ", error);
 };
 
+let previousBestOfTemp = 0;
 let bestOfTemp = 5;
 let scoreVisibleTemp;
 let starsVisibleTemp;
@@ -177,7 +183,17 @@ let tempClass = 'unknown';
 
 let nextAction = document.getElementById("nextAction");
 let roundText = document.getElementById("round");
+let allMaps = getAllBeatmaps();
 let allTeams = getAllTeams();
+
+console.log(allMaps)
+for (var i = 0; i < allMaps.length; i++) {
+	for (var j = 0; j < allMaps[i].length; j++) {
+		let mapChoicesButton = document.createElement("button")
+		mapChoicesButton.innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+		mapChoices.append(mapChoicesButton)
+	}
+}
 
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
@@ -255,39 +271,30 @@ socket.onmessage = async event => {
 
 		// MAP STATS
 		foundMapFromMappool = false;
-		let getMaps = new Promise((resolve, reject) => {
-			let allMaps = getAllBeatmaps();
-			console.log(allMaps);
-			resolve(allMaps); 
-		})
+		for (var i = 0; i < allMaps.length; i++) {
+			for (var j = 0; j < allMaps[i].length; j++) {
+					if (allMaps[i][j].beatmapID == data.menu.bm.id) {
+						currentMap = allMaps[i][j];
+						foundMapFromMappool = true;
 
-		getMaps.then((allMaps => {
-			
-			for (var i = 0; i < allMaps.length; i++) {
-				for (var j = 0; j < allMaps[i].length; j++) {
-						if (allMaps[i][j].beatmapID == data.menu.bm.id) {
-							currentMap = allMaps[i][j];
-							foundMapFromMappool = true;
-	
-							tempMapStatsCS = Math.round((parseFloat(currentMap.cs) + Number.EPSILON) * 10) / 10
-							tempMapStatsAR = Math.round((parseFloat(currentMap.ar) + Number.EPSILON) * 10) / 10
-							tempMapStatsOD = Math.round((parseFloat(currentMap.od) + Number.EPSILON) * 10) / 10
-							tempMapStatsBPM = parseFloat(currentMap.bpm)
-							tempMapStatsLEN = parseFloat(currentMap.songLength)
-							tempMapStatsSR = Math.round((parseFloat(currentMap.difficultyrating) + Number.EPSILON) * 100) / 100
+						tempMapStatsCS = Math.round((parseFloat(currentMap.cs) + Number.EPSILON) * 10) / 10
+						tempMapStatsAR = Math.round((parseFloat(currentMap.ar) + Number.EPSILON) * 10) / 10
+						tempMapStatsOD = Math.round((parseFloat(currentMap.od) + Number.EPSILON) * 10) / 10
+						tempMapStatsBPM = parseFloat(currentMap.bpm)
+						tempMapStatsLEN = parseFloat(currentMap.songLength)
+						tempMapStatsSR = Math.round((parseFloat(currentMap.difficultyrating) + Number.EPSILON) * 100) / 100
 
-							mapStatsCS.innerText = tempMapStatsCS;
-							mapStatsBPM.innerText = tempMapStatsBPM;
-							mapStatsAR.innerText = tempMapStatsAR;
-							mapStatsOD.innerText = tempMapStatsOD;
-							mapStatsLEN.innerText = `${(Math.floor(tempMapStatsLEN / 60))}:${("0" + Math.floor(tempMapStatsLEN % 60)).slice(-2)}`
-							mapStatsSR.innerText = tempMapStatsSR;
-						}
-						if (foundMapFromMappool) break;
-				}
-				if (foundMapFromMappool) break;
+						mapStatsCS.innerText = tempMapStatsCS;
+						mapStatsBPM.innerText = tempMapStatsBPM;
+						mapStatsAR.innerText = tempMapStatsAR;
+						mapStatsOD.innerText = tempMapStatsOD;
+						mapStatsLEN.innerText = `${(Math.floor(tempMapStatsLEN / 60))}:${("0" + Math.floor(tempMapStatsLEN % 60)).slice(-2)}`
+						mapStatsSR.innerText = tempMapStatsSR;
+					}
+					if (foundMapFromMappool) break;
 			}
-		}))
+			if (foundMapFromMappool) break;
+		}
 	}
 	if (!foundMapFromMappool) {
 		if (tempMapStatsCS !== data.menu.bm.stats.CS) mapStatsCS.innerText = data.menu.bm.stats.CS
@@ -378,7 +385,6 @@ socket.onmessage = async event => {
 				purpleTeamStatsPrecision = parseFloat(allTeams[i].precision)
 				purpleTeamStatsReading = parseFloat(allTeams[i].reading)
 				purpleTeamStatsTech = parseFloat(allTeams[i].tech)
-				
 			}
 		}
 
@@ -554,7 +560,7 @@ socket.onmessage = async event => {
 
 }
 
-function changeAction(actionText) { nextAction.innerText = actionText; }
+const changeAction = (actionText) => nextAction.innerText = actionText
 function changeRound(round) {
 	// Changing Round Text
 	roundText.innerText = round;
@@ -566,6 +572,29 @@ function changeRound(round) {
 
 	// Changing Stars
 	changeStars(null);
+
+	// Changing Number of Cards
+	let noOfBlueCards = mapPickCardsBlue.childElementCount
+	let noOfPurpleCards = mapPickCardsPurple.childElementCount
+
+	console.log(bestOfTemp, noOfBlueCards, noOfPurpleCards)
+
+	if (noOfBlueCards < bestOfTemp) {
+		for (var i = noOfBlueCards; i < bestOfTemp; i++) {
+			let pickCard = document.createElement("div")
+			pickCard.setAttribute("class","mappoolCard pickCard")
+			pickCard.style.left = `${160 * i}px`
+			mapPickCardsBlue.append(pickCard)
+		}
+	}
+	if (noOfPurpleCards < bestOfTemp) {
+		for (var i = noOfPurpleCards; i < bestOfTemp; i++) {
+			let pickCard = document.createElement("div")
+			pickCard.setAttribute("class","mappoolCard pickCard")
+			pickCard.style.right = `${(160 * i) - 120}px`
+			mapPickCardsPurple.append(pickCard)
+		}
+	}
 }
 function changeScore(side, scoreEvent) {
 	let animation = true;

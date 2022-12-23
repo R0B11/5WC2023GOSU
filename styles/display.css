@@ -588,6 +588,23 @@ body,html{
 #purpleStarControlSubtract { top: 210px; }
 .starToggle { top: 355px; }
 
+/* Map Choices*/
+#mapChoices {
+    position: absolute;
+    top: 450px;
+}
+#mapChoices h2 {
+	font-family: RenogareSoft-Regular; font-size: 20px;
+	text-shadow: 0px 0px 0px rgba(0,0,0,0);
+}
+#mapChoices button {
+	background-color: white;
+	height: 40px; width: 80px;
+	font-family: RenogareSoft-Regular; 
+	font-size: medium;
+	margin: 2px 3px;
+	border-radius: 10px;
+}
 
 /* CHAT DISPLAY */
 #chats {
