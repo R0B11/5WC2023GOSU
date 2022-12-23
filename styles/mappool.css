@@ -58,3 +58,60 @@
 }
 #blueTeamSeed { left: 40px; }
 #purpleTeamSeed { right: 40px; }
+
+#teamNamesBlue {
+    display: flex;
+    position: absolute; top: 930px; left: 60px;
+    width: 370px;
+    flex-wrap: wrap;
+}
+#teamNameBluePlayer1 {
+    z-index: 0;
+    font-size: 16px;
+    width: 180px;
+}
+
+/* Cards */
+#mapPickCardsBlue { position: absolute; left: 420px; top: 120px; }
+#mapPickCardsPurple { position: absolute; right: 540px; top: 350px; }
+.mappoolCard {
+    height: 155px;
+    width: 110px;
+    border-radius: 10px;
+    position: absolute;
+    border: 5px solid;
+}
+#pickCardBlue2 { left: 160px; }
+#pickCardBlue3 { left: 320px; }
+#pickCardBlue4 { left: 480px; }
+#pickCardBlue5 { left: 640px; }
+#pickCardBlue6 { left: 800px; }
+#pickCardBlue7 { left: 960px; }
+#pickCardPurple2 { right: 40px; }
+#pickCardPurple3 { right: 200px; }
+#pickCardPurple4 { right: 360px; }
+#pickCardPurple5 { right: 520px; }
+#pickCardPurple6 { right: 680px; }
+#pickCardPurple7 { right: 840px; }
+.pickCard { border-color: white; }
+.protectCard {
+    border-color: rgb(93,244,146);
+    top: 680px;
+}
+#protectCardBlue { left: 420px; }
+#protectCardPurple { right: 420px; }
+.banCard {
+    border-color: rgb(246,91,91);
+    top: 873px;
+}
+#banCardBlue1 { left: 420px; }
+#banCardBlue2 { left: 580px; }
+#banCardPurple1 { right: 420px; }
+#banCardPurple2 { right: 580px; }
+.banCardText {
+    width: 110px;
+    text-align: center;
+    color: rgb(246,91,91);
+    font-size: 38px;
+    position: absolute; bottom: 5px;
+}
