@@ -117,6 +117,10 @@ let mappoolSponsor = document.getElementById("mappoolSponsor")
 // Protects, Bans, and Picks
 let protectCardBlue = document.querySelector("#protectCardBlue")
 let protectCardPurple = document.querySelector("#protectCardPurple")
+let protectCardBlueText = document.querySelector("#protectCardBlueText")
+let protectCardPurpleText = document.querySelector("#protectCardPurpleText")
+let protectCardBlueID
+let protectCardPurpleID
 let banCard = document.getElementsByClassName("banCard")
 let banCards = document.querySelector("#banCards")
 
@@ -200,7 +204,6 @@ let blueProtectNum  = 0
 let purpleProtectNum = 0
 let banNum = 0
 
-console.log(allMaps)
 for (var i = 0; i < allMaps.length; i++) {
 	for (var j = 0; j < allMaps[i].length; j++) {
 		let mapChoicesButton = document.createElement("button")
@@ -240,14 +243,12 @@ socket.onmessage = async event => {
 				blueStars[i].style.opacity = 1;
 				purpleStars[i].style.opacity = 1
 				await new Promise(r => setTimeout(r, 500));
-				console.log(starsVisibleTemp)
 			}
 		} else {
 			for (var i = blueStars.length - 1; i >= 0; i--) {
 				blueStars[i].style.opacity = 0;
 				purpleStars[i].style.opacity = 0;
 				await new Promise(r => setTimeout(r, 500));
-				console.log(starsVisibleTemp)
 			}
 			scorePurple.style.display = "none";
 			scoreBlue.style.display = "none";
@@ -618,8 +619,6 @@ function changeRound(round) {
 	let noOfBlueCards = mapPickCardsBlue.childElementCount
 	let noOfPurpleCards = mapPickCardsPurple.childElementCount
 
-	console.log(bestOfTemp, noOfBlueCards, noOfPurpleCards)
-
 	if (noOfBlueCards < bestOfTemp) {
 		for (var i = noOfBlueCards; i < bestOfTemp; i++) {
 			let pickCard = document.createElement("div")
@@ -627,7 +626,7 @@ function changeRound(round) {
 			pickCard.style.left = `${160 * i}px`
 
 			let pickCardOverlay = document.createElement("div")
-			pickCardOverlay.classList.add("pickCardOverlay")
+			pickCardOverlay.classList.add("mappoolCardOverlay")
 			let pickCardText = document.createElement("div")
 			pickCardText.classList.add("pickCardText")
 
@@ -635,7 +634,7 @@ function changeRound(round) {
 			pickCard.append(pickCardText)
 			mapPickCardsBlue.append(pickCard)
 		}
-	}
+	} else if (bestOfTemp < noOfBlueCards) for (var i = noOfBlueCards; i > bestOfTemp; i--) mapPickCardsBlue.removeChild(mapPickCardsBlue.lastElementChild)
 	if (noOfPurpleCards < bestOfTemp) {
 		for (var i = noOfPurpleCards; i < bestOfTemp; i++) {
 			let pickCard = document.createElement("div")
@@ -643,7 +642,7 @@ function changeRound(round) {
 			pickCard.style.right = `${(160 * i) - 120}px`
 
 			let pickCardOverlay = document.createElement("div")
-			pickCardOverlay.classList.add("pickCardOverlay")
+			pickCardOverlay.classList.add("mappoolCardOverlay")
 			let pickCardText = document.createElement("div")
 			pickCardText.classList.add("pickCardText")
 
@@ -651,7 +650,7 @@ function changeRound(round) {
 			pickCard.append(pickCardText)
 			mapPickCardsPurple.append(pickCard)
 		}
-	}
+	} else if (bestOfTemp < noOfPurpleCards) for (var i = noOfPurpleCards; i > bestOfTemp; i--) mapPickCardsPurple.removeChild(mapPickCardsPurple.lastElementChild)
 }
 function changeScore(side, scoreEvent) {
 	let animation = true;
@@ -872,13 +871,51 @@ changeStars(null)
 
 // When clicking on a map in the side panel
 function mapClickEvent() {
+
+	// Get id of the element clicked
+	let clickedMapID = this.id.replace(/\D/g, "")
+
+	// Finding the correct map
+	let clickedMap;
+	for (var i = 0; i < allMaps.length; i++) {
+		for (var j = 0; j < allMaps[i].length; j++) {
+			if (clickedMapID == allMaps[i][j].beatmapID) clickedMap = allMaps[i][j]
+			break
+		}
+	}
+
+	// Changes based on protection
 	switch(true) {
 		case (nextAction.innerText == "Blue Protect"):
+			// Changing the style of buttonS
+			this.style.backgroundColor = "#6ACE0C"
+			if (clickedMapID !== protectCardBlueID && typeof protectCardBlueID !== undefined) {
+				document.getElementById(`${protectCardBlueID}`).style.backgroundColor = "#FFFFFF" 
+			}
+			protectCardBlueID = clickedMapID
+
+			// Changing the style of the card
+			protectCardBlue.style.backgroundImage = clickedMap.imgURL
+			protectCardBlueText.innerText = `${clickedMap.mod}${clickedMap.order}`
+
+			// Other Details
 			blueProtectNum++;
 			if (purpleProtectNum >= protectTotalNum) nextAction.innerText = "Blue Ban"
 			else nextAction.innerText = "Purple Protect"
 			break;
 		case (nextAction.innerText == "Purple Protect"): 
+			// Changing the style of buttons
+			this.style.backgroundColor = "#6ACE0C"
+			if (clickedMapID !== protectCardPurpleID && typeof protectCardPurpleID !== undefined) {
+				document.getElementById(`${protectCardPurpleID}`).style.backgroundColor = "#FFFFFF" 
+			}
+			protectCardPurpleID = clickedMapID
+
+			// Changing the style of the card
+			protectCardPurple.style.backgroundImage = clickedMap.imgURL
+			protectCardPurpleText.innerText = `${clickedMap.mod}${clickedMap.order}`
+
+			// Other Details
 			purpleProtectNum++;
 			if (blueProtectNum >= protectTotalNum) nextAction.innerText = "Purple Ban"
 			else nextAction.innerText = "Blue Protect"

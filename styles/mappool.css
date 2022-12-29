@@ -81,11 +81,11 @@
     position: absolute;
     border: 5px solid;
 }
-.pickCardOverlay {
+.mappoolCardOverlay {
     width: inherit; height: inherit;
     background-color: rgba(0,0,0,0.5);
 }
-.pickCardText {
+.mappoolCardText {
     position: absolute; top: 10px; left: 0;
     width: inherit;
     font-size: 35px;
