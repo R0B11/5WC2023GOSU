@@ -131,26 +131,18 @@
                     <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
                     <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
                 </div>
-                <div id="mapPickCardsBlue"></div>
-                <div id="mapPickCardsPurple"></div>
-                <div id="banCards">
-                    <div class="mappoolCard banCard" id="banCardBlue1">
-                        <div class="banCardText">BAN</div>
-                    </div>
-                    <div class="mappoolCard banCard" id="banCardBlue2">
-                        <div class="banCardText">BAN</div>
-                    </div>
-                    <div class="mappoolCard banCard" id="banCardPurple1">
-                        <div class="banCardText">BAN</div>
-                    </div>
-                    <div class="mappoolCard banCard" id="banCardPurple2">
-                        <div class="banCardText">BAN</div>
+                <div id="mapPickCardsBlue">
+                    <div class="mappoolCard pickCard" style="left: 0px; background-image: url(&quot;https://assets.ppy.sh/beatmaps/1267314/covers/cover.jpg&quot;);">
+                        <div class="pickCardOverlay"></div>
+                        <div class="pickCardText">NM1</div>
                     </div>
                 </div>
+                <div id="mapPickCardsPurple"></div>
                 <div id="protectCards">
                     <div class="mappoolCard protectCard" id="protectCardBlue"></div>
                     <div class="mappoolCard protectCard" id="protectCardPurple"></div>
                 </div>
+                <div id="banCards"></div>
             </div>
             <div id="bottom">
                 <div id="chats"></div>
@@ -192,6 +184,12 @@
             <div id="panel">
                 <section id="paneltitle">Control Panel</section>
                 <section id="panelBreak"></section>
+                <section id="setRollWinnerText">Set Roll Winner:</section>
+                <select id="setRollWinner">
+                    <option value="blue">Blue</option>
+                    <option value="purple">Purple</option>
+                </select>
+                <button class="panelButton" id="setRollWinnerButton" onclick="rollWinner()">Set</button>
                 <section id="nextActionText">Next Action:</section>
                 <section id="nextAction"></section>
                 <section id="pickScreenView">

@@ -81,19 +81,18 @@
     position: absolute;
     border: 5px solid;
 }
-#pickCardBlue2 { left: 160px; }
-#pickCardBlue3 { left: 320px; }
-#pickCardBlue4 { left: 480px; }
-#pickCardBlue5 { left: 640px; }
-#pickCardBlue6 { left: 800px; }
-#pickCardBlue7 { left: 960px; }
-#pickCardPurple2 { right: 40px; }
-#pickCardPurple3 { right: 200px; }
-#pickCardPurple4 { right: 360px; }
-#pickCardPurple5 { right: 520px; }
-#pickCardPurple6 { right: 680px; }
-#pickCardPurple7 { right: 840px; }
-.pickCard { border-color: white; }
+.pickCardOverlay {
+    width: inherit; height: inherit;
+    background-color: rgba(0,0,0,0.5);
+}
+.pickCardText {
+    position: absolute; top: 10px; left: 0;
+    width: inherit;
+    font-size: 35px;
+    height: 40px;
+    text-align: center;
+    text-shadow: -3px 3px 8px rgba(0,0,0,0.8);
+}
 .protectCard {
     border-color: rgb(93,244,146);
     top: 680px;

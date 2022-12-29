@@ -114,9 +114,16 @@ let gameplaySection = document.getElementById("gameplay");
 let sponsor = document.getElementById("sponsor")
 let mappoolSponsor = document.getElementById("mappoolSponsor")
 
-socket.onopen = () => {
-    console.log("Successfully Connected");
-};
+// Protects, Bans, and Picks
+let protectCardBlue = document.querySelector("#protectCardBlue")
+let protectCardPurple = document.querySelector("#protectCardPurple")
+let banCard = document.getElementsByClassName("banCard")
+let banCards = document.querySelector("#banCards")
+
+// Roll Winner
+let setRollWinner = document.querySelector("#setRollWinner")
+
+socket.onopen = () => console.log("Successfully Connected");
 
 let animation = {
     playScoreBlue:  new CountUp('playScoreBlue', 0, 0, 0, .2, {useEasing: true, useGrouping: true,   separator: " ", decimal: "." }),
@@ -186,11 +193,20 @@ let roundText = document.getElementById("round");
 let allMaps = getAllBeatmaps();
 let allTeams = getAllTeams();
 
+let protectTotalNum = 1
+let banTotalNum = 0
+let banProtectNum = 0
+let blueProtectNum  = 0
+let purpleProtectNum = 0
+let banNum = 0
+
 console.log(allMaps)
 for (var i = 0; i < allMaps.length; i++) {
 	for (var j = 0; j < allMaps[i].length; j++) {
 		let mapChoicesButton = document.createElement("button")
 		mapChoicesButton.innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+		mapChoicesButton.setAttribute("id", `${allMaps[i][j].beatmapID}Button`)
+		mapChoicesButton.setAttribute("onclick", "mapClickEvent()")
 		mapChoices.append(mapChoicesButton)
 	}
 }
@@ -566,9 +582,34 @@ function changeRound(round) {
 	roundText.innerText = round;
 
 	// Changing Best Of
+	bestOfTemp = 7
 	if (round == "Round of 32" || round == "Round of 16") bestOfTemp = 5
 	else if (round == "Quarterfinals" || round == "Semifinals") bestOfTemp = 6
-	else bestOfTemp = 7
+	
+
+	// Changing No Of Bans
+	banTotalNum = 2
+	if (round == "Round of 32" || round == "Round of 16") banTotalNum = 1
+
+	// Changing Number of Ban Cards
+	if (banCard.length / 2 < banTotalNum) {
+		for (var i = banCard.length; i < banTotalNum * 2; i++) {
+			let banCardCreate = document.createElement("div")
+			banCardCreate.setAttribute("class", "mappoolCard banCard")
+
+			let banCardTextCreate = document.createElement("div")
+			banCardTextCreate.classList.add("banCardText")
+			banCardTextCreate.innerText = "BAN"
+
+			banCardCreate.append(banCardTextCreate)
+			banCards.append(banCardCreate)
+			
+			if (i == 0) banCardCreate.style.left = "420px"
+			else if (i == 1) banCardCreate.style.right = "420px"
+			else if (i == 2) banCardCreate.style.left = "580px"
+			else if (i == 3) banCardCreate.style.right = "580px"
+		}
+	} else if (banCard.length / 2 > banTotalNum) for (var i = banCard.length; i > banTotalNum * 2; i--) banCards.removeChild(banCards.lastElementChild)
 
 	// Changing Stars
 	changeStars(null);
@@ -584,6 +625,14 @@ function changeRound(round) {
 			let pickCard = document.createElement("div")
 			pickCard.setAttribute("class","mappoolCard pickCard")
 			pickCard.style.left = `${160 * i}px`
+
+			let pickCardOverlay = document.createElement("div")
+			pickCardOverlay.classList.add("pickCardOverlay")
+			let pickCardText = document.createElement("div")
+			pickCardText.classList.add("pickCardText")
+
+			pickCard.append(pickCardOverlay)
+			pickCard.append(pickCardText)
 			mapPickCardsBlue.append(pickCard)
 		}
 	}
@@ -592,6 +641,14 @@ function changeRound(round) {
 			let pickCard = document.createElement("div")
 			pickCard.setAttribute("class","mappoolCard pickCard")
 			pickCard.style.right = `${(160 * i) - 120}px`
+
+			let pickCardOverlay = document.createElement("div")
+			pickCardOverlay.classList.add("pickCardOverlay")
+			let pickCardText = document.createElement("div")
+			pickCardText.classList.add("pickCardText")
+
+			pickCard.append(pickCardOverlay)
+			pickCard.append(pickCardText)
 			mapPickCardsPurple.append(pickCard)
 		}
 	}
@@ -812,3 +869,51 @@ function toGameplayView() {
 }
 
 changeStars(null)
+
+// When clicking on a map in the side panel
+function mapClickEvent() {
+	switch(true) {
+		case (nextAction.innerText == "Blue Protect"):
+			blueProtectNum++;
+			if (purpleProtectNum >= protectTotalNum) nextAction.innerText = "Blue Ban"
+			else nextAction.innerText = "Purple Protect"
+			break;
+		case (nextAction.innerText == "Purple Protect"): 
+			purpleProtectNum++;
+			if (blueProtectNum >= protectTotalNum) nextAction.innerText = "Purple Ban"
+			else nextAction.innerText = "Blue Protect"
+			break;
+		case (nextAction.innerText == "Blue Ban"):
+			banNum++
+			if (banNum == 1) nextAction.innerText = "Purple Ban"
+			else if (banTotalNum == 2) {
+				if (banNum == 2) nextAction.innerText = "Blue Ban"
+				else if (banNum == 3) nextAction.innerText = "Purple Ban"
+				else nextAction.innerText = "Blue Pick"
+			} else if (banTotalNum == 1) {
+				nextAction.innerText = "Blue Pick"
+			}
+			break;
+		case (nextAction.innerText == "Purple Ban"): 
+			banNum++
+			if (banNum == 1) nextAction.innerText = "Blue Ban"
+			else if (banTotalNum == 2) {
+				if (banNum == 2) nextAction.innerText = "Purple Ban"
+				else if (banNum == 3) nextAction.innerText = "Blue Ban"
+				else nextAction.innerText = "Purple Pick"
+			} else if (banTotalNum == 1) {
+				nextAction.innerText = "Purple Pick"
+			}
+			break;
+		case (nextAction.innerText == "Blue Pick"):
+			nextAction.innerText = "Purple Pick"
+			break;
+		case (nextAction.innerText == "Purple Pick"): 
+			nextAction.innerText = "Blue Pick"
+			break;
+	}
+}
+function rollWinner() {
+	if (setRollWinner.value == "blue") nextAction.innerText = "Purple Protect"
+	else if (setRollWinner.value == "purple") nextAction.innerText = "Blue Protect"
+}
