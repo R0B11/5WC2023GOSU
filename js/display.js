@@ -115,17 +115,19 @@ let sponsor = document.getElementById("sponsor")
 let mappoolSponsor = document.getElementById("mappoolSponsor")
 
 // Protects, Bans, and Picks
-let protectCardBlue = document.querySelector("#protectCardBlue")
-let protectCardPurple = document.querySelector("#protectCardPurple")
-let protectCardBlueText = document.querySelector("#protectCardBlueText")
-let protectCardPurpleText = document.querySelector("#protectCardPurpleText")
+let protectCardBlue = document.getElementById("protectCardBlue")
+let protectCardPurple = document.getElementById("protectCardPurple")
+let protectCardBlueText = document.getElementById("protectCardBlueText")
+let protectCardPurpleText = document.getElementById("protectCardPurpleText")
 let protectCardBlueID
 let protectCardPurpleID
 let banCard = document.getElementsByClassName("banCard")
-let banCards = document.querySelector("#banCards")
+let banCards = document.getElementById("banCards")
+let banCardBlue = document.getElementsByClassName("banCardBlue")
+let banCardPurple = document.getElementsByClassName("banCardPurple")
 
 // Roll Winner
-let setRollWinner = document.querySelector("#setRollWinner")
+let setRollWinner = document.getElementById("setRollWinner")
 
 socket.onopen = () => console.log("Successfully Connected");
 
@@ -209,7 +211,7 @@ for (var i = 0; i < allMaps.length; i++) {
 		let mapChoicesButton = document.createElement("button")
 		mapChoicesButton.innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
 		mapChoicesButton.setAttribute("id", `${allMaps[i][j].beatmapID}Button`)
-		mapChoicesButton.setAttribute("onclick", "mapClickEvent()")
+		mapChoicesButton.addEventListener("click", mapClickEvent)
 		mapChoices.append(mapChoicesButton)
 	}
 }
@@ -586,7 +588,6 @@ function changeRound(round) {
 	bestOfTemp = 7
 	if (round == "Round of 32" || round == "Round of 16") bestOfTemp = 5
 	else if (round == "Quarterfinals" || round == "Semifinals") bestOfTemp = 6
-	
 
 	// Changing No Of Bans
 	banTotalNum = 2
@@ -598,17 +599,37 @@ function changeRound(round) {
 			let banCardCreate = document.createElement("div")
 			banCardCreate.setAttribute("class", "mappoolCard banCard")
 
+			let banCardOverlayCreate = document.createElement("div")
+			banCardOverlayCreate.classList.add("mappoolCardOverlay")
+
+			let banCardModTextCreate = document.createElement("div")
+			banCardModTextCreate.classList.add("mappoolCardText")
+
 			let banCardTextCreate = document.createElement("div")
 			banCardTextCreate.classList.add("banCardText")
 			banCardTextCreate.innerText = "BAN"
 
+			banCardCreate.append(banCardOverlayCreate)
+			banCardCreate.append(banCardModTextCreate)
 			banCardCreate.append(banCardTextCreate)
-			banCards.append(banCardCreate)
+			banCards.append(banCardCreate)			
 			
-			if (i == 0) banCardCreate.style.left = "420px"
-			else if (i == 1) banCardCreate.style.right = "420px"
-			else if (i == 2) banCardCreate.style.left = "580px"
-			else if (i == 3) banCardCreate.style.right = "580px"
+			if (i == 0) {
+				banCardCreate.style.left = "420px"
+				banCardCreate.classList.add("banCardBlue")
+			}
+			else if (i == 1) {
+				banCardCreate.style.right = "420px"
+				banCardCreate.classList.add("banCardPurple")
+			}
+			else if (i == 2) {
+				banCardCreate.style.left = "580px"
+				banCardCreate.classList.add("banCardBlue")
+			}
+			else if (i == 3) {
+				banCardCreate.style.right = "580px"
+				banCardCreate.classList.add("banCardPurple")
+			}
 		}
 	} else if (banCard.length / 2 > banTotalNum) for (var i = banCard.length; i > banTotalNum * 2; i--) banCards.removeChild(banCards.lastElementChild)
 
@@ -756,19 +777,19 @@ function starGenerate(side, i) {
 	return starGeneration
 }
 function reset(text) {
-	if (text == "neutral") {
-		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 1;
-		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0;
-		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0;
-	} else if (text == "blue") {
-		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0;
-		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 1;
-		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0;
-	} else {
-		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0;
-		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0;
-		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 1;
-	}
+	// if (text == "neutral") {
+	// 	document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 1;
+	// 	document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0;
+	// 	document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0;
+	// } else if (text == "blue") {
+	// 	document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0;
+	// 	document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 1;
+	// 	document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0;
+	// } else {
+	// 	document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0;
+	// 	document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0;
+	// 	document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 1;
+	// }
 }
 
 function starToggleOnOff(toggle) {
@@ -873,15 +894,22 @@ changeStars(null)
 function mapClickEvent() {
 
 	// Get id of the element clicked
-	let clickedMapID = this.id.replace(/\D/g, "")
+	let clickedMapID
+	if (typeof this.id !== "undefined") clickedMapID = this.id.replace(/\D/g, "")
+	
 
 	// Finding the correct map
 	let clickedMap;
+	let clickedMapFound;
 	for (var i = 0; i < allMaps.length; i++) {
 		for (var j = 0; j < allMaps[i].length; j++) {
-			if (clickedMapID == allMaps[i][j].beatmapID) clickedMap = allMaps[i][j]
-			break
+			if (clickedMapID == allMaps[i][j].beatmapID) {
+				clickedMap = allMaps[i][j]
+				clickedMapFound = true
+				break
+			}
 		}
+		if (clickedMapFound) break
 	}
 
 	// Changes based on protection
@@ -889,13 +917,13 @@ function mapClickEvent() {
 		case (nextAction.innerText == "Blue Protect"):
 			// Changing the style of buttonS
 			this.style.backgroundColor = "#6ACE0C"
-			if (clickedMapID !== protectCardBlueID && typeof protectCardBlueID !== undefined) {
-				document.getElementById(`${protectCardBlueID}`).style.backgroundColor = "#FFFFFF" 
+			if (clickedMapID !== protectCardBlueID && typeof protectCardBlueID !== "undefined") {
+				document.getElementById(`${protectCardBlueID}Button`).style.backgroundColor = "#FFFFFF" 
 			}
 			protectCardBlueID = clickedMapID
 
 			// Changing the style of the card
-			protectCardBlue.style.backgroundImage = clickedMap.imgURL
+			protectCardBlue.style.backgroundImage = `url("${clickedMap.imgURL}")`
 			protectCardBlueText.innerText = `${clickedMap.mod}${clickedMap.order}`
 
 			// Other Details
@@ -906,13 +934,13 @@ function mapClickEvent() {
 		case (nextAction.innerText == "Purple Protect"): 
 			// Changing the style of buttons
 			this.style.backgroundColor = "#6ACE0C"
-			if (clickedMapID !== protectCardPurpleID && typeof protectCardPurpleID !== undefined) {
-				document.getElementById(`${protectCardPurpleID}`).style.backgroundColor = "#FFFFFF" 
+			if (clickedMapID !== protectCardPurpleID && typeof protectCardPurpleID !== "undefined") {
+				document.getElementById(`${protectCardPurpleID}Button`).style.backgroundColor = "#FFFFFF" 
 			}
 			protectCardPurpleID = clickedMapID
 
 			// Changing the style of the card
-			protectCardPurple.style.backgroundImage = clickedMap.imgURL
+			protectCardPurple.style.backgroundImage = `url("${clickedMap.imgURL}")`
 			protectCardPurpleText.innerText = `${clickedMap.mod}${clickedMap.order}`
 
 			// Other Details
@@ -922,6 +950,18 @@ function mapClickEvent() {
 			break;
 		case (nextAction.innerText == "Blue Ban"):
 			banNum++
+
+			// Changing style of buttons
+			this.style.backgroundColor = "#F88379"
+
+			// Changing the style of the card
+			for (var i = 0; i < banCardBlue.length; i++) {
+				if (i == banCardBlue.length - 1 || banCardBlue[i].children[1].innerText.trim() == "") {
+					setCardInfo(banCardBlue[i], clickedMap)
+					break;
+				}
+			}
+
 			if (banNum == 1) nextAction.innerText = "Purple Ban"
 			else if (banTotalNum == 2) {
 				if (banNum == 2) nextAction.innerText = "Blue Ban"
@@ -933,6 +973,18 @@ function mapClickEvent() {
 			break;
 		case (nextAction.innerText == "Purple Ban"): 
 			banNum++
+
+			// Changing style of buttons
+			this.style.backgroundColor = "#F88379"
+
+			// Changing the style of the card
+			for (var i = 0; i < banCardPurple.length; i++) {
+				if (i == banCardPurple.length - 1 || banCardPurple[i].children[1].innerText.trim() == "") {
+					setCardInfo(banCardPurple[i], clickedMap)
+					break;
+				}
+			}
+
 			if (banNum == 1) nextAction.innerText = "Blue Ban"
 			else if (banTotalNum == 2) {
 				if (banNum == 2) nextAction.innerText = "Purple Ban"
@@ -953,4 +1005,8 @@ function mapClickEvent() {
 function rollWinner() {
 	if (setRollWinner.value == "blue") nextAction.innerText = "Purple Protect"
 	else if (setRollWinner.value == "purple") nextAction.innerText = "Blue Protect"
+}
+function setCardInfo(element, map) {
+	element.children[1].innnerText = `${map.mod.toUpperCase()}${map.order}`
+	element.style.backgroundImage =  `url("${map.imgURL}")`
 }

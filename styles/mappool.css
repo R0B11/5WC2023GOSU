@@ -80,6 +80,8 @@
     border-radius: 10px;
     position: absolute;
     border: 5px solid;
+    background-size: cover;
+    background-position: 50%;
 }
 .mappoolCardOverlay {
     width: inherit; height: inherit;
@@ -92,6 +94,9 @@
     height: 40px;
     text-align: center;
     text-shadow: -3px 3px 8px rgba(0,0,0,0.8);
+}
+.protectCardLockButton {
+    position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%);
 }
 .protectCard {
     border-color: rgb(93,244,146);
