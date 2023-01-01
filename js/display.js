@@ -119,12 +119,14 @@ let protectCardBlue = document.getElementById("protectCardBlue")
 let protectCardPurple = document.getElementById("protectCardPurple")
 let protectCardBlueText = document.getElementById("protectCardBlueText")
 let protectCardPurpleText = document.getElementById("protectCardPurpleText")
-let protectCardBlueID
-let protectCardPurpleID
 let banCard = document.getElementsByClassName("banCard")
 let banCards = document.getElementById("banCards")
 let banCardBlue = document.getElementsByClassName("banCardBlue")
 let banCardPurple = document.getElementsByClassName("banCardPurple")
+let protectCardBlueID
+let protectCardPurpleID
+let banCardBlueIDs = new Array()
+let banCardPurpleIDs = new Array()
 
 // Roll Winner
 let setRollWinner = document.getElementById("setRollWinner")
@@ -826,7 +828,17 @@ function resetConfirm(section, confirm) {
 		if (section == "picks") {
 
 		} else if (section == "bans") {
-
+			for (var i = 0; i < banCard.length; i++) {
+				banCard[i].style.backgroundImage = "none"
+				banCard[i].children[1].innerText = ""
+			}
+			for (var i = banCardBlueIDs.length - 1; i >= 0; i--) {
+				document.getElementById(`${banCardBlueIDs[i]}Button`).style.backgroundColor = "white"
+				document.getElementById(`${banCardPurpleIDs[i]}Button`).style.backgroundColor = "white"
+				banCardBlueIDs[i] = undefined
+				banCardPurpleIDs[i] = undefined
+				resetBanButton()
+			}
 		} else if (section == "protects") {
 			protectCardBlue.style.backgroundImage = "none"
 			protectCardBlueText.innerText = ""
@@ -834,6 +846,7 @@ function resetConfirm(section, confirm) {
 			protectCardPurple.style.backgroundImage = "none"
 			protectCardPurpleText.innerText = ""
 			document.getElementById(`${[protectCardPurpleID]}Button`).style.backgroundColor = "#FFFFFF"
+			resetProtectButton()
 		}
 	} else {
 		if (section == "picks") resetPickButton()
@@ -1012,7 +1025,6 @@ function mapClickEvent() {
 			break;
 		case (nextAction.innerText == "Blue Ban"):
 			banNum++
-
 			// Changing style of buttons
 			this.style.backgroundColor = "#F88379"
 
@@ -1020,6 +1032,7 @@ function mapClickEvent() {
 			for (var i = 0; i < banCardBlue.length; i++) {
 				if (i == banCardBlue.length - 1 || banCardBlue[i].children[1].innerText.trim() == "") {
 					setCardInfo(banCardBlue[i], clickedMap)
+					banCardBlueIDs[i] = clickedMap.beatmapID
 					break;
 				}
 			}
@@ -1035,7 +1048,7 @@ function mapClickEvent() {
 			break;
 		case (nextAction.innerText == "Purple Ban"): 
 			banNum++
-
+			banCardPurpleIDs.push(clickedMap.beatmapID)
 			// Changing style of buttons
 			this.style.backgroundColor = "#F88379"
 
@@ -1043,6 +1056,7 @@ function mapClickEvent() {
 			for (var i = 0; i < banCardPurple.length; i++) {
 				if (i == banCardPurple.length - 1 || banCardPurple[i].children[1].innerText.trim() == "") {
 					setCardInfo(banCardPurple[i], clickedMap)
+					banCardPurpleIDs[i] = clickedMap.beatmapID
 					break;
 				}
 			}
@@ -1069,6 +1083,6 @@ function rollWinner() {
 	else if (setRollWinner.value == "purple") nextAction.innerText = "Blue Protect"
 }
 function setCardInfo(element, map) {
-	element.children[1].innnerText = `${map.mod.toUpperCase()}${map.order}`
+	element.children[1].innerText = `${map.mod.toUpperCase()}${map.order}`
 	element.style.backgroundImage =  `url("${map.imgURL}")`
 }
