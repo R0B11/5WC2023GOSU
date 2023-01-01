@@ -207,9 +207,21 @@
                     <button class="panelButton purpleButton banButton" onclick="changeAction('Purple Ban');">Purple Ban</button>
                     <button class="panelButton blueButton protectButton" onclick="changeAction('Blue Protect');">Blue Protect</button>
                     <button class="panelButton purpleButton protectButton" onclick="changeAction('Purple Protect');">Purple Protect</button>
-                    <button class="panelButton resetButton resetPicks" onclick="reset('neutral');">Reset Picks</button>
-                    <button class="panelButton resetButton resetBans" onclick="reset('blue');">Reset Bans</button>
-                    <button class="panelButton resetButton resetProtects" onclick="reset('purple');">Reset Protects</button>
+                    <button id="resetButtonPicks" class="panelButton resetButton resetPicks" onclick="reset('picks');">Reset Picks</button>
+                    <div class="resetButtonConfirmSet" id="resetButtonPicksConfirm">
+                        <button class="resetButtonConfirm resetButtonConfirmYes" onclick="resetConfirm('picks',true)">&#10003;</button>
+                        <button class="resetButtonConfirm resetButtonConfirmNo" onclick="resetConfirm('picks',false)">X</button>
+                    </div>
+                    <button id="resetButtonBans" class="panelButton resetButton resetBans" onclick="reset('bans');">Reset Bans</button>
+                    <div class="resetButtonConfirmSet" id="resetButtonBansConfirm">
+                        <button class="resetButtonConfirm resetButtonConfirmYes" onclick="resetConfirm('bans',true)">&#10003;</button>
+                        <button class="resetButtonConfirm resetButtonConfirmNo" onclick="resetConfirm('bans',false)">X</button>
+                    </div>
+                    <button id="resetButtonProtects" class="panelButton resetButton resetProtects" onclick="reset('protects');">Reset Protects</button>
+                    <div class="resetButtonConfirmSet" id="resetButtonProtectsConfirm">
+                        <button class="resetButtonConfirm resetButtonConfirmYes" onclick="resetConfirm('protects',true)">&#10003;</button>
+                        <button class="resetButtonConfirm resetButtonConfirmNo" onclick="resetConfirm('protects',false)">X</button>
+                    </div>
                     <button class="panelButton roundButton ro32button" onclick="changeRound('Round of 32');">RO32</button>
                     <button class="panelButton roundButton ro16button" onclick="changeRound('Round of 16');">RO16</button>
                     <button class="panelButton roundButton qfbutton" onclick="changeRound('Quarterfinals');">QF</button>

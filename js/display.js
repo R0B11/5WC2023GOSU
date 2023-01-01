@@ -129,6 +129,14 @@ let banCardPurple = document.getElementsByClassName("banCardPurple")
 // Roll Winner
 let setRollWinner = document.getElementById("setRollWinner")
 
+// Reset Buttons
+let resetButtonPicks = document.getElementById("resetButtonPicks")
+let resetButtonBans = document.getElementById("resetButtonBans")
+let resetButtonProtects = document.getElementById("resetButtonProtects")
+let resetButtonPicksConfirm = document.getElementById("resetButtonPicksConfirm")
+let resetButtonBansConfirm = document.getElementById("resetButtonBansConfirm")
+let resetButtonProtectsConfirm = document.getElementById("resetButtonProtectsConfirm")
+
 socket.onopen = () => console.log("Successfully Connected");
 
 let animation = {
@@ -776,7 +784,29 @@ function starGenerate(side, i) {
 	let starGeneration = [star, line1, line2]
 	return starGeneration
 }
-function reset(text) {
+
+// Reset
+function reset(section) {
+	if (section == "picks") {
+		// Picks
+		resetButtonPicks.style.display = "none"	
+		resetButtonPicksConfirm.style.display = "block"
+		resetBanButton()
+		resetProtectButton()
+	} else if (section == "bans") {
+		// Bans
+		resetPickButton()
+		resetButtonBans.style.display = "none"	
+		resetButtonBansConfirm.style.display = "block"
+		resetProtectButton()
+	} else if (section == "protects") {
+		// Protects
+		resetPickButton()
+		resetBanButton()
+		resetButtonProtects.style.display = "none"	
+		resetButtonProtectsConfirm.style.display = "block"
+	}
+	
 	// if (text == "neutral") {
 	// 	document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 1;
 	// 	document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0;
@@ -791,7 +821,40 @@ function reset(text) {
 	// 	document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 1;
 	// }
 }
+function resetConfirm(section, confirm) {
+	if (confirm) {
+		if (section == "picks") {
 
+		} else if (section == "bans") {
+
+		} else if (section == "protects") {
+			protectCardBlue.style.backgroundImage = "none"
+			protectCardBlueText.innerText = ""
+			document.getElementById(`${[protectCardBlueID]}Button`).style.backgroundColor = "#FFFFFF"
+			protectCardPurple.style.backgroundImage = "none"
+			protectCardPurpleText.innerText = ""
+			document.getElementById(`${[protectCardPurpleID]}Button`).style.backgroundColor = "#FFFFFF"
+		}
+	} else {
+		if (section == "picks") resetPickButton()
+		else if (section == "bans") resetBanButton()
+		else if (section == "protects") resetProtectButton()
+	}
+}
+function resetPickButton() {
+	resetButtonPicks.style.display = "block"	
+	resetButtonPicksConfirm.style.display = "none"
+}
+function resetBanButton() {
+	resetButtonBans.style.display = "block"	
+	resetButtonBansConfirm.style.display = "none"
+}
+function resetProtectButton() {
+	resetButtonProtects.style.display = "block"	
+	resetButtonProtectsConfirm.style.display = "none"
+}
+
+// Star Toggle
 function starToggleOnOff(toggle) {
 	if (toggle == "turnOff") {
 		starToggleState = false;
@@ -896,7 +959,6 @@ function mapClickEvent() {
 	// Get id of the element clicked
 	let clickedMapID
 	if (typeof this.id !== "undefined") clickedMapID = this.id.replace(/\D/g, "")
-	
 
 	// Finding the correct map
 	let clickedMap;
