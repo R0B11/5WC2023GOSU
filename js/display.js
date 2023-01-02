@@ -114,7 +114,7 @@ let gameplaySection = document.getElementById("gameplay");
 let sponsor = document.getElementById("sponsor")
 let mappoolSponsor = document.getElementById("mappoolSponsor")
 
-// Protects, Bans, and Picks
+// PROTECTS AND BANS
 let protectCardBlue = document.getElementById("protectCardBlue")
 let protectCardPurple = document.getElementById("protectCardPurple")
 let protectCardBlueText = document.getElementById("protectCardBlueText")
@@ -128,10 +128,10 @@ let protectCardPurpleID
 let banCardBlueIDs = new Array()
 let banCardPurpleIDs = new Array()
 
-// Roll Winner
+// ROLL WINNER
 let setRollWinner = document.getElementById("setRollWinner")
 
-// Reset Buttons
+// RESET BUTTONS
 let resetButtonPicks = document.getElementById("resetButtonPicks")
 let resetButtonBans = document.getElementById("resetButtonBans")
 let resetButtonProtects = document.getElementById("resetButtonProtects")
@@ -140,6 +140,7 @@ let resetButtonBansConfirm = document.getElementById("resetButtonBansConfirm")
 let resetButtonProtectsConfirm = document.getElementById("resetButtonProtectsConfirm")
 
 socket.onopen = () => console.log("Successfully Connected");
+socket.onerror = error => console.log("Socket Error: ", error);
 
 let animation = {
     playScoreBlue:  new CountUp('playScoreBlue', 0, 0, 0, .2, {useEasing: true, useGrouping: true,   separator: " ", decimal: "." }),
@@ -149,10 +150,6 @@ let animation = {
 socket.onclose = event => {
     console.log("Socket Closed Connection: ", event);
     socket.send("Client Closed!");
-};
-
-socket.onerror = error => {
-    console.log("Socket Error: ", error);
 };
 
 let previousBestOfTemp = 0;

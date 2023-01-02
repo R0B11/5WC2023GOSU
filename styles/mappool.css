@@ -86,6 +86,9 @@
 .mappoolCardOverlay {
     width: inherit; height: inherit;
     background-color: rgba(0,0,0,0.5);
+    position: absolute; top: -5px; left: -5px;
+    border: 5px solid;
+    border-radius: inherit;
 }
 .mappoolCardText {
     position: absolute; top: 10px; left: 0;
@@ -102,16 +105,14 @@
     border-color: rgb(93,244,146);
     top: 680px;
 }
+.protectCard .mappoolCardOverlay { border-color: rgb(93,244,146); }
 #protectCardBlue { left: 420px; }
 #protectCardPurple { right: 420px; }
 .banCard {
     border-color: rgb(246,91,91);
     top: 873px;
 }
-#banCardBlue1 { left: 420px; }
-#banCardBlue2 { left: 580px; }
-#banCardPurple1 { right: 420px; }
-#banCardPurple2 { right: 580px; }
+.banCard .mappoolCardOverlay { border-color: rgb(246,91,91); }
 .banCardText {
     width: 110px;
     text-align: center;
