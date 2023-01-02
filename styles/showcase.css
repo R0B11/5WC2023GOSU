@@ -175,10 +175,8 @@ canvas { position: absolute; top: 0; z-index: 0; }
     position: absolute; bottom: 115px; left: 950px;
     width: 600px; height: 90px;
     z-index: 2;
-}
-
-#comments {
-    line-height: 90px;
+    display: flex;
+    align-items: center;
     font-size: 18px;
 }
 
