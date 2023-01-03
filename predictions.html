@@ -1,27 +1,26 @@
 <!DOCTYPE html>
-        <html lang="en">
+    <html lang="en">
         
-        <head>
-            <meta charset="UTF-8">
-            <link href="styles/predictions.css" rel="stylesheet" type="text/css" />
-            <script src="deps/reconnecting-websocket.min.js"></script>
-        </head>
+    <head>
+        <meta charset="UTF-8">
+        <link href="styles/predictions.css" rel="stylesheet" type="text/css" />
+        <script src="deps/reconnecting-websocket.min.js"></script>
+    </head>
 
-        <body>
-            <div id="main">
-                <div id="commBox">
-                    
-                </div>
-                <div id="compareBox">
+    <body>
+        <div id="main">
+            <img src="static/prediction.png" id="predictionOverlay">
+            <button id="teamDisplaybuttonleft" onclick="teamDisplayleft();"></button>
+            <button id="teamDisplaybuttonright" onclick="teamDisplayright();"></button>
+            <div id="currentTeamName">United States</div>
+            <div id="currentTeamFlag"></div>
+            <div id="commBox"></div>
+            <div id="compareBox"></div>
+            <div id="tierList"></div>
+        </div>
 
-                </div>
-                <div id="tierList">
-                
-                </div>
-            </div>
-
-
-            <script src="js/particles/particles.js"></script>
-            <script src="js/particles/appMain.js"></script>
-        </body>    
-    </html>
+        <script src="js/predictions.js"></script>
+        <script src="js/particles/particles.js"></script>
+        <script src="js/particles/appMain.js"></script>
+    </body>    
+</html>
