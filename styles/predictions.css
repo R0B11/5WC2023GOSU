@@ -28,14 +28,19 @@ body,html{
 }
 
 #main{
-    font-size: 30px;
     font-family: Round-Control;
     font-weight: normal;
     color: white;
 	background-color: #000210;
     width: 1920px;
     height: 1080px;
-    position: relative;
+    z-index: 2;
+}
+
+#predictionOverlay {
+	position: absolute; top: 0; left: 0;
+    width: 1920px; height: 1080px;
+	z-index: 2;
 }
 
 #tierList{
@@ -44,4 +49,46 @@ body,html{
     bottom: 100px;
     width: 500px;
     height: 500px;
+}
+
+#teamDisplaybuttonleft{
+    position: absolute;
+    left: 105px;
+    top: 487px;
+    width: 50px;
+    height: 50px;
+    border: transparent;
+    background-color: transparent;
+    z-index: 3;
+}
+#teamDisplaybuttonright{
+    position: absolute;
+    left: 497px;
+    top: 487px;
+    width: 50px;
+    height: 50px;
+    border: transparent;
+    background-color: transparent;
+    z-index: 3;
+}
+#currentTeamName{
+    position: absolute;
+    top: 600px;
+    left: 200px;
+    width: 250px;
+    height: 50px;
+    text-align: center;
+    background-color: transparent;
+    font-family: Round-Control;
+    color: white;
+    font-size: 30px;
+}
+.currentTeamFlag{
+    position: absolute;
+    top: 600px;
+    left: 249px;
+    height: 200px;
+    width: 100px;
+    background-size: contain;
+	background-repeat: no-repeat;
 }
