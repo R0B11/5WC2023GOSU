@@ -13,7 +13,7 @@ setTeamFlag.style.backgroundImage = `url("static/flags/${predictionTeams[current
 function teamDisplayleft(){
 
     currentTeamLocation = currentTeamLocation - 1;
-    if (currentTeamLocation < 0) {currentTeamLocation = (predictionTeams.length -1)};
+    if (currentTeamLocation < 0) {currentTeamLocation = (predictionTeams.length - 1)};
     setTeamName.innerText = predictionTeams[currentTeamLocation];
     setTeamFlag.style.backgroundImage = `url("../static/flags/${predictionTeams[currentTeamLocation]}.png")`;
 
