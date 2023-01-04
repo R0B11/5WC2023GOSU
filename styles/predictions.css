@@ -83,12 +83,13 @@ body,html{
     color: white;
     font-size: 30px;
 }
-.currentTeamFlag{
+#currentTeamFlag{
     position: absolute;
-    top: 600px;
-    left: 249px;
-    height: 200px;
-    width: 100px;
+    top: 400px;
+    left: 230px;
+    height: 400px;
+    width: 200px;
     background-size: contain;
 	background-repeat: no-repeat;
+    z-index: 3;
 }
