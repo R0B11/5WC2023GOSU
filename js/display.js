@@ -127,6 +127,8 @@ let protectCardBlueID
 let protectCardPurpleID
 let banCardBlueIDs = new Array()
 let banCardPurpleIDs = new Array()
+let pickCardBlueIDs = new Array()
+let pickCardPurpleIDs = new Array()
 
 // ROLL WINNER
 let setRollWinner = document.getElementById("setRollWinner")
@@ -656,7 +658,7 @@ function changeRound(round) {
 			let pickCardOverlay = document.createElement("div")
 			pickCardOverlay.classList.add("mappoolCardOverlay")
 			let pickCardText = document.createElement("div")
-			pickCardText.classList.add("pickCardText")
+			pickCardText.classList.add("mappoolCardText")
 
 			pickCard.append(pickCardOverlay)
 			pickCard.append(pickCardText)
@@ -672,7 +674,7 @@ function changeRound(round) {
 			let pickCardOverlay = document.createElement("div")
 			pickCardOverlay.classList.add("mappoolCardOverlay")
 			let pickCardText = document.createElement("div")
-			pickCardText.classList.add("pickCardText")
+			pickCardText.classList.add("mappoolCardText")
 
 			pickCard.append(pickCardOverlay)
 			pickCard.append(pickCardText)
@@ -823,7 +825,21 @@ function reset(section) {
 function resetConfirm(section, confirm) {
 	if (confirm) {
 		if (section == "picks") {
-
+			for (var i = 0; i < mapPickCardsBlue.childElementCount; i++) {
+				mapPickCardsBlue.children[i].children[1].innerText = ""
+				mapPickCardsBlue.children[i].style.backgroundImage = "none"
+				mapPickCardsPurple.children[i].children[1].innerText = ""
+				mapPickCardsPurple.children[i].style.backgroundImage = "none"
+			}
+			for (var i = 0; i < pickCardBlueIDs.length; i++) {
+				document.getElementById(`${pickCardBlueIDs[i]}Button`).style.backgroundColor = "white"
+				pickCardBlueIDs[i] = undefined
+			}
+			for (var i = 0; i < pickCardPurpleIDs.length; i++) {
+				document.getElementById(`${pickCardPurpleIDs[i]}Button`).style.backgroundColor = "white"
+				pickCardPurpleIDs[i] = undefined
+			}
+			resetPickButton()
 		} else if (section == "bans") {
 			for (var i = 0; i < banCard.length; i++) {
 				banCard[i].style.backgroundImage = "none"
@@ -986,93 +1002,106 @@ function mapClickEvent() {
 
 	// Changes based on protection
 	switch(true) {
-		case (nextAction.innerText == "Blue Protect"):
-			// Changing the style of buttonS
-			this.style.backgroundColor = "#6ACE0C"
-			if (clickedMapID !== protectCardBlueID && typeof protectCardBlueID !== "undefined") {
-				document.getElementById(`${protectCardBlueID}Button`).style.backgroundColor = "#FFFFFF" 
+	case (nextAction.innerText == "Blue Protect"):
+		// Changing the style of buttonS
+		this.style.backgroundColor = "#6ACE0C"
+		if (clickedMapID !== protectCardBlueID && typeof protectCardBlueID !== "undefined") {
+			document.getElementById(`${protectCardBlueID}Button`).style.backgroundColor = "#FFFFFF" 
+		}
+		protectCardBlueID = clickedMapID
+		// Changing the style of the card
+		protectCardBlue.style.backgroundImage = `url("${clickedMap.imgURL}")`
+		protectCardBlueText.innerText = `${clickedMap.mod}${clickedMap.order}`
+		// Other Details
+		blueProtectNum++;
+		if (purpleProtectNum >= protectTotalNum) nextAction.innerText = "Blue Ban"
+		else nextAction.innerText = "Purple Protect"
+		break;
+	case (nextAction.innerText == "Purple Protect"): 
+		// Changing the style of buttons
+		this.style.backgroundColor = "#6ACE0C"
+		if (clickedMapID !== protectCardPurpleID && typeof protectCardPurpleID !== "undefined") {
+			document.getElementById(`${protectCardPurpleID}Button`).style.backgroundColor = "#FFFFFF" 
+		}
+		protectCardPurpleID = clickedMapID
+		// Changing the style of the card
+		protectCardPurple.style.backgroundImage = `url("${clickedMap.imgURL}")`
+		protectCardPurpleText.innerText = `${clickedMap.mod}${clickedMap.order}`
+		// Other Details
+		purpleProtectNum++;
+		if (blueProtectNum >= protectTotalNum) nextAction.innerText = "Purple Ban"
+		else nextAction.innerText = "Blue Protect"
+		break;
+	case (nextAction.innerText == "Blue Ban"):
+		banNum++
+		// Changing style of buttons
+		this.style.backgroundColor = "#F88379"
+		// Changing the style of the card
+		for (var i = 0; i < banCardBlue.length; i++) {
+			if (i == banCardBlue.length - 1 || banCardBlue[i].children[1].innerText.trim() == "") {
+				setCardInfo(banCardBlue[i], clickedMap)
+				banCardBlueIDs[i] = clickedMap.beatmapID
+				break;
 			}
-			protectCardBlueID = clickedMapID
-
-			// Changing the style of the card
-			protectCardBlue.style.backgroundImage = `url("${clickedMap.imgURL}")`
-			protectCardBlueText.innerText = `${clickedMap.mod}${clickedMap.order}`
-
-			// Other Details
-			blueProtectNum++;
-			if (purpleProtectNum >= protectTotalNum) nextAction.innerText = "Blue Ban"
-			else nextAction.innerText = "Purple Protect"
-			break;
-		case (nextAction.innerText == "Purple Protect"): 
-			// Changing the style of buttons
-			this.style.backgroundColor = "#6ACE0C"
-			if (clickedMapID !== protectCardPurpleID && typeof protectCardPurpleID !== "undefined") {
-				document.getElementById(`${protectCardPurpleID}Button`).style.backgroundColor = "#FFFFFF" 
-			}
-			protectCardPurpleID = clickedMapID
-
-			// Changing the style of the card
-			protectCardPurple.style.backgroundImage = `url("${clickedMap.imgURL}")`
-			protectCardPurpleText.innerText = `${clickedMap.mod}${clickedMap.order}`
-
-			// Other Details
-			purpleProtectNum++;
-			if (blueProtectNum >= protectTotalNum) nextAction.innerText = "Purple Ban"
-			else nextAction.innerText = "Blue Protect"
-			break;
-		case (nextAction.innerText == "Blue Ban"):
-			banNum++
-			// Changing style of buttons
-			this.style.backgroundColor = "#F88379"
-
-			// Changing the style of the card
-			for (var i = 0; i < banCardBlue.length; i++) {
-				if (i == banCardBlue.length - 1 || banCardBlue[i].children[1].innerText.trim() == "") {
-					setCardInfo(banCardBlue[i], clickedMap)
-					banCardBlueIDs[i] = clickedMap.beatmapID
-					break;
-				}
-			}
-
-			if (banNum == 1) nextAction.innerText = "Purple Ban"
-			else if (banTotalNum == 2) {
-				if (banNum == 2) nextAction.innerText = "Blue Ban"
-				else if (banNum == 3) nextAction.innerText = "Purple Ban"
-				else nextAction.innerText = "Blue Pick"
-			} else if (banTotalNum == 1) {
-				nextAction.innerText = "Blue Pick"
-			}
-			break;
-		case (nextAction.innerText == "Purple Ban"): 
-			banNum++
-			banCardPurpleIDs.push(clickedMap.beatmapID)
-			// Changing style of buttons
-			this.style.backgroundColor = "#F88379"
-
-			// Changing the style of the card
-			for (var i = 0; i < banCardPurple.length; i++) {
-				if (i == banCardPurple.length - 1 || banCardPurple[i].children[1].innerText.trim() == "") {
-					setCardInfo(banCardPurple[i], clickedMap)
-					banCardPurpleIDs[i] = clickedMap.beatmapID
-					break;
-				}
-			}
-
-			if (banNum == 1) nextAction.innerText = "Blue Ban"
-			else if (banTotalNum == 2) {
-				if (banNum == 2) nextAction.innerText = "Purple Ban"
-				else if (banNum == 3) nextAction.innerText = "Blue Ban"
-				else nextAction.innerText = "Purple Pick"
-			} else if (banTotalNum == 1) {
-				nextAction.innerText = "Purple Pick"
-			}
-			break;
-		case (nextAction.innerText == "Blue Pick"):
-			nextAction.innerText = "Purple Pick"
-			break;
-		case (nextAction.innerText == "Purple Pick"): 
+		}
+		if (banNum == 1) nextAction.innerText = "Purple Ban"
+		else if (banTotalNum == 2) {
+			if (banNum == 2) nextAction.innerText = "Blue Ban"
+			else if (banNum == 3) nextAction.innerText = "Purple Ban"
+			else nextAction.innerText = "Blue Pick"
+		} else if (banTotalNum == 1) {
 			nextAction.innerText = "Blue Pick"
+		}
+		break;
+	case (nextAction.innerText == "Purple Ban"): 
+		banNum++
+		banCardPurpleIDs.push(clickedMap.beatmapID)
+		// Changing style of buttons
+		this.style.backgroundColor = "#F88379"
+		// Changing the style of the card
+		for (var i = 0; i < banCardPurple.length; i++) {
+			if (i == banCardPurple.length - 1 || banCardPurple[i].children[1].innerText.trim() == "") {
+				setCardInfo(banCardPurple[i], clickedMap)
+				banCardPurpleIDs[i] = clickedMap.beatmapID
+				break;
+			}
+		}
+		if (banNum == 1) nextAction.innerText = "Blue Ban"
+		else if (banTotalNum == 2) {
+			if (banNum == 2) nextAction.innerText = "Purple Ban"
+			else if (banNum == 3) nextAction.innerText = "Blue Ban"
+			else nextAction.innerText = "Purple Pick"
+		} else if (banTotalNum == 1) {
+			nextAction.innerText = "Purple Pick"
+		}
+		break;
+	case (nextAction.innerText == "Blue Pick"):
+		// Change style of button
+		this.style.backgroundColor = "var(--blue)"
+		// Change style of card
+		for (var i = 0; i < mapPickCardsBlue.childElementCount; i++) {
+			if (mapPickCardsBlue.children[i].children[1].innerText !== "") continue
+			mapPickCardsBlue.children[i].children[1].innerText = `${clickedMap.mod.toUpperCase()}${clickedMap.order}`
+			mapPickCardsBlue.children[i].style.backgroundImage = `url("${clickedMap.imgURL}")`
+			pickCardBlueIDs[i] = clickedMap.beatmapID
 			break;
+		}
+		nextAction.innerText = "Purple Pick"
+		break;
+	case (nextAction.innerText == "Purple Pick"): 
+		// Change style of button
+		this.style.backgroundColor = "var(--purple)"
+		// Change style of card
+		for (var i = 0; i < mapPickCardsPurple.childElementCount; i++) {
+			if (mapPickCardsPurple.children[i].children[1].innerText !== "") continue
+			mapPickCardsPurple.children[i].children[1].innerText = `${clickedMap.mod.toUpperCase()}${clickedMap.order}`
+			mapPickCardsPurple.children[i].style.backgroundImage = `url("${clickedMap.imgURL}")`
+			pickCardPurpleIDs[i] = clickedMap.beatmapID
+			console.log(pickCardPurpleIDs)
+			break;
+		}
+		nextAction.innerText = "Blue Pick"
+		break;
 	}
 }
 function rollWinner() {
