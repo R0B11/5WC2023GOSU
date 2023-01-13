@@ -1,192 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
     
-    <head>
-        <meta charset="UTF-8">
-        <link href="styles/display.css" rel="stylesheet" type="text/css" />
-        <link href="styles/mappool.css" rel="stylesheet" type="text/css">
-        <script src="deps/countUp.js"></script>
-        <script src="deps/reconnecting-websocket.min.js"></script>
-    </head>
-    
-    <body>
-        <div id="main">
-            <div id="top">
-                <div id="round">Round of 32</div>
-                <div class="scores" id="scoreBlue"></div>
-                <div class="teamFlags" id="teamBlueFlag"></div>
-                <div class="teams" id="teamBlue">
-                    <div class="teamNames" id="teamBlueName"></div>  
-                </div>
-                <div class="teamFlags" id="teamPurpleFlag"></div>
-                <div class="teams" id="teamPurple">
-                    <div class="teamNames" id="teamPurpleName"></div>
-                </div>
-                <div class="scores" id="scorePurple"></div>
+<head>
+    <meta charset="UTF-8">
+    <link href="styles/display.css" rel="stylesheet" type="text/css" />
+    <link href="styles/mappool.css" rel="stylesheet" type="text/css">
+    <script src="deps/countUp.js"></script>
+    <script src="deps/reconnecting-websocket.min.js"></script>
+</head>
+
+<body>
+    <div id="main">
+        <div id="top">
+            <div id="round">Round of 32</div>
+            <div class="scores" id="scoreBlue"></div>
+            <div class="teamFlags" id="teamBlueFlag"></div>
+            <div class="teams" id="teamBlue">
+                <div class="teamNames" id="teamBlueName"></div>  
             </div>
-            <div id="gameplay"></div>
-            <div id="mappool">
-                <div id="mappoolSponsor">
-                    <video loop autoplay width="400" height="130" >
-                        <source src="static/sponsor.webm" type="video/webm">
-                    </video>
-                </div>
-                <div class="teamSeedContainer" id="blueTeamSeed">Seed: #<span id="blueTeamSeedNumber"></span></div>
-                <div class="teamSeedContainer" id="purpleTeamSeed">Seed: #<span id="purpleTeamSeedNumber"></span></div>
-                <div class="teamStatsTeamsContainer" id="blueTeamStats">
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText">Aim</div>
-                        <div class="teamStatsText teamStatsRightText" id="blueTeamStatsAimNum"></div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsAimBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText">Speed</div>
-                        <div class="teamStatsText teamStatsRightText" id="blueTeamStatsSpeedNum"></div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsSpeedBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText">Stamina</div>
-                        <div class="teamStatsText teamStatsRightText" id="blueTeamStatsStaminaNum"></div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsStaminaBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText">Finger Control</div>
-                        <div class="teamStatsText teamStatsRightText" id="blueTeamStatsFingerControlNum"></div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsFingerControlBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText">Precision</div>
-                        <div class="teamStatsText teamStatsRightText" id="blueTeamStatsPrecisionNum"></div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsPrecisionBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText">Reading</div>
-                        <div class="teamStatsText teamStatsRightText" id="blueTeamStatsReadingNum"></div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsReadingBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText">Technical</div>
-                        <div class="teamStatsText teamStatsRightText" id="blueTeamStatsTechNum"></div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsTechBar"></div>
-                    </div>
-                </div>
-                <div class="teamStatsTeamsContainer" id="purpleTeamStats">
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText" id="purpleTeamStatsAimNum"></div>
-                        <div class="teamStatsText teamStatsRightText">Aim</div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsAimBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText" id="purpleTeamStatsSpeedNum"></div>
-                        <div class="teamStatsText teamStatsRightText">Speed</div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsSpeedBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText" id="purpleTeamStatsStaminaNum"></div>
-                        <div class="teamStatsText teamStatsRightText">Stamina</div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsStaminaBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText" id="purpleTeamStatsFingerControlNum"></div>
-                        <div class="teamStatsText teamStatsRightText">Finger Control</div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsFingerControlBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText" id="purpleTeamStatsPrecisionNum"></div>
-                        <div class="teamStatsText teamStatsRightText">Precision</div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsPrecisionBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText" id="purpleTeamStatsReadingNum"></div>
-                        <div class="teamStatsText teamStatsRightText">Reading</div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsReadingBar"></div>
-                    </div>
-                    <div class="teamStatsContainer">
-                        <div class="teamStatsText" id="purpleTeamStatsTechNum"></div>
-                        <div class="teamStatsText teamStatsRightText">Technical</div>
-                        <div class="teamStatsBox"></div>
-                        <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsTechBar"></div>
-                    </div>
-                </div>
-                <div id="teamNamesBlue">
-                    <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
-                    <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
-                    <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
-                    <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
-                    <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
-                    <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
-                    <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
-                    <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
-                </div>
-                <div id="mapPickCardsBlue"></div>
-                <div id="mapPickCardsPurple"></div>
-                <div id="protectCards">
-                    <div class="mappoolCard protectCard" id="protectCardBlue">
-                        <div class="mappoolCardOverlay"></div>
-                        <img class="protectCardLockButton" src="static/Lock.png">
-                        <div class="mappoolCardText" id="protectCardBlueText"></div>
-                    </div>
-                    <div class="mappoolCard protectCard" id="protectCardPurple">
-                        <div class="mappoolCardOverlay"></div>
-                        <img class="protectCardLockButton" src="static/Lock.png">
-                        <div class="mappoolCardText" id="protectCardPurpleText"></div>
-                    </div>
-                </div>
-                <div id="banCards"></div>
+            <div class="teamFlags" id="teamPurpleFlag"></div>
+            <div class="teams" id="teamPurple">
+                <div class="teamNames" id="teamPurpleName"></div>
             </div>
-            <div id="bottom">
-                <div id="chats"></div>
-                <div id="movingScoreBars">
-                    <div class="movingScoreBars" id="movingScoreBarBlue"></div>
-                    <div class="movingScoreBars" id="movingScoreBarPurple"></div>
+            <div class="scores" id="scorePurple"></div>
+        </div>
+        <div id="gameplay"></div>
+        <div id="gameplayNames">
+            <div class="gameplayName gameplayNameLeft gameplayNameColumn1 gameplayNameTopRow" id="gameplayName1"></div>
+            <div class="gameplayName gameplayNameLeft gameplayNameColumn1 gameplayNameBottomRow" id="gameplayName2"></div>
+            <div class="gameplayName gameplayNameLeft gameplayNameColumn2 gameplayNameTopRow" id="gameplayName3"></div>
+            <div class="gameplayName gameplayNameLeft gameplayNameColumn2 gameplayNameBottomRow" id="gameplayName4"></div>
+            <div class="gameplayName gameplayNameRight gameplayNameColumn3 gameplayNameTopRow" id="gameplayName5"></div>
+            <div class="gameplayName gameplayNameRight gameplayNameColumn3 gameplayNameBottomRow" id="gameplayName6"></div>
+            <div class="gameplayName gameplayNameRight gameplayNameColumn4 gameplayNameTopRow" id="gameplayName7"></div>
+            <div class="gameplayName gameplayNameRight gameplayNameColumn4 gameplayNameBottomRow" id="gameplayName8"></div>
+        </div>
+        <div id="mappool">
+            <div id="mappoolSponsor">
+                <video loop autoplay width="400" height="130" >
+                    <source src="static/sponsor.webm" type="video/webm">
+                </video>
+            </div>
+            <div class="teamSeedContainer" id="blueTeamSeed">Seed: #<span id="blueTeamSeedNumber"></span></div>
+            <div class="teamSeedContainer" id="purpleTeamSeed">Seed: #<span id="purpleTeamSeedNumber"></span></div>
+            <div class="teamStatsTeamsContainer" id="blueTeamStats">
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText">Aim</div>
+                    <div class="teamStatsText teamStatsRightText" id="blueTeamStatsAimNum"></div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsAimBar"></div>
                 </div>
-                <div class="playScores" id="playScoreBlue"></div>
-                <div class="playScores" id="playScorePurple"></div>
-                <div id="nowPlayingContainer">
-                    <img class="nowPlayingWrapperImage" id="nowPlayingWrapperImageNeutral" src="static/nowPlayingNeutral.png">
-                    <img class="nowPlayingWrapperImage" style="opacity: 0" id="nowPlayingWrapperImageBlue" src="static/nowPlayingteamBlue.png">
-                    <img class="nowPlayingWrapperImage" style="opacity: 0" id="nowPlayingWrapperImagePurple" src="static/nowPlayingteamPurple.png">
-                    <div id="mapContainer"></div>
-                    <div class="mapTitleWrapper" id="mapTitleWrapper"><div id="mapTitle"></div></div>
-                    <div class="mapTitleWrapper" id="mapTitleWrapper2">
-                        <div id="mapTitles">
-                            <span class="mapTitles" id="mapTitle1"></span>
-                            <span class="mapTitles" id="mapTitle2"></span>
-                        </div>
-                    </div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText">Speed</div>
+                    <div class="teamStatsText teamStatsRightText" id="blueTeamStatsSpeedNum"></div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsSpeedBar"></div>
                 </div>
-                <div id="mapStatsTop">
-                    <div class="mapStats mapStatsTop" id="mapStatsCS"></div>
-                    <div class="mapStats mapStatsTop" id="mapStatsOD"></div>
-                    <div class="mapStats mapStatsTop" id="mapStatsAR"></div>
-                    <div class="mapStats mapStatsTop" id="mapStatsLEN"></div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText">Stamina</div>
+                    <div class="teamStatsText teamStatsRightText" id="blueTeamStatsStaminaNum"></div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsStaminaBar"></div>
                 </div>
-                <div id="mapStatsBot">
-                    <div class="mapStats mapStatsBot" id="mapStatsSR"></div>
-                    <div class="mapStats mapStatsBot" id="mapStatsBPM"></div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText">Finger Control</div>
+                    <div class="teamStatsText teamStatsRightText" id="blueTeamStatsFingerControlNum"></div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsFingerControlBar"></div>
                 </div>
-                <div id="sponsor">
-                    <video loop autoplay width="400" height="130" >
-                        <source src="static/sponsor.webm" type="video/webm">
-                    </video>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText">Precision</div>
+                    <div class="teamStatsText teamStatsRightText" id="blueTeamStatsPrecisionNum"></div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsPrecisionBar"></div>
+                </div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText">Reading</div>
+                    <div class="teamStatsText teamStatsRightText" id="blueTeamStatsReadingNum"></div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsReadingBar"></div>
+                </div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText">Technical</div>
+                    <div class="teamStatsText teamStatsRightText" id="blueTeamStatsTechNum"></div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar blueTeamStatsBar" id="blueTeamStatsTechBar"></div>
                 </div>
             </div>
-            <div id="panel">
-                <section id="paneltitle">Control Panel</section>
-                <section id="panelBreak"></section>
+            <div class="teamStatsTeamsContainer" id="purpleTeamStats">
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText" id="purpleTeamStatsAimNum"></div>
+                    <div class="teamStatsText teamStatsRightText">Aim</div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsAimBar"></div>
+                </div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText" id="purpleTeamStatsSpeedNum"></div>
+                    <div class="teamStatsText teamStatsRightText">Speed</div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsSpeedBar"></div>
+                </div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText" id="purpleTeamStatsStaminaNum"></div>
+                    <div class="teamStatsText teamStatsRightText">Stamina</div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsStaminaBar"></div>
+                </div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText" id="purpleTeamStatsFingerControlNum"></div>
+                    <div class="teamStatsText teamStatsRightText">Finger Control</div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsFingerControlBar"></div>
+                </div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText" id="purpleTeamStatsPrecisionNum"></div>
+                    <div class="teamStatsText teamStatsRightText">Precision</div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsPrecisionBar"></div>
+                </div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText" id="purpleTeamStatsReadingNum"></div>
+                    <div class="teamStatsText teamStatsRightText">Reading</div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsReadingBar"></div>
+                </div>
+                <div class="teamStatsContainer">
+                    <div class="teamStatsText" id="purpleTeamStatsTechNum"></div>
+                    <div class="teamStatsText teamStatsRightText">Technical</div>
+                    <div class="teamStatsBox"></div>
+                    <div class="teamStatsBar purpleTeamStatsBar" id="purpleTeamStatsTechBar"></div>
+                </div>
+            </div>
+            <div id="teamNamesBlue">
+                <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
+                <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
+                <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
+                <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
+                <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
+                <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
+                <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
+                <div id="teamNameBluePlayer1">GRR SNARL GROWL</div>
+            </div>
+            <div id="mapPickCardsBlue"></div>
+            <div id="mapPickCardsPurple"></div>
+            <div id="protectCards">
+                <div class="mappoolCard protectCard" id="protectCardBlue">
+                    <div class="mappoolCardOverlay"></div>
+                    <img class="protectCardLockButton" src="static/Lock.png">
+                    <div class="mappoolCardText" id="protectCardBlueText"></div>
+                </div>
+                <div class="mappoolCard protectCard" id="protectCardPurple">
+                    <div class="mappoolCardOverlay"></div>
+                    <img class="protectCardLockButton" src="static/Lock.png">
+                    <div class="mappoolCardText" id="protectCardPurpleText"></div>
+                </div>
+            </div>
+            <div id="banCards"></div>
+        </div>
+        <div id="bottom">
+            <div id="chats"></div>
+            <div id="movingScoreBars">
+                <div class="movingScoreBars" id="movingScoreBarBlue"></div>
+                <div class="movingScoreBars" id="movingScoreBarPurple"></div>
+            </div>
+            <div class="playScores" id="playScoreBlue"></div>
+            <div class="playScores" id="playScorePurple"></div>
+            <div id="nowPlayingContainer">
+                <img class="nowPlayingWrapperImage" id="nowPlayingWrapperImageNeutral" src="static/nowPlayingNeutral.png">
+                <img class="nowPlayingWrapperImage" style="opacity: 0" id="nowPlayingWrapperImageBlue" src="static/nowPlayingteamBlue.png">
+                <img class="nowPlayingWrapperImage" style="opacity: 0" id="nowPlayingWrapperImagePurple" src="static/nowPlayingteamPurple.png">
+                <div id="mapContainer"></div>
+                <div class="mapTitleWrapper" id="mapTitleWrapper"><div id="mapTitle"></div></div>
+                <div class="mapTitleWrapper" id="mapTitleWrapper2">
+                    <div id="mapTitles">
+                        <span class="mapTitles" id="mapTitle1"></span>
+                        <span class="mapTitles" id="mapTitle2"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="mapStatsTop">
+                <div class="mapStats mapStatsTop" id="mapStatsCS"></div>
+                <div class="mapStats mapStatsTop" id="mapStatsOD"></div>
+                <div class="mapStats mapStatsTop" id="mapStatsAR"></div>
+                <div class="mapStats mapStatsTop" id="mapStatsLEN"></div>
+            </div>
+            <div id="mapStatsBot">
+                <div class="mapStats mapStatsBot" id="mapStatsSR"></div>
+                <div class="mapStats mapStatsBot" id="mapStatsBPM"></div>
+            </div>
+            <div id="sponsor">
+                <video loop autoplay width="400" height="130" >
+                    <source src="static/sponsor.webm" type="video/webm">
+                </video>
+            </div>
+        </div>
+        <div id="panel">
+            <section id="paneltitle">Control Panel</section>
+            <section id="panelBreak"></section>
+            <section id="panelBreak2"></section>
+            <section id="mainControlPanel">
                 <section id="setRollWinnerText">Set Roll Winner:</section>
                 <select id="setRollWinner">
                     <option value="blue">Blue</option>
@@ -227,30 +239,35 @@
                     <!-- Maybe someway to add the list of maps here idk so we can actually
                     chose what get protect/banned/picked-->
                 </section>
+            </section>
+            <section class="rightHandSide" id="starControl">
+                Stars:<br>
+                <div id="blueStarControl">Blue Stars:</div>
+                <button class="panelButton largeTextButton greenButton" id="blueStarControlPlus" onclick="changeScore('blue','add')">+</button>
+                <button class="panelButton largeTextButton redButton" id="blueStarControlSubtract" onclick="changeScore('blue','remove')">-</button>
+                <div class="rightHandSide" id="purpleStarControl">Purple Stars:</div>
+                <button class="panelButton largeTextButton greenButton" id="purpleStarControlPlus" onclick="changeScore('purple','add')">+</button>
+                <button class="panelButton largeTextButton redButton" id="purpleStarControlSubtract" onclick="changeScore('purple','remove')">-</button>
+                <div class="rightHandSide" id="starToggleText">Stars are currently:</div>
+                <button class="panelButton resetButton starToggle" id="starToggle" onclick="starToggleOnOff('turnOff');">ON</button>
+                <section id="mapChoices">
+                    <h2>Maps</h2>
+                </section>
+            </section>
+            <section class="rightHandSide" id="mapControl">
+                Map Control:<br>
+                
                 <section id="navigation">
                     <button class="panelButton viewButton pickView" onclick="toPickScreenView();">Pick Screen View</button>
                     <button class="panelButton viewButton gameView" onclick="toGameplayView();">Game View</button>
                 </section>
-                <section class="rightHandSide" id="starControl">
-                    Stars:<br>
-                    <div id="blueStarControl">Blue Stars:</div>
-                    <button class="panelButton largeTextButton greenButton" id="blueStarControlPlus" onclick="changeScore('blue','add')">+</button>
-                    <button class="panelButton largeTextButton redButton" id="blueStarControlSubtract" onclick="changeScore('blue','remove')">-</button>
-                    <div class="rightHandSide" id="purpleStarControl">Purple Stars:</div>
-                    <button class="panelButton largeTextButton greenButton" id="purpleStarControlPlus" onclick="changeScore('purple','add')">+</button>
-                    <button class="panelButton largeTextButton redButton" id="purpleStarControlSubtract" onclick="changeScore('purple','remove')">-</button>
-                    <div class="rightHandSide" id="starToggleText">Stars are currently:</div>
-                    <button class="panelButton resetButton starToggle" id="starToggle" onclick="starToggleOnOff('turnOff');">ON</button>
-                    <section id="mapChoices">
-                        <h2>Maps</h2>
-                    </section>
-                </section>
-            </div>
+            </section>
         </div>
-        
-        <script src="js/loadMaps.js"></script>
-        <script src="js/display.js"></script>
-        <script src="js/particles/particles.js"></script>
-        <script src="js/particles/appMain.js"></script>
-    </body>    
+    </div>
+    
+    <script src="js/loadMaps.js"></script>
+    <script src="js/display.js"></script>
+    <script src="js/particles/particles.js"></script>
+    <script src="js/particles/appMain.js"></script>
+</body>    
 </html>

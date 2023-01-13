@@ -93,3 +93,39 @@ body,html{
 	background-repeat: no-repeat;
     z-index: 3;
 }
+
+/* Cyrrent Song */
+#currentSongImage {
+    position: absolute; top: 925px; left: 95px;
+    background-color: white;
+    width: 141px; height: 73px;
+    background-size: cover;
+    background-position: 50%;
+}
+#currentSongImageLayer {
+    background-color: rgba(0,0,0,0.2);
+    width: inherit; height: inherit;
+}
+.currentSongTextWrappers {
+    position: absolute; left: 253px;
+    width: 323px; height: 35px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    font-size: 30px;
+}
+#currentSongTitleWrapper { top: 925px; }
+#currentSongArtistWrapper { top: 960px; }
+.currentSongText {
+    width: max-content;
+}
+.currentSongTextWrap {
+    transform: translate(323px);
+    animation: displaySlide 12s linear infinite;
+}
+@keyframes displaySlide {
+    0% {transform: translate(0px);}
+    11% {transform: translate(0px);}
+    80% { transform: translate(calc(-100% + 323px)); }
+    100% { transform: translate(calc(-100% + 323px)); }
+}

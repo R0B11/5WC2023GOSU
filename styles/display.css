@@ -1,4 +1,6 @@
 :root {
+	--lightpurple: #E0B0FF;
+	/* --lightpurple: #CCCCFF; */
 	--purple: #936bf7;
 	--purple75Opacity: #936bf77F;
 	--blue: #75c6ea;
@@ -84,7 +86,7 @@ body,html{
 	top: 180px;
 	height: 720px;
 	width: 1920px;
-	background-color: black;
+	background-color: #04F404;
 	transition: ease-in-out 750ms;
 }
 
@@ -446,7 +448,7 @@ body,html{
 
 /* ~~~~~~~~~~~~~~~~~~~ BUTTON PANEL ~~~~~~~~~~~~~~~~~~~~~ */
 #panel {
-	width: 500px;
+	width: 750px;
 	height: 1080px;
 	background-color: rgb(46, 53, 90);
 	position: absolute;
@@ -466,6 +468,15 @@ body,html{
 	width: 10px;
 	height: 880px;
 	left: 245px;
+	top: 100px;
+	border-radius: 50px;
+	background-color: black;
+}
+#panelBreak2 {
+	position: absolute;
+	width: 10px;
+	height: 950px;
+	left: 495px;
 	top: 100px;
 	border-radius: 50px;
 	background-color: black;
@@ -568,7 +579,7 @@ body,html{
 .resetBans { top: 650px; }
 .resetProtects { top: 750px; }
 
-.viewButton { bottom: 30px }
+.viewButton { bottom: 130px }
 .pickView { left: 30px; } 
 .gameView { left: 135px; }
 .roundButton {
@@ -588,8 +599,15 @@ body,html{
 .gfbutton { left: 158px; }
 
 /* Star Control */
+#mainControlPanel {
+	top: 100px; left: 0;
+	font-family: RenogareSoft-Regular; 
+	color: white;
+	position: absolute;
+	width: 250px;
+}
 #starControl {
-	top: 100px; right: 0;
+	top: 100px; right: 250px;
 	font-family: RenogareSoft-Regular; 
 	color: white;
 	font-size: 20px;
@@ -620,7 +638,6 @@ body,html{
 }
 #mapChoices h2 {
 	font-family: RenogareSoft-Regular; font-size: 20px;
-	text-shadow: 0px 0px 0px rgba(0,0,0,0);
 }
 #mapChoices button {
 	background-color: white;
@@ -629,6 +646,15 @@ body,html{
 	font-size: medium;
 	margin: 2px 3px;
 	border-radius: 10px;
+}
+
+/* Map Control */
+#mapControl {
+	top: 100px; right: 0px;
+	font-family: RenogareSoft-Regular; 
+	color: white;
+	font-size: 20px;
+	height: 100%;
 }
 
 /* CHAT DISPLAY */
@@ -718,3 +744,23 @@ body,html{
 	position: absolute;
 	left: 105px;
 }
+
+/* Gameplay Names */
+#gameplayNames {
+	opacity: 1;
+	transition: 750ms ease-in-out
+}
+.gameplayName {
+	font-family: RenogareSoft-Regular; 
+	font-style: italic;
+	position: absolute;
+	font-size: 40px;
+}
+.gameplayNameLeft { color: var(--blue); }
+.gameplayNameRight { color: var(--lightpurple); }
+.gameplayNameColumn1 { right: 1455px; }
+.gameplayNameColumn2 { right: 975px; }
+.gameplayNameColumn3 { right: 495px; }
+.gameplayNameColumn4 { right: 15px; }
+.gameplayNameTopRow { bottom: 544px; }
+.gameplayNameBottomRow { bottom: 184px; }

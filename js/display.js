@@ -109,6 +109,23 @@ let mapChoices = document.getElementById("mapChoices")
 // TOP SECTION
 let topSection = document.getElementById("top");
 let gameplaySection = document.getElementById("gameplay");
+let gameplayNames = document.getElementById("gameplayNames")
+let gameplayName1 = document.getElementById("gameplayName1")
+let gameplayName2 = document.getElementById("gameplayName2")
+let gameplayName3 = document.getElementById("gameplayName3")
+let gameplayName4 = document.getElementById("gameplayName4")
+let gameplayName5 = document.getElementById("gameplayName5")
+let gameplayName6 = document.getElementById("gameplayName6")
+let gameplayName7 = document.getElementById("gameplayName7")
+let gameplayName8 = document.getElementById("gameplayName8")
+let playerSlotName1;
+let playerSlotName2;
+let playerSlotName3;
+let playerSlotName4;
+let playerSlotName5;
+let playerSlotName6;
+let playerSlotName7;
+let playerSlotName8;
 
 // SPONSORS
 let sponsor = document.getElementById("sponsor")
@@ -140,6 +157,10 @@ let resetButtonProtects = document.getElementById("resetButtonProtects")
 let resetButtonPicksConfirm = document.getElementById("resetButtonPicksConfirm")
 let resetButtonBansConfirm = document.getElementById("resetButtonBansConfirm")
 let resetButtonProtectsConfirm = document.getElementById("resetButtonProtectsConfirm")
+
+// MAPPOOL PAGE
+let mappool = document.getElementById("mappool")
+
 
 socket.onopen = () => console.log("Successfully Connected");
 socket.onerror = error => console.log("Socket Error: ", error);
@@ -229,6 +250,7 @@ socket.onmessage = async event => {
     let data = JSON.parse(event.data);
 	console.log(data)
 
+	// SCore and Star Visibility
 	if(scoreVisibleTemp !== data.tourney.manager.bools.scoreVisible) {
 		scoreVisibleTemp = data.tourney.manager.bools.scoreVisible;
 		if(scoreVisibleTemp) {
@@ -265,6 +287,7 @@ socket.onmessage = async event => {
 			scoreBlue.style.display = "none";
 		}
 	}
+	// Getting maps
 	if (tempMapID !== data.menu.bm.id) {
 		// MAP ID
 		tempMapID = data.menu.bm.id
@@ -342,6 +365,7 @@ socket.onmessage = async event => {
 		else if (tempMapStatsBPM !== data.menu.bm.stats.BPM.min) mapStatsBPM.innerText = data.menu.bm.stats.BPM.min
 		if (tempMapStatsSR !== data.menu.bm.stats.SR) mapStatsSR.innerText = Math.round((parseFloat(data.menu.bm.stats.SR) + Number.EPSILON) * 10) / 10;
 	}
+	// Team Names
 	if(teamNameBlueTemp !== data.tourney.manager.teamName.left) {
 		teamNameBlueTemp = data.tourney.manager.teamName.left;
 		teamBlueName.innerHTML = teamNameBlueTemp;
@@ -452,6 +476,7 @@ socket.onmessage = async event => {
 			purpleTeamStatsTechBar.style.width = 0
 		}
 	}
+	// IPC State
 	if (numOfClients !== data.tourney.ipcClients.length) numOfClients = data.tourney.ipcClients.length
 	if (ipcState !== data.tourney.manager.ipcState) {
 		ipcState = data.tourney.manager.ipcState
@@ -586,6 +611,39 @@ socket.onmessage = async event => {
 		}
 	}
 
+	// Player Names
+	if (playerSlotName1 !== data.tourney.ipcClients[0].spectating.name) {
+		playerSlotName1 = data.tourney.ipcClients[0].spectating.name
+		gameplayName1.innerText = playerSlotName1
+	}
+	if (playerSlotName2 !== data.tourney.ipcClients[1].spectating.name) {
+		playerSlotName2 = data.tourney.ipcClients[1].spectating.name
+		gameplayName2.innerText = playerSlotName2
+	}
+	if (playerSlotName3 !== data.tourney.ipcClients[2].spectating.name) {
+		playerSlotName3 = data.tourney.ipcClients[2].spectating.name
+		gameplayName3.innerText = playerSlotName3
+	}
+	if (playerSlotName4 !== data.tourney.ipcClients[3].spectating.name) {
+		playerSlotName4 = data.tourney.ipcClients[3].spectating.name
+		gameplayName4.innerText = playerSlotName4
+	}
+	if (playerSlotName5 !== data.tourney.ipcClients[4].spectating.name) {
+		playerSlotName5 = data.tourney.ipcClients[4].spectating.name
+		gameplayName5.innerText = playerSlotName5
+	}
+	if (playerSlotName6 !== data.tourney.ipcClients[5].spectating.name) {
+		playerSlotName6 = data.tourney.ipcClients[5].spectating.name
+		gameplayName6.innerText = playerSlotName6
+	}
+	if (playerSlotName7 !== data.tourney.ipcClients[6].spectating.name) {
+		playerSlotName7 = data.tourney.ipcClients[6].spectating.name
+		gameplayName7.innerText = playerSlotName7
+	}
+	if (playerSlotName8 !== data.tourney.ipcClients[7].spectating.name) {
+		playerSlotName8 = data.tourney.ipcClients[7].spectating.name
+		gameplayName8.innerText = playerSlotName8
+	}
 }
 
 const changeAction = (actionText) => nextAction.innerText = actionText
@@ -807,20 +865,6 @@ function reset(section) {
 		resetButtonProtects.style.display = "none"	
 		resetButtonProtectsConfirm.style.display = "block"
 	}
-	
-	// if (text == "neutral") {
-	// 	document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 1;
-	// 	document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0;
-	// 	document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0;
-	// } else if (text == "blue") {
-	// 	document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0;
-	// 	document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 1;
-	// 	document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0;
-	// } else {
-	// 	document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0;
-	// 	document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0;
-	// 	document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 1;
-	// }
 }
 function resetConfirm(section, confirm) {
 	if (confirm) {
@@ -839,6 +883,7 @@ function resetConfirm(section, confirm) {
 				document.getElementById(`${pickCardPurpleIDs[i]}Button`).style.backgroundColor = "white"
 				pickCardPurpleIDs[i] = undefined
 			}
+			banNum = 0
 			resetPickButton()
 		} else if (section == "bans") {
 			for (var i = 0; i < banCard.length; i++) {
@@ -850,8 +895,8 @@ function resetConfirm(section, confirm) {
 				document.getElementById(`${banCardPurpleIDs[i]}Button`).style.backgroundColor = "white"
 				banCardBlueIDs[i] = undefined
 				banCardPurpleIDs[i] = undefined
-				resetBanButton()
 			}
+			resetBanButton()
 		} else if (section == "protects") {
 			protectCardBlue.style.backgroundImage = "none"
 			protectCardBlueText.innerText = ""
@@ -859,6 +904,9 @@ function resetConfirm(section, confirm) {
 			protectCardPurple.style.backgroundImage = "none"
 			protectCardPurpleText.innerText = ""
 			document.getElementById(`${[protectCardPurpleID]}Button`).style.backgroundColor = "#FFFFFF"
+
+			blueProtectNum = 0
+			purpleProtectNum = 0
 			resetProtectButton()
 		}
 	} else {
@@ -934,6 +982,9 @@ function toPickScreenView() {
 	// Sponsors
 	sponsor.style.opacity = 0;
 	mappoolSponsor.style.opacity = 1;
+	// Gameplay Names
+	gameplayNames.style.opacity = 0;
+	mappool.style.opacity = 1;
 }
 function toGameplayView() {
 	// Changing Background Image
@@ -975,6 +1026,9 @@ function toGameplayView() {
 	// Sponsors
 	sponsor.style.opacity = 1;
 	mappoolSponsor.style.opacity = 0;
+	// Gameplay Names
+	gameplayNames.style.opacity = 1;
+	mappool.style.opacity = 0;
 }
 
 changeStars(null)
@@ -1049,9 +1103,7 @@ function mapClickEvent() {
 			if (banNum == 2) nextAction.innerText = "Blue Ban"
 			else if (banNum == 3) nextAction.innerText = "Purple Ban"
 			else nextAction.innerText = "Blue Pick"
-		} else if (banTotalNum == 1) {
-			nextAction.innerText = "Blue Pick"
-		}
+		} else if (banTotalNum == 1) nextAction.innerText = "Blue Pick"
 		break;
 	case (nextAction.innerText == "Purple Ban"): 
 		banNum++
@@ -1071,9 +1123,7 @@ function mapClickEvent() {
 			if (banNum == 2) nextAction.innerText = "Purple Ban"
 			else if (banNum == 3) nextAction.innerText = "Blue Ban"
 			else nextAction.innerText = "Purple Pick"
-		} else if (banTotalNum == 1) {
-			nextAction.innerText = "Purple Pick"
-		}
+		} else if (banTotalNum == 1) nextAction.innerText = "Purple Pick"
 		break;
 	case (nextAction.innerText == "Blue Pick"):
 		// Change style of button
@@ -1086,8 +1136,12 @@ function mapClickEvent() {
 			pickCardBlueIDs[i] = clickedMap.beatmapID
 			break;
 		}
+		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0
+		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 1
+		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0
 		nextAction.innerText = "Purple Pick"
 		break;
+		
 	case (nextAction.innerText == "Purple Pick"): 
 		// Change style of button
 		this.style.backgroundColor = "var(--purple)"
@@ -1100,6 +1154,9 @@ function mapClickEvent() {
 			console.log(pickCardPurpleIDs)
 			break;
 		}
+		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0
+		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0
+		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 1
 		nextAction.innerText = "Blue Pick"
 		break;
 	}

@@ -10,10 +10,19 @@
     <body>
         <div id="main">
             <img src="static/prediction.png" id="predictionOverlay">
-            <button id="teamDisplaybuttonleft" onclick="teamDisplayleft();"></button>
-            <button id="teamDisplaybuttonright" onclick="teamDisplayright();"></button>
-            <div id="currentTeamName">United States</div>
-            <div id="currentTeamFlag"></div>
+            <section id="currentCountry">
+                <button id="teamDisplaybuttonleft" onclick="teamDisplayleft();"></button>
+                <button id="teamDisplaybuttonright" onclick="teamDisplayright();"></button>
+                <div id="currentTeamName">United States</div>
+                <div id="currentTeamFlag"></div>
+            </section>
+            <section id="currentSong">
+                <div id="currentSongImage">
+                    <div id="currentSongImageLayer"></div>
+                </div>
+                <div class="currentSongTextWrappers" id="currentSongTitleWrapper"><div class="currentSongText" id="currentSongTitle">Hello</div></div>
+                <div class="currentSongTextWrappers" id="currentSongArtistWrapper"><div class="currentSongText" id="currentSongArtist">Goodbye </div></div>
+            </section>
             <div id="commBox"></div>
             <div id="compareBox"></div>
             <div id="tierList"></div>
