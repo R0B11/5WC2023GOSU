@@ -161,6 +161,10 @@ let resetButtonProtectsConfirm = document.getElementById("resetButtonProtectsCon
 // MAPPOOL PAGE
 let mappool = document.getElementById("mappool")
 
+// SETTING CHANGES
+let mapControl = document.getElementById("mapControl")
+let setActionElement = document.getElementById("setAction")
+let currentAction;
 
 socket.onopen = () => console.log("Successfully Connected");
 socket.onerror = error => console.log("Socket Error: ", error);
@@ -620,30 +624,30 @@ socket.onmessage = async event => {
 		playerSlotName2 = data.tourney.ipcClients[1].spectating.name
 		gameplayName2.innerText = playerSlotName2
 	}
-	if (playerSlotName3 !== data.tourney.ipcClients[2].spectating.name) {
-		playerSlotName3 = data.tourney.ipcClients[2].spectating.name
-		gameplayName3.innerText = playerSlotName3
-	}
-	if (playerSlotName4 !== data.tourney.ipcClients[3].spectating.name) {
-		playerSlotName4 = data.tourney.ipcClients[3].spectating.name
-		gameplayName4.innerText = playerSlotName4
-	}
-	if (playerSlotName5 !== data.tourney.ipcClients[4].spectating.name) {
-		playerSlotName5 = data.tourney.ipcClients[4].spectating.name
-		gameplayName5.innerText = playerSlotName5
-	}
-	if (playerSlotName6 !== data.tourney.ipcClients[5].spectating.name) {
-		playerSlotName6 = data.tourney.ipcClients[5].spectating.name
-		gameplayName6.innerText = playerSlotName6
-	}
-	if (playerSlotName7 !== data.tourney.ipcClients[6].spectating.name) {
-		playerSlotName7 = data.tourney.ipcClients[6].spectating.name
-		gameplayName7.innerText = playerSlotName7
-	}
-	if (playerSlotName8 !== data.tourney.ipcClients[7].spectating.name) {
-		playerSlotName8 = data.tourney.ipcClients[7].spectating.name
-		gameplayName8.innerText = playerSlotName8
-	}
+	// if (playerSlotName3 !== data.tourney.ipcClients[2].spectating.name) {
+	// 	playerSlotName3 = data.tourney.ipcClients[2].spectating.name
+	// 	gameplayName3.innerText = playerSlotName3
+	// }
+	// if (playerSlotName4 !== data.tourney.ipcClients[3].spectating.name) {
+	// 	playerSlotName4 = data.tourney.ipcClients[3].spectating.name
+	// 	gameplayName4.innerText = playerSlotName4
+	// }
+	// if (playerSlotName5 !== data.tourney.ipcClients[4].spectating.name) {
+	// 	playerSlotName5 = data.tourney.ipcClients[4].spectating.name
+	// 	gameplayName5.innerText = playerSlotName5
+	// }
+	// if (playerSlotName6 !== data.tourney.ipcClients[5].spectating.name) {
+	// 	playerSlotName6 = data.tourney.ipcClients[5].spectating.name
+	// 	gameplayName6.innerText = playerSlotName6
+	// }
+	// if (playerSlotName7 !== data.tourney.ipcClients[6].spectating.name) {
+	// 	playerSlotName7 = data.tourney.ipcClients[6].spectating.name
+	// 	gameplayName7.innerText = playerSlotName7
+	// }
+	// if (playerSlotName8 !== data.tourney.ipcClients[7].spectating.name) {
+	// 	playerSlotName8 = data.tourney.ipcClients[7].spectating.name
+	// 	gameplayName8.innerText = playerSlotName8
+	// }
 }
 
 const changeAction = (actionText) => nextAction.innerText = actionText
@@ -1168,4 +1172,56 @@ function rollWinner() {
 function setCardInfo(element, map) {
 	element.children[1].innerText = `${map.mod.toUpperCase()}${map.order}`
 	element.style.backgroundImage =  `url("${map.imgURL}")`
+}
+
+// Setting Changes
+function setAction() {
+	// Set current action
+	currentAction = setActionElement.value
+
+	// Remove Children that are not needed
+	let removeStartingChild;
+	for (var i = 0; i < mapControl.childElementCount; i++) if (mapControl.children[i].id == "navigation") removeStartingChild = i
+	for (var i = mapControl.childElementCount - 1; i > removeStartingChild; i--) mapControl.children[i].remove()
+
+	// Question of which teams
+	let selectTeamOptionText = document.createElement("div")
+	selectTeamOptionText.innerText = "Which Team?"
+	let selectTeamOptions = document.createElement("select")
+	let selectOptionsOption  = document.createElement("option")
+	let blueTeamOption = document.createElement("option")
+	let purpleTeamOption = document.createElement("option")
+	let selectTeamOptionBRPost = document.createElement("br")
+	let selectTeamOptionBRPost2 =  document.createElement("br")
+
+	selectTeamOptionText.setAttribute("id","selectTeamOptionText")
+	selectTeamOptions.setAttribute("id","selectTeamOptions")
+	selectTeamOptionBRPost.setAttribute("id","selectTeamOptionBRPost")
+	selectTeamOptionBRPost2.setAttribute("id","selectTeamOptionBRPost2")
+
+	selectTeamOptions.classList.add("mapControlSelect")
+	selectOptionsOption.disabled = true
+	selectOptionsOption.selected = true
+	selectOptionsOption.setAttribute("value","selectOption")
+	selectOptionsOption.innerText = "Select Options"
+	blueTeamOption.setAttribute("value", "blue")
+	blueTeamOption.innerText = "Blue"
+	purpleTeamOption.setAttribute("value", "purple")
+	purpleTeamOption.innerText = "Purple"
+
+	mapControl.append(selectTeamOptionText)
+	mapControl.append(selectTeamOptions)
+	selectTeamOptions.append(selectOptionsOption)
+	selectTeamOptions.append(blueTeamOption)
+	selectTeamOptions.append(purpleTeamOption)
+	mapControl.append(selectTeamOptionBRPost)
+	mapControl.append(selectTeamOptionBRPost2)
+
+	if ((setActionElement.value == "removeBan" && banTotalNum == 1) || setActionElement.value == "removeProtect") {
+		let applyChangesButton = document.createElement("button")
+		applyChangesButton.setAttribute("class", "panelButton resetButton")
+		applyChangesButton.setAttribute("onclick", "applyChanges()")
+		applyChangesButton.innerText = "Apply Changes"
+		mapControl.append(applyChangesButton)
+	} else selectTeamOptions.setAttribute("onchange","setTeam()")
 }
