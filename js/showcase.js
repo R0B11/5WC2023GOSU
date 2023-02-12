@@ -25,6 +25,8 @@ let tempLENs;
 let currBPM;
 let mapIds;
 
+let replayer;
+
 let mapStatsCS = document.getElementById("mapStatsCSnum");
 let mapStatsAR = document.getElementById("mapStatsARnum");
 let mapStatsOD = document.getElementById("mapStatsODnum");
@@ -36,6 +38,8 @@ let srBar = document.getElementById("mapStatsSRbar");
 let arBar = document.getElementById("mapStatsARbar");
 let csBar = document.getElementById("mapStatsCSbar");
 let odBar = document.getElementById("mapStatsODbar");
+
+let replayerPanel = document.getElementById("replayer");
 
 let srbarPercent;
 let srbarPix;
@@ -102,6 +106,10 @@ socket.onmessage = async event => {
         mapDifficulty.innerText = `[ ${data.menu.bm.metadata.difficulty} ]`;
         if (mapDifficulty.getBoundingClientRect().width > 324) mapDifficulty.classList.add("mapInfoWrap")
         else mapDifficulty.classList.remove("mapInfoWrap")
+
+        // Replayer: Identify and inject
+        replayer = data.gameplay.name;
+        replayerPanel.innerHTML = replayer;
 
         // Map Slot Scrolling
         // Calculate toMapSlot
