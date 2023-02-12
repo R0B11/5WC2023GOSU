@@ -1,1 +1,57 @@
-[{"beatmapID":3216821,"poolerComment":"hello","modID":"NM1"},{"beatmapID":3797883,"poolerComment":"goodbye","modID":"NM2"},{"beatmapID":3207056,"poolerComment":"hello","modID":"NM3"},{"beatmapID":3499390,"poolerComment":"goodbye","modID":"NM4"},{"beatmapID":3804092,"poolerComment":"hello","modID":"NM5"},{"beatmapID":3588298,"poolerComment":"goodbye","modID":"NM6"},{"beatmapID":3235391,"poolerComment":"hello","modID":"NM7"},{"beatmapID":3448616,"poolerComment":"goodbye","modID":"HD1"},{"beatmapID":3711413,"poolerComment":"hello","modID":"HD2"},{"beatmapID":3720306,"poolerComment":"goodbye","modID":"HD3"},{"beatmapID":3255289,"poolerComment":"hello","modID":"HD4"},{"beatmapID":3802909,"poolerComment":"goodbye","modID":"HR1"},{"beatmapID":3804286,"poolerComment":"hello","modID":"HR2"},{"beatmapID":1559974,"poolerComment":"goodbye","modID":"HR3"},{"beatmapID":2791096,"poolerComment":"hello","modID":"HR4"},{"beatmapID":2719411,"poolerComment":"goodbye","modID":"DT1"},{"beatmapID":2881616,"poolerComment":"hello","modID":"DT2"},{"beatmapID":3557309,"poolerComment":"goodbye","modID":"DT3"},{"beatmapID":2857813,"poolerComment":"hello","modID":"DT4"},{"beatmapID":2223963,"poolerComment":"goodbye","modID":"TB1"}]
+[
+    {
+      "beatmapTitle": "Relive",
+      "poolerComment": "Concistency check on aim",
+      "modID": "NM1"
+    },
+    {
+      "beatmapTitle": "We Got It (feat. Rothwell)",
+      "poolerComment": "Flow aim & stamina tapping",
+      "modID": "NM2"
+    },
+    {
+      "beatmapTitle": "firewall",
+      "poolerComment": "Alt with a little bit of tech tapping",
+      "modID": "NM3"
+    },
+    {
+      "beatmapTitle": "Hestia",
+      "poolerComment": "Slidertech aim",
+      "modID": "NM4"
+    },
+    {
+      "beatmapTitle": "Zange Mairi",
+      "poolerComment": "Flow and stacks tapping",
+      "modID": "HD1"
+    },
+    {
+      "beatmapTitle": "My Life Is Over and I Couldn't Be Happier",
+      "poolerComment": "170BPM aim, light reading",
+      "modID": "HD2"
+    },
+    {
+      "beatmapTitle": "Edge",
+      "poolerComment": "Tapping and aim tech mix",
+      "modID": "HR1"
+    },
+    {
+      "beatmapTitle": "So Cold",
+      "poolerComment": "110BPM Aim",
+      "modID": "HR2"
+    },
+    {
+      "beatmapTitle": "Kono Sekai wa Bokura wo Matteita",
+      "poolerComment": "Aim with some triples, AR10",
+      "modID": "DT1"
+    },
+    {
+      "beatmapTitle": "Extend Ash ~ Houraijin",
+      "poolerComment": "Speed tapping",
+      "modID": "DT2"
+    },
+    {
+      "beatmapTitle": "PANTA RHEI",
+      "poolerComment": "Aim focus with a good amount of streams",
+      "modID": "FM1"
+    }
+  ]
