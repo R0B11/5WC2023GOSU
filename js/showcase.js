@@ -201,8 +201,8 @@ socket.onmessage = async event => {
     }
 
     // SR, CS, AR, OD
-    if (currSR !== data.menu.bm.stats.SR) {
-        currSR = data.menu.bm.stats.SR;
+    if (currSR !== data.menu.bm.stats.fullSR) {
+        currSR = data.menu.bm.stats.fullSR;
         mapStatsSR.innerText = currSR;
         if (currSR > 4) {
             srbarPercent = (currSR - 4) / 3.1;
