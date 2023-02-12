@@ -57,34 +57,76 @@ let toMapSlot = 0;
 let animTime;
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-let getMaps = new Promise(async (resolve, reject) => {
-    let allMaps;
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:24050/5WC2023GOSU/data/showcaseBeatmaps.json`, false);
-    xhr.onload = function xhrLoad()  {
-        if (this.status == 404) {
-            console.log("Showcase Beatmaps Data Not Found")
-            return;
-        }
-        else if (this.status == 200) allMaps = JSON.parse(this.responseText)
+let allMaps = JSON.parse(`[
+    {
+      "beatmapTitle": "Relive",
+      "poolerComment": "Concistency check on aim",
+      "modID": "NM1"
+    },
+    {
+      "beatmapTitle": "We Got It (feat. Rothwell)",
+      "poolerComment": "Flow aim & stamina tapping",
+      "modID": "NM2"
+    },
+    {
+      "beatmapTitle": "firewall",
+      "poolerComment": "Alt with a little bit of tech tapping",
+      "modID": "NM3"
+    },
+    {
+      "beatmapTitle": "Hestia",
+      "poolerComment": "Slidertech aim",
+      "modID": "NM4"
+    },
+    {
+      "beatmapTitle": "Zange Mairi",
+      "poolerComment": "Flow and stacks tapping",
+      "modID": "HD1"
+    },
+    {
+      "beatmapTitle": "My Life Is Over and I Couldn't Be Happier",
+      "poolerComment": "170BPM aim, light reading",
+      "modID": "HD2"
+    },
+    {
+      "beatmapTitle": "Edge",
+      "poolerComment": "Tapping and aim tech mix",
+      "modID": "HR1"
+    },
+    {
+      "beatmapTitle": "So Cold",
+      "poolerComment": "110BPM Aim",
+      "modID": "HR2"
+    },
+    {
+      "beatmapTitle": "Kono Sekai wa Bokura wo Matteita",
+      "poolerComment": "Aim with some triples, AR10",
+      "modID": "DT1"
+    },
+    {
+      "beatmapTitle": "Extend Ash ~ Houraijin",
+      "poolerComment": "Speed tapping",
+      "modID": "DT2"
+    },
+    {
+      "beatmapTitle": "PANTA RHEI",
+      "poolerComment": "Aim focus with a good amount of streams",
+      "modID": "FM1"
     }
-    xhr.send();
-    resolve(allMaps); 
-})
-getMaps.then(allMaps => {
-    for (var i = 0; i < allMaps.length; i++) {
-        let newMapTitle = document.createElement("div")
-        newMapTitle.setAttribute("id", allMaps[i].beatmapID)
-        newMapTitle.innerText = `${allMaps[i].modID.toUpperCase()}`
-        newMapTitle.classList.add("mapSlot")
+  ]`);
 
-        if (i == 0) newMapTitle.classList.add("current")
-        else if (i == 1) newMapTitle.classList.add("below")
-        else newMapTitle.classList.add("belowAll")
+for (var i = 0; i < allMaps.length; i++) {
+    let newMapTitle = document.createElement("div")
+    newMapTitle.setAttribute("id", allMaps[i].beatmapID)
+    newMapTitle.innerText = `${allMaps[i].modID.toUpperCase()}`
+    newMapTitle.classList.add("mapSlot")
 
-        currentMapWheel.append(newMapTitle)
-    }
-})
+    if (i == 0) newMapTitle.classList.add("current")
+    else if (i == 1) newMapTitle.classList.add("below")
+    else newMapTitle.classList.add("belowAll")
+
+    currentMapWheel.append(newMapTitle)
+}
 
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
