@@ -101,14 +101,9 @@ function validateTextAreaMappoolGenerator() {
     let arrayOfMapIDs = new Array();
     let arrayOfComments = new Array();
 
-    console.log(modAbbArray.length)
     // Mod Array
     for (var i = 0; i < modAbbArray.length; i++) {
-        console.log(i)
         for (var j = 0; j < modNumArray[i].value; j++) {
-            console.log("hello")
-            console.log(modAbbArray[i].value)
-            console.log(j + 1)
             arrayOfModIDs.push(`${modAbbArray[i].value}${j + 1}`)
         }
     }
@@ -128,22 +123,15 @@ function validateTextAreaMappoolGenerator() {
     if (notANum != 0) return alert(`There are ${notANum} value(s) that are not a number.`)
     if (notComment != 0) return alert(`There are ${notComment} missing comments`)
 
-    console.log(arrayOfMapIDs, arrayOfComments, arrayOfModIDs)
     turnIntoJSONAndDownload(arrayOfMapIDs, arrayOfComments, arrayOfModIDs)
 }
 
 function turnIntoJSONAndDownload(mapIDArray, mapCommentArray, modIDArray) {
-    let mapArray = new Array();
-    for (var i = 0; i < mapIDArray.length; i++) {
-        let mapObj = {
-            beatmapID: mapIDArray[i],
-            poolerComment: mapCommentArray[i],
-            modID: modIDArray[i]
-        }
-        mapArray.push(mapObj)
-    }
+    let apiKey = getAPIKey();
 
-    const mappoolDL = "data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(mapArray));
+    for (var i = 0; i < mapIDArray.length; i++) requestMapData(mapIDArray[i], apiKey, modIDArray[i], mapCommentArray[i])
+
+    const mappoolDL = "data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(beatmaps));
     let mappoolAnchorElem = document.createElement("a");
     mappoolAnchorElem.setAttribute("id", "downloadMappool");
     mappoolAnchorElem.setAttribute("href", mappoolDL);
@@ -174,4 +162,52 @@ function turnIntoJSONAndDownload(mapIDArray, mapCommentArray, modIDArray) {
 
     mappoolDownloadPage.append(previousPageButton);
     mappoolDownloadPage.append(mappoolDownloadPageLinks);
+}
+
+function requestMapData(mapid, api, modid, comment) {
+
+    let request = new XMLHttpRequest();
+    let mapMod = modid.toLowerCase();
+    let modNum
+    let singleMap = {}
+
+    if (mapMod.includes("hr")) modNum = 16
+    else if (mapMod.includes("dt")) modNum = 64
+    else if (mapMod.includes("ez")) modNum = 2
+    else modNum = 0
+
+    request.open("GET",`https://osu.ppy.sh/api/get_beatmaps?k=${api}&b=${mapid}&mods=${modNum}`,false)
+    request.onload = function() {
+        let mapData = JSON.parse(this.response)
+        if (request.status == 200) {
+            singleMap = {};
+            mapData.forEach(map => {
+                singleMap.songName = map.title
+                singleMap.difficulty = map.version
+                singleMap.modid = modid
+                singleMap.comment = comment
+                singleMap.sr = map.difficultyrating
+                singleMap.cs = map.diff_size
+                singleMap.ar = map.diff_approach
+                singleMap.od = map.diff_overall
+                singleMap.bpm = map.bpm
+                singleMap.len = map.total_length
+                if (mapMod.includes("dt")) {
+                    singleMap.bpm = map.bpm * 1.5
+                    if (map.diff_approach <= 5) {singleMap.ar = (1800-((1800 - map.diff_approach)*2/3))/120;}
+                    else {singleMap.ar = ((1200-((1200-(map.diff_approach-5)*150)*2/3))/150)+5;}
+                    if (map.diff_overall <= 5) {singleMap.od = (1800-((1800 - map.diff_overall)*2/3))/120;}
+                    else {singleMap.od = ((1200-((1200-(map.diff_overall-5)*150)*2/3))/150)+5;}
+                } else if (mapMod.includes("hr")) {
+                    singleMap.cs = map.diff_size * 1.3;
+                    singleMap.ar = map.diff_approach * 1.4; 
+                    if (singleMap.ar > 10) {singleMap.ar = 10;}
+                    singleMap.od = map.diff_overall * 1.4;
+                    if (singleMap.od > 10) {singleMap.od = 10;}
+                }
+                beatmaps.push(singleMap)
+            })
+        }
+    }
+    request.send()
 }
