@@ -51,28 +51,98 @@ let compareBox = document.getElementById("compareBox")
 
 function generateRoster() {
     
-    let rightbox = document.getElementsByClassName("rightbox")
-    for (var i = 0; i < rightbox.length; i++) rightbox[i].remove()
-    let pointers = document.getElementsByClassName("pointer")
-    for (var i = 0; i < pointers.length; i++) pointers  [i].remove()
+    let rightbox = document.querySelectorAll('.rightbox')
+    if (rightbox.length > 0) rightbox.forEach(element => element.remove())
+    let pointer = document.querySelectorAll('.pointer')
+    if (pointer.length > 0) pointer.forEach(element => element.remove())
+    let leftbox = document.querySelectorAll('.leftbox')
+    if (leftbox.length > 0) leftbox.forEach(element => element.remove())
 
     let currentTeam = predictionTeams[currentTeamLocation]
     for (var i = 0; i < playerData.length; i++) {
         // Creating Green Boxes
         if (currentTeam == playerData[i].country_name) {
+            let playersFromLastYearNotInThisYear = []
+            let playersFromLastYearAndThisYear = []
+            let playersFromLastYear = []
+            for (var j = 0; j < playerData[i].last_year.length; j++) {
+                playersFromLastYear.push(playerData[i].last_year[j][0])
+                if (!playerData[i].last_year[j][1]) playersFromLastYearNotInThisYear.push(playerData[i].last_year[j][0])
+                else playersFromLastYearAndThisYear.push(playerData[i].last_year[j][0])
+            }
+
+            // Generate Right Boxes
             for (var j = 0; j < playerData[i].current_year.length; j++) {
-                // Generate Right Boxes
                 let rightBox = document.createElement("div")
                 rightBox.classList.add("rightbox")
                 rightBox.setAttribute("id",`rightPlayer${j+1}`)
                 rightBox.innerText = playerData[i].current_year[j]
                 rightBox.style.top = `${10 + j * 60}px`
                 compareBox.append(rightBox)
-            }
-        }
 
-        if (currentTeam == playerData[i].country_name) {
-            
+                if (!playersFromLastYear.includes(playerData[i].current_year[j])) {
+                    let pointer = document.createElement("div")
+                    pointer.classList.add("pointer")
+                    pointer.setAttribute("id",`pointer${j+1}`)
+                    pointer.style.top = `${25 + j * 60}px`
+                    compareBox.append(pointer)
+                }
+            }
+
+            // Generate Left Boxes
+            let redBoxCounter = 0
+            // Where they are both there
+            for (var j = 0; j < playerData[i].current_year.length; j++) {
+                if (playerData[i].last_year.length == 0) break
+                if (playersFromLastYearAndThisYear.includes(playerData[i].current_year[j])) continue
+                let leftBox = document.createElement("div")
+                leftBox.classList.add("leftbox")
+                leftBox.setAttribute("id",`leftPlayer${j+1}`)
+                leftBox.innerText = playersFromLastYearNotInThisYear[redBoxCounter]
+                leftBox.style.top = `${10 + j * 60}px`
+                compareBox.append(leftBox)
+                redBoxCounter++
+
+                // Generating Arrows
+                let pointer = document.createElement("div")
+                pointer.classList.add("pointer")
+                pointer.setAttribute("id",`pointer${j+1}`)
+                pointer.style.top = `${25 + j * 60}px`
+                compareBox.append(pointer)
+            }
+            // When they are not there
+            let currentNo = j;
+            let currentRemaining = playersFromLastYearNotInThisYear.length - redBoxCounter
+            if (redBoxCounter < playersFromLastYearNotInThisYear.length) {
+                for (var k = 0; k < currentRemaining; k++) {
+                    let leftBox = document.createElement("div")
+                    leftBox.classList.add("leftbox")
+                    leftBox.setAttribute("id",`leftPlayer${j+1}`)
+                    leftBox.innerText = playersFromLastYearNotInThisYear[redBoxCounter]
+                    leftBox.style.top = `${10 + (currentNo + k)* 60}px`
+                    compareBox.append(leftBox)
+                    redBoxCounter++
+
+                    // Generating Arrows
+                    let pointer = document.createElement("div")
+                    pointer.classList.add("pointer")
+                    pointer.setAttribute("id",`pointer${j+1}`)
+                    pointer.style.top = `${25 + j * 60}px`
+                    compareBox.append(pointer)
+                }
+            }
+
+            // Remove all undefined left boxes
+            leftbox = document.querySelectorAll('.leftbox')
+            pointer = document.querySelectorAll('.pointer')
+            if (leftbox.length > 0) {
+                for (var j = 0; j < leftbox.length; j++) {
+                    if (leftbox[j].innerText == "undefined") {
+                        leftbox[j].remove()
+                        pointer[j].remove()
+                    }
+                }
+            }
         }
     }
 }
