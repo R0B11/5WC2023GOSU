@@ -4,12 +4,12 @@
     <head>
         <meta charset="UTF-8">
         <link href="styles/predictions.css" rel="stylesheet" type="text/css" />
+        <link href="styles/controlPanel.css" rel="stylesheet" type="text/css" />
         <script src="deps/reconnecting-websocket.min.js"></script>
     </head>
 
     <body>
         <div id="main">
-            <img src="static/prediction.png" id="predictionOverlay">
             <section id="currentCountry">
                 <button id="teamDisplaybuttonleft" onclick="teamDisplayleft();"></button>
                 <button id="teamDisplaybuttonright" onclick="teamDisplayright();"></button>
@@ -24,8 +24,72 @@
                 <div class="currentSongTextWrappers" id="currentSongArtistWrapper"><div class="currentSongText" id="currentSongArtist">Goodbye </div></div>
             </section>
             <div id="commBox"></div>
-            <div id="compareBox"></div>
-            <div id="tierList"></div>
+            <div id="compareBox">
+                
+            </div>
+            <div id="tierList">
+                <div class="tierListRowTop" id="onePlaceRow"></div>
+                <div class="tierListRowTop" id="twoPlaceRow"></div>
+                <div class="tierListRowTop" id="threePlaceRow"></div>
+                <div class="tierListRowTop" id="fourPlaceRow"></div>
+                <div class="tierListRowTop" id="fivetosixPlaceRow"></div>
+                <div class="tierListRowMiddle" id="seventoeightPlaceRow"></div>
+                <div class="tierListRowMiddle" id="ninetotwelvePlaceRow"></div>
+                <div class="tierListRowMiddle" id="thirteentosixteenPlaceRow"></div>
+                <div class="tierListRowMiddle" id="seventeentotwentyfourPlaceRow"></div>
+                <div class="tierListRowMiddle" id="twentyfivetothrirtytwoPlaceRow"></div>
+                <div class="tierListRowBottom" id="dnqPlaceRow"></div>
+            </div>
+        </div>
+        <div id="controlPanel">
+            <section id="controlPanelSectionOne">
+                <div id="controlPanelAddRemovePlacesTitle">Add/Remove Places</div><br>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(1)">Add to 1st</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(1)" >Remove From 1st</button>
+                </div>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(2)">Add to 2nd</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(2)" >Remove From 2nd</button>
+                </div>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(3)">Add to 3rd</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(3)" >Remove From 3rd</button>
+                </div>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(4)">Add to 4th</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(4)" >Remove From 4th</button>
+                </div>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(5)">Add to 5th-6th</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(5)" >Remove From 5th-6th</button>
+                </div>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(7)">Add to 7th - 8th</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(7)" >Remove From 7th-8th</button>
+                </div>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(9)">Add to 9th-12th</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(9)" >Remove From 9th-12th</button>
+                </div>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(13)">Add to 13th-16th</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(13)" >Remove From 13th-16th</button>
+                </div>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(17)">Add to 17th-24th</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(17)" >Remove From 17th-24th</button>
+                </div>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(25)">Add to 25th - 32nd</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(25)" >Remove From 25th-32nd</button>
+                </div>
+                <div class="controlPanelAddRemoveSectionButtons">
+                    <button class="controlPanelButton controlPanelAddButton" onclick="changeFlagToLocation(33)">Add to DNQ</button>
+                    <button class="controlPanelButton controlPanelRemoveButton" onclick="removeFlag(33)" >Remove From DNQ</button>
+                </div>
+            </section>
+            <section id="controlPanelSectionTwo"></section>
         </div>
 
         <script src="js/predictions.js"></script>

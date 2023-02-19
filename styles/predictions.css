@@ -27,28 +27,14 @@ body,html{
     overflow-y: hidden;
 }
 
-#main{
-    font-family: Round-Control;
-    font-weight: normal;
-    color: white;
-	background-color: #000210;
-    width: 1920px;
-    height: 1080px;
-    z-index: 2;
+body {
+    background-image: url("../static/prediction.png");
+    background-repeat: no-repeat;
+    background-color: black;
+    height: 3000px;
 }
-
-#predictionOverlay {
-	position: absolute; top: 0; left: 0;
+#main {
     width: 1920px; height: 1080px;
-	z-index: 2;
-}
-
-#tierList{
-    position: absolute;
-    right: 100px;
-    bottom: 100px;
-    width: 500px;
-    height: 500px;
 }
 
 #teamDisplaybuttonleft{
@@ -85,7 +71,7 @@ body,html{
 }
 #currentTeamFlag{
     position: absolute;
-    top: 400px;
+    top: 428px;
     left: 230px;
     height: 400px;
     width: 200px;
@@ -113,6 +99,8 @@ body,html{
     white-space: nowrap;
     display: inline-block;
     font-size: 30px;
+    color: white;
+    font-family: Round-Control;
 }
 #currentSongTitleWrapper { top: 925px; }
 #currentSongArtistWrapper { top: 960px; }
@@ -129,3 +117,158 @@ body,html{
     80% { transform: translate(calc(-100% + 323px)); }
     100% { transform: translate(calc(-100% + 323px)); }
 }
+
+/* Comparison Box */
+#compareBox {
+    position: absolute;
+    width: 515px;
+    height: 500px;
+    left: 720px;
+    top: 550px;
+    background-color:transparent; 
+    font-size: 18px;
+    font-family: Round-Control;
+    font-weight: normal;
+    color: white;
+    z-index: 10;
+}
+.rightbox {
+    position: absolute;
+    right: 20px;
+    border-radius: 15px;
+    height: 20px;
+    width: 200px;
+    border: 5px solid #54ff5d;
+    background: black;
+    text-align: center;
+    padding: 10px 0px;
+    text-shadow: 0 0 2px black, 0 0 4px black;
+}
+.redbox {
+    position: absolute;
+    left: 20px;
+    border-radius: 15px;
+    height: 20px;
+    width: 200px;
+    background-color: #ff5454;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-shadow: 0 0 2px black, 0 0 4px black;
+}
+.pointer {
+    position: absolute;
+    left: 244px;
+    border-top: 15px solid transparent;
+    border-left: 30px solid white;
+    border-bottom: 15px solid transparent;
+    top: 20px
+}
+
+/* Tier List */
+#tierList{
+    margin: 0;
+    position: absolute;
+    left: 1419px; top: 447px;
+    width: 500px; height: 500px;
+}
+.tierListRowTop {
+    background-color: transparent;
+    width: 428px; height: 51px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.tierListRowMiddle {
+    background-color: transparent;
+    width: 428px; height: 52.5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.tierListRowBottom {
+    width: 428px; height: 83px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.tierListStandardRowImage {
+    margin-left: 8px;
+    width: 45px; 
+    height: 32.4px;
+    background-image: url("../static/flags/Argentina.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.tierListBottomRowImage {
+    margin-left: 8px;
+    width: 30px; 
+    height: 21.4px;
+    background-image: url("../static/flags/Argentina.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Control Panel */
+#controlPanel {
+    position: absolute; left: 1920px; top: 0;
+    width: 500px;
+    height: 1080px;
+    background-color: rgb(46, 53, 90);
+    color: white;
+    font-family: RenogareSoft-Regular; 
+}
+#controlPanelSectionOne {
+    width: 250px;
+}
+#controlPanelSectionTwo {
+    position: absolute; right: 0px; top: 0px;
+    width: 250px;
+}
+.controlPanelAddRemoveSectionButtons {
+    position: relative;
+    width: 100%;
+    height: 60px;
+}
+#controlPanelAddRemovePlacesTitle {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 24px;
+}
+.controlPanelButton {
+    position: absolute;
+    width: 100px; height: 50px;
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+.controlPanelButton:active {
+    border: 1px solid black;
+    color: black;
+    background-color: white;
+}
+.controlPanelAddButton {
+    top: 0px; left: 20px;
+}
+.controlPanelRemoveButton {
+    top: 0px; right: 20px;
+}
+#selectList {
+    font-family: RenogareSoft-Regular;
+    color: white;
+    background-color: transparent;
+    font-size: 13px;
+    border: none;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+#selectList option {
+    width: 210px;
+    text-align: center;
+}
+
+#selectList::-webkit-scrollbar {
+    display: none;
+  }
