@@ -76,7 +76,7 @@ canvas { position: absolute; top: 0; z-index: 0; }
     color: black;
     font-size: 20px;
     left: 50%; transform: translateX(-50%);
-    top: -10px;
+    top: 1%;
     opacity: 0;
 }
 .above {
@@ -84,7 +84,7 @@ canvas { position: absolute; top: 0; z-index: 0; }
     color: grey;
     font-size: 20px;
     left: 50%; transform: translateX(-50%);
-    top: 10px; opacity: 1;
+    top: 11%; opacity: 1;
 }
 .current {
     position: absolute;
@@ -98,7 +98,7 @@ canvas { position: absolute; top: 0; z-index: 0; }
     color: grey;
     font-size: 20px;
     left: 50%; transform: translateX(-50%);
-    bottom: 10px;
+    top:67%;
     opacity: 1;
 }
 .belowAll {
@@ -106,8 +106,123 @@ canvas { position: absolute; top: 0; z-index: 0; }
     color: black;
     font-size: 16px;
     left: 50%; transform: translateX(-50%);
-    bottom: -10px;
+    top: 78%;
     opacity: 0;
+}
+
+/* Going Down the List*/
+.fromAboveToAboveAll { animation-name: fromAboveToAboveAll; }
+.fromCurrentToAbove { animation-name: fromCurrentToAbove; }
+.fromBelowToCurrent { animation-name: fromBelowToCurrent;  }
+.fromBelowAllToBelow { animation-name: fromBelowAllToBelow; }
+@keyframes fromAboveToAboveAll {
+    0% {
+        color: #696969;
+        font-size: 20px;
+        top: 11%;
+        opacity: 1;
+    }
+    100% {
+        color: #000000;
+        font-size: 16px;
+        top: 10%;
+        opacity: 0;
+    }
+}
+@keyframes fromCurrentToAbove {
+    0% {
+        color: #ffffff;
+        font-size: 28px;
+        top: 50%; transform: translate(-50%, -50%);
+    }
+    100% {
+        color: #696969;
+        font-size: 20px;
+        top: 11%; transform: translateX(-50%);
+    }
+}
+@keyframes fromBelowToCurrent {
+    0% {
+        color: #696969;
+        font-size: 20px;
+        top: 67%; transform: translateX(-50%);
+    }
+    100% {
+        color: #ffffff;
+        font-size: 28px;
+        top: 50%; transform: translate(-50%, -50%);
+    }
+}
+@keyframes fromBelowAllToBelow {
+    0% {
+        color: #000000;
+        font-size: 16px;
+        top: 78%; 
+        opacity: 0;
+    }
+    100% {
+        color: #696969;
+        font-size: 20px;
+        top: 67%; 
+        opacity: 1;
+    }
+}
+/* Going Up the List */
+.fromAboveAllToAbove { animation-name: fromAboveAllToAbove; }
+.fromAboveToCurrent { animation-name: fromAboveToCurrent; }
+.fromCurrentToBelow { animation-name: fromCurrentToBelow; }
+.fromBelowToBelowAll { animation-name: fromBelowToBelowAll; }
+@keyframes fromAboveAllToAbove {
+    0% {
+        color: #000000;
+        font-size: 16px;
+        top: 10%;
+        opacity: 0;
+    }
+    100% {
+        color: #696969;
+        font-size: 20px;
+        top: 11%;
+        opacity: 1;
+    }
+}
+@keyframes fromAboveToCurrent {
+    0% {
+        color: #696969;
+        font-size: 20px;
+        top: 11%; transform: translateX(-50%);
+    }
+    100% {
+        color: #ffffff;
+        font-size: 28px;
+        top: 50%; transform: translate(-50%, -50%);
+    }
+}
+@keyframes fromCurrentToBelow {
+    0% {
+        color: #ffffff;
+        font-size: 28px;
+        top: 50%; transform: translate(-50%, -50%);
+    }
+    100% {
+        color: #696969;
+        font-size: 20px;
+        top: 67%; transform: translateX(-50%);
+    }
+}
+@keyframes fromBelowToBelowAll {
+    0% {
+        color: #696969;
+        font-size: 20px;
+        top: 67%;
+        opacity: 1;
+    }
+    100% {
+        color: #000000;
+        font-size: 16px;
+        top: 78%;
+        opacity: 0;
+    }
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~ NOW PLAYING ~~~~~~~~~~~~~~~~~~~~ */
@@ -157,7 +272,7 @@ canvas { position: absolute; top: 0; z-index: 0; }
     position: absolute;
     bottom: 255px; 
     right: 50px;
-    width: 200px;
+    width: 225px;
     height: 29px;
     background-color: transparent;
     z-index: 2;
@@ -165,9 +280,7 @@ canvas { position: absolute; top: 0; z-index: 0; }
 #replayer {
     font-size: 18px;
     position: inherit;
-    text-align: right;
-    bottom: 5px;
-    left: 5px;
+    top: 3px;
 }
 /* ~~~~~~~~~~~~~~~~~~~~ POOLER COMMENTS ~~~~~~~~~~~~~~~~~~~~ */
 
@@ -205,6 +318,7 @@ canvas { position: absolute; top: 0; z-index: 0; }
     z-index: 1;
     max-width: 352px;
     transition: width 1s;
+    height: 10.5px; top: 35.7px;
 }
 
 .mapStatsBar {
@@ -221,7 +335,7 @@ canvas { position: absolute; top: 0; z-index: 0; }
     font-size: 19px;
 }
 
-#mapStatsbox {
+.mapStatsbox {
     position: absolute;
     top: 30px;
     left: 0px;
