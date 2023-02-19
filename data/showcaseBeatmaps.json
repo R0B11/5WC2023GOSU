@@ -1,57 +1,134 @@
 [
     {
-      "beatmapTitle": "Relive",
-      "poolerComment": "Concistency check on aim",
-      "modID": "NM1"
+      "songName": "Relive",
+      "difficulty": "byd's Extreme",
+      "modid": "NM1",
+      "comment": "consistency check on aim",
+      "sr": "6.30558",
+      "cs": "4.2",
+      "ar": "9.6",
+      "od": "8.7",
+      "bpm": "196",
+      "len": "235"
     },
     {
-      "beatmapTitle": "We Got It (feat. Rothwell)",
-      "poolerComment": "Flow aim & stamina tapping",
-      "modID": "NM2"
+      "songName": "We Got It (feat. Rothwell)",
+      "difficulty": "new 1.05x",
+      "modid": "NM2",
+      "comment": "lowaim + stamina tapping",
+      "sr": "6.22649",
+      "cs": "4.1",
+      "ar": "9.5",
+      "od": "8.5",
+      "bpm": "182.7",
+      "len": "224"
     },
     {
-      "beatmapTitle": "firewall",
-      "poolerComment": "Alt with a little bit of tech tapping",
-      "modID": "NM3"
+      "songName": "firewall",
+      "difficulty": "you have won a free iphone! (5WC Ver.)",
+      "modid": "NM3",
+      "comment": "alt with little bit tech tapping",
+      "sr": "5.6",
+      "cs": "4",
+      "ar": "9.4",
+      "od": "8.5",
+      "bpm": "150",
+      "len": "187"
     },
     {
-      "beatmapTitle": "Hestia",
-      "poolerComment": "Slidertech aim",
-      "modID": "NM4"
+      "songName": "Hestia",
+      "difficulty": "New noise",
+      "modid": "NM4",
+      "comment": "slidertech aim",
+      "sr": "5.71858",
+      "cs": "3.7",
+      "ar": "9.3",
+      "od": "7.5",
+      "bpm": "190",
+      "len": "124"
     },
     {
-      "beatmapTitle": "Zange Mairi",
-      "poolerComment": "Flow and stacks tapping",
-      "modID": "HD1"
+      "songName": "Zange Mairi",
+      "difficulty": "Repentance",
+      "modid": "HD1",
+      "comment": "low and stacks tapping",
+      "sr": "5.4407",
+      "cs": "4.8",
+      "ar": "9",
+      "od": "8",
+      "bpm": "140",
+      "len": "198"
     },
     {
-      "beatmapTitle": "My Life Is Over and I Couldn't Be Happier",
-      "poolerComment": "170BPM aim, light reading",
-      "modID": "HD2"
+      "songName": "My Life Is Over And I Couldn't Be Happier",
+      "difficulty": "yuh",
+      "modid": "HD2",
+      "comment": "170bpm aim, and light reading",
+      "sr": "5.35",
+      "cs": "4",
+      "ar": "8",
+      "od": "8.2",
+      "bpm": "172-176 (172)",
+      "len": "144"
     },
     {
-      "beatmapTitle": "Edge",
-      "poolerComment": "Tapping and aim tech mix",
-      "modID": "HR1"
+      "songName": "Edge",
+      "difficulty": "Insane",
+      "modid": "HR1",
+      "comment": "tapping and aim tech mix",
+      "sr": "5.93117",
+      "cs": "5.2",
+      "ar": "10",
+      "od": "10",
+      "bpm": "172",
+      "len": "154"
     },
     {
-      "beatmapTitle": "So Cold",
-      "poolerComment": "110BPM Aim",
-      "modID": "HR2"
+      "songName": "So Cold",
+      "difficulty": "brr",
+      "modid": "HR2",
+      "comment": "110bpm aim",
+      "sr": "5.99",
+      "cs": "6.5",
+      "ar": "10",
+      "od": "10",
+      "bpm": "115",
+      "len": "154"
     },
     {
-      "beatmapTitle": "Kono Sekai wa Bokura wo Matteita",
-      "poolerComment": "Aim with some triples, AR10",
-      "modID": "DT1"
+      "songName": "Kono Sekai wa Bokura wo Matteita",
+      "difficulty": "Insane",
+      "modid": "DT1",
+      "comment": "aim with some triples AR10",
+      "sr": "6.36959",
+      "cs": "4",
+      "ar": "10",
+      "od": "9.33",
+      "bpm": "169",
+      "len": "215"
     },
     {
-      "beatmapTitle": "Extend Ash ~ Houraijin",
-      "poolerComment": "Speed tapping",
-      "modID": "DT2"
+      "songName": "Extend Ash ~ Houraijin",
+      "difficulty": "Insane",
+      "modid": "DT2",
+      "comment": "speed tapping",
+      "sr": "6.33685",
+      "cs": "3.8",
+      "ar": "9.8",
+      "od": "9",
+      "bpm": "156",
+      "len": "154"
     },
     {
-      "beatmapTitle": "PANTA RHEI",
-      "poolerComment": "Aim focus with a good amount of streams",
-      "modID": "FM1"
+      "songName": "PANTA RHEI",
+      "difficulty": "SPIRALLING :3",
+      "modid": "FM1",
+      "comment": "aim focus with a good amount streams",
+      "sr": "5.88792",
+      "cs": "4",
+      "ar": "9",
+      "od": "9",
+      "bpm": "190",
+      "len": "194"
     }
-  ]
+]
