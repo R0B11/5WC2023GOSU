@@ -583,9 +583,15 @@ body,html{
 .resetBans { top: 650px; }
 .resetProtects { top: 750px; }
 
-.viewButton { bottom: 130px }
-.pickView { left: 30px; } 
-.gameView { left: 135px; }
+.viewButton { top: -90px }
+.pickView { 
+	left: -470px;
+	width: 185px;
+} 
+.gameView { 
+	left: 30px; 
+	width: 185px;
+}
 .roundButton {
 	width: 55px;
 	height: 50px;
@@ -667,10 +673,13 @@ body,html{
 	background-color: transparent;
 	border-color: white;
 	color: white;
-	border-radius: 10px;
 	text-align: center;
+	border: none;
 }
-.mapControlSelect option { color: black; }
+.mapControlSelect::-webkit-scrollbar { display: none; }
+.mapControlSelect option { color: rgb(180,180,180);}
+.mapControlSelect option:checked { color: black;}
+
 
 /* CHAT DISPLAY */
 #chats {
@@ -760,6 +769,18 @@ body,html{
 	left: 105px;
 }
 
+#selectMapOptions {
+	position: relative; left: 50%; transform: translateX(-50%);
+}
+.selectMapOptionButton {
+    width: 65px;
+    height: 35px;
+    font-family: RenogareSoft-Regular;
+    color: rgb(180,180,180);
+    background: transparent;
+    border: 0px;
+    font-size: 20px;
+}
 
 /* Gameplay Names */
 #gameplayNames {

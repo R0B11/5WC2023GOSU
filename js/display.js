@@ -164,7 +164,12 @@ let mappool = document.getElementById("mappool")
 // SETTING CHANGES
 let mapControl = document.getElementById("mapControl")
 let setActionElement = document.getElementById("setAction")
-let currentAction;
+let setTeamOptions = document.getElementById("selectTeamOptions")
+let currentActionMapControl;
+let currentTeamMapControl;
+let currentMapMapControl;
+let currentSlotMapControl;
+let currentSlotNumberMapControl;
 
 socket.onopen = () => console.log("Successfully Connected");
 socket.onerror = error => console.log("Socket Error: ", error);
@@ -714,7 +719,7 @@ function changeRound(round) {
 	if (noOfBlueCards < bestOfTemp) {
 		for (var i = noOfBlueCards; i < bestOfTemp; i++) {
 			let pickCard = document.createElement("div")
-			pickCard.setAttribute("class","mappoolCard pickCard")
+			pickCard.setAttribute("class","mappoolCard pickCard pickCardBlue")
 			pickCard.style.left = `${160 * i}px`
 
 			let pickCardOverlay = document.createElement("div")
@@ -730,7 +735,7 @@ function changeRound(round) {
 	if (noOfPurpleCards < bestOfTemp) {
 		for (var i = noOfPurpleCards; i < bestOfTemp; i++) {
 			let pickCard = document.createElement("div")
-			pickCard.setAttribute("class","mappoolCard pickCard")
+			pickCard.setAttribute("class","mappoolCard pickCard pickCardPurple")
 			pickCard.style.right = `${(160 * i) - 120}px`
 
 			let pickCardOverlay = document.createElement("div")
@@ -1155,7 +1160,6 @@ function mapClickEvent() {
 			mapPickCardsPurple.children[i].children[1].innerText = `${clickedMap.mod.toUpperCase()}${clickedMap.order}`
 			mapPickCardsPurple.children[i].style.backgroundImage = `url("${clickedMap.imgURL}")`
 			pickCardPurpleIDs[i] = clickedMap.beatmapID
-			console.log(pickCardPurpleIDs)
 			break;
 		}
 		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0
@@ -1177,18 +1181,15 @@ function setCardInfo(element, map) {
 // Setting Changes
 function setAction() {
 	// Set current action
-	currentAction = setActionElement.value
+	currentActionMapControl = setActionElement.value
 
 	// Remove Children that are not needed
-	let removeStartingChild;
-	for (var i = 0; i < mapControl.childElementCount; i++) if (mapControl.children[i].id == "navigation") removeStartingChild = i
-	for (var i = mapControl.childElementCount - 1; i > removeStartingChild; i--) mapControl.children[i].remove()
+	removeMapControlElements("navigation")
 
 	// Question of which teams
 	let selectTeamOptionText = document.createElement("div")
 	selectTeamOptionText.innerText = "Which Team?"
 	let selectTeamOptions = document.createElement("select")
-	let selectOptionsOption  = document.createElement("option")
 	let blueTeamOption = document.createElement("option")
 	let purpleTeamOption = document.createElement("option")
 	let selectTeamOptionBRPost = document.createElement("br")
@@ -1200,10 +1201,6 @@ function setAction() {
 	selectTeamOptionBRPost2.setAttribute("id","selectTeamOptionBRPost2")
 
 	selectTeamOptions.classList.add("mapControlSelect")
-	selectOptionsOption.disabled = true
-	selectOptionsOption.selected = true
-	selectOptionsOption.setAttribute("value","selectOption")
-	selectOptionsOption.innerText = "Select Options"
 	blueTeamOption.setAttribute("value", "blue")
 	blueTeamOption.innerText = "Blue"
 	purpleTeamOption.setAttribute("value", "purple")
@@ -1211,11 +1208,11 @@ function setAction() {
 
 	mapControl.append(selectTeamOptionText)
 	mapControl.append(selectTeamOptions)
-	selectTeamOptions.append(selectOptionsOption)
 	selectTeamOptions.append(blueTeamOption)
 	selectTeamOptions.append(purpleTeamOption)
 	mapControl.append(selectTeamOptionBRPost)
 	mapControl.append(selectTeamOptionBRPost2)
+	selectTeamOptions.setAttribute("size",selectTeamOptions.childElementCount)
 
 	if ((setActionElement.value == "removeBan" && banTotalNum == 1) || setActionElement.value == "removeProtect") {
 		let applyChangesButton = document.createElement("button")
@@ -1224,4 +1221,414 @@ function setAction() {
 		applyChangesButton.innerText = "Apply Changes"
 		mapControl.append(applyChangesButton)
 	} else selectTeamOptions.setAttribute("onchange","setTeam()")
+}
+
+function setTeam() {
+	currentTeamMapControl = document.getElementById("selectTeamOptions").value
+
+	// Remove Elements not needed
+	removeMapControlElements("selectTeamOptionBRPost2")
+
+	// Ask for map
+	let selectMapOptionText = document.createElement("div")
+	selectMapOptionText.innerText = "Which Map?"
+	let selectMapOptions = document.createElement("div")
+	let selectMapOptionsBRPost = document.createElement("br")
+	let selectMapOptionsBRPost2 = document.createElement("br")
+
+	selectMapOptionText.setAttribute("id","selectMapOptionText")
+	selectMapOptions.setAttribute("id","selectMapOptions")
+	selectMapOptionsBRPost.setAttribute("id","selectMapOptionsBRPost")
+	selectMapOptionsBRPost2.setAttribute("id","selectMapOptionsBRPost2")
+
+	selectMapOptions.classList.add("mapControlSelect")
+
+	if (currentActionMapControl == "setProtect" || currentActionMapControl == "setBan") {
+		for (var i = 0; i < allMaps.length; i++) {
+			for (var j = 0; j < allMaps[i].length; j++) {
+				let selectMapOptionIndividual = document.createElement("button")
+				selectMapOptionIndividual.innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+				selectMapOptionIndividual.classList.add("selectMapOptionButton")
+				selectMapOptionIndividual.setAttribute("onclick",`setCurrentMapMapControl(${allMaps[i][j].beatmapID})`)
+				selectMapOptionIndividual.setAttribute("id",`${allMaps[i][j].beatmapID}MapMapControl`)
+				selectMapOptions.append(selectMapOptionIndividual)
+			}
+		}
+	} else if (currentActionMapControl == "removeBan") {
+		if (currentTeamMapControl == "blue") {
+			for (var i = 0; i < banCardBlueIDs.length; i++) {
+				for (var j = 0; j < allMaps.length; j++) {
+					for (var k = 0; k < allMaps[j].length; k++) {
+						if (allMaps[j][k].beatmapID == banCardBlueIDs[i]) {
+							let selectMapOptionIndividual = document.createElement("button")
+							selectMapOptionIndividual.innerText = `${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+							selectMapOptionIndividual.classList.add("selectMapOptionButton")
+							selectMapOptionIndividual.setAttribute("onclick",`setCurrentMapMapControl(${allMaps[j][k].beatmapID})`)
+							selectMapOptionIndividual.setAttribute("id",`${allMaps[j][k].beatmapID}MapMapControl`)
+							selectMapOptions.append(selectMapOptionIndividual)
+							break;
+						}
+					}
+				}
+			}
+		} else if (currentTeamMapControl == "purple") {
+			for (var i = 0; i < banCardPurpleIDs.length; i++) {
+				for (var j = 0; j < allMaps.length; j++) {
+					for (var k = 0; k < allMaps[j].length; k++) {
+						if (allMaps[j][k].beatmapID == banCardPurpleIDs[i]) {
+							let selectMapOptionIndividual = document.createElement("button")
+							selectMapOptionIndividual.innerText = `${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+							selectMapOptionIndividual.classList.add("selectMapOptionButton")
+							selectMapOptionIndividual.setAttribute("onclick",`setCurrentMapMapControl(${allMaps[j][k].beatmapID})`)
+							selectMapOptionIndividual.setAttribute("id",`${allMaps[j][k].beatmapID}MapMapControl`)
+							selectMapOptions.append(selectMapOptionIndividual)
+						}
+					}
+				}
+			}
+		}
+	}
+
+	mapControl.append(selectMapOptionText)
+	mapControl.append(selectMapOptions)
+	mapControl.append(selectMapOptionsBRPost)
+	mapControl.append(selectMapOptionsBRPost2)
+
+	if (currentActionMapControl == "setBan") {
+		let selectSlotOptionText = document.createElement("div")
+		selectSlotOptionText.innerText = "Replacing Which Slot?"
+		let selectSlotOptions = document.createElement("select")
+		let ban1Option = document.createElement("option")
+		let ban2Option = document.createElement("option")
+		let selectSlotOptionBRPost = document.createElement("br")
+		let selectSlotOptionBRPost2 = document.createElement("br")
+
+		selectSlotOptionText.setAttribute("id","selectSlotOptionText")
+		selectSlotOptions.setAttribute("id","selectSlotOptions")
+		ban1Option.setAttribute("id","ban1Option")
+		ban2Option.setAttribute("id","ban2Option")
+		selectSlotOptionBRPost.setAttribute("id","selectSlotOptionBRPost")
+		selectSlotOptionBRPost2.setAttribute("id","selectSlotOptionBRPost2")
+
+		selectSlotOptions.classList.add("mapControlSelect")
+		if (currentTeamMapControl == "blue") {
+			for (var i = 0; i < banTotalNum; i++) {
+				for (var j = 0; j < allMaps.length; j++) {
+					for (var k = 0; k < allMaps[j].length; k++) {
+						if (allMaps[j][k].beatmapID == banCardBlueIDs[i]) {
+							if (i == 0) {
+								ban1Option.innerText = `Slot 1 - ${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+								ban1Option.setAttribute("value",`${allMaps[j][k].beatmapID}SlotMapControl`)
+								ban1Option.setAttribute("onclick",`setCurrentMapSlotControl(${allMaps[j][k].beatmapID}, 1)`)
+								currentSlotMapControl = allMaps[j][k].beatmapID
+								currentSlotNumberMapControl = 1
+							}
+							else if (i == 1) {
+								ban2Option.innerText = `Slot 2 - ${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+								ban2Option.setAttribute("value",`${allMaps[j][k].beatmapID}SlotMapControl`)
+								ban2Option.setAttribute("onclick",`setCurrentMapSlotControl(${allMaps[j][k].beatmapID}, 2)`)
+							}
+						}
+					}
+				}
+				if (!banCardBlueIDs[i] || banCardBlueIDs[i] == "") {
+					if (i == 0) {
+						ban1Option.innerText = `Slot 1 - No Map`
+						ban1Option.setAttribute("value",`0SlotMapControl`)
+						ban1Option.setAttribute("onclick",`setCurrentMapSlotControl(0, 1)`)
+						currentSlotMapControl = 0
+						currentSlotNumberMapControl = 1
+					}
+					else if (i == 1) {
+						ban2Option.innerText = `Slot 2 - No Map`
+						ban2Option.setAttribute("value",`0SlotMapControl`)
+						ban2Option.setAttribute("onclick",`setCurrentMapSlotControl(0, 2)`)
+					}
+				}
+			}
+		} else if (currentTeamMapControl == "purple") {
+			for (var i = 0; i < banTotalNum; i++) {
+				for (var j = 0; j < allMaps.length; j++) {
+					for (var k = 0; k < allMaps[j].length; k++) {
+						if (allMaps[j][k].beatmapID == banCardPurpleIDs[i]) {
+							if (i == 0) {
+								ban1Option.innerText = `Slot 1 - ${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+								ban1Option.setAttribute("value",`${allMaps[j][k].beatmapID}SlotMapControl`)
+								ban1Option.setAttribute("onclick",`setCurrentMapSlotControl(${allMaps[j][k].beatmapID}, 1)`)
+								currentSlotMapControl = allMaps[j][k].beatmapID
+								currentSlotNumberMapControl = 1
+							}
+							else if (i == 1) {
+								ban2Option.innerText = `Slot 2 - ${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+								ban2Option.setAttribute("value",`${allMaps[j][k].beatmapID}SlotMapControl`)
+								ban2Option.setAttribute("onclick",`setCurrentMapSlotControl(${allMaps[j][k].beatmapID}, 2)`)
+							}
+						}
+					}
+				}
+				if (!banCardPurpleIDs[i] || banCardPurpleIDs[i] == "") {
+					if (i == 0) {
+						ban1Option.innerText = `Slot 1 - No Map`
+						ban1Option.setAttribute("value",`0SlotMapControl`)
+						ban1Option.setAttribute("onclick",`setCurrentMapSlotControl(0, 1)`)
+						currentSlotMapControl = 0
+						currentSlotNumberMapControl = 1
+					}
+					else if (i == 1) {
+						ban2Option.innerText = `Slot 2 - No Map`
+						ban2Option.setAttribute("value",`0SlotMapControl`)
+						ban2Option.setAttribute("onclick",`setCurrentMapSlotControl(0, 2)`)
+					}
+				}
+			}
+		}
+
+		mapControl.append(selectSlotOptionText)
+		mapControl.append(selectSlotOptions)
+		selectSlotOptions.append(ban1Option)
+		if (banTotalNum == 2) selectSlotOptions.append(ban2Option)
+		mapControl.append(selectSlotOptionBRPost)
+		mapControl.append(selectSlotOptionBRPost2)
+		selectSlotOptions.setAttribute("size",selectSlotOptions.childElementCount)
+	}
+	
+	if (currentActionMapControl == "removePick") {
+		if (currentTeamMapControl == "blue") {
+			for (var i = 0; i < pickCardBlueIDs.length; i++) {
+				for (var j = 0; j < allMaps.length; j++) {
+					for (var k = 0; k < allMaps[j].length; k++) {
+						if (pickCardBlueIDs[i] == allMaps[j][k].beatmapID) {
+							let pickCardOption = document.createElement("button")
+							pickCardOption.innerText = `${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+							pickCardOption.classList.add("selectMapOptionButton")
+							pickCardOption.setAttribute("onclick",`setCurrentMapMapControl(${allMaps[j][k].beatmapID})`)
+							pickCardOption.setAttribute("id",`${allMaps[j][k].beatmapID}MapMapControl`)
+							selectMapOptions.append(pickCardOption)
+						}
+					}
+				}
+			}
+		} else if (currentTeamMapControl == "purple") {
+			for (var i = 0; i < pickCardPurpleIDs.length; i++) {
+				for (var j = 0; j < allMaps.length; j++) {
+					for (var k = 0; k < allMaps[j].length; k++) {
+						if (pickCardPurpleIDs[i] == allMaps[j][k].beatmapID) {
+							let pickCardOption = document.createElement("button")
+							pickCardOption.innerText = `${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+							pickCardOption.classList.add("selectMapOptionButton")
+							pickCardOption.setAttribute("onclick",`setCurrentMapMapControl(${allMaps[j][k].beatmapID})`)
+							pickCardOption.setAttribute("id",`${allMaps[j][k].beatmapID}MapMapControl`)
+							selectMapOptions.append(pickCardOption)
+						}
+					}
+				}
+			}
+		}
+	}
+
+	let applyChangesButton = document.createElement("button")
+	applyChangesButton.setAttribute("class", "panelButton resetButton")
+	applyChangesButton.setAttribute("onclick", "applyChanges()")
+	applyChangesButton.innerText = "Apply Changes"
+	mapControl.append(applyChangesButton)
+}
+
+function setCurrentMapMapControl(beatmapID) {
+	let selectMapOptionButtons = document.getElementsByClassName("selectMapOptionButton")
+	
+	for (var i = 0; i < selectMapOptionButtons.length; i++) {
+		selectMapOptionButtons[i].style.backgroundColor = "transparent"
+		selectMapOptionButtons[i].style.color ="rgb(180,180,180)"
+	}
+
+	let currentMap = document.getElementById(`${beatmapID}MapMapControl`)
+	currentMap.style.backgroundColor = "rgb(206, 206, 206)"
+	currentMap.style.color = "black"
+	
+	currentMapMapControl = beatmapID
+}
+
+function setCurrentMapSlotControl(slotmap, slotnum) {
+	currentSlotMapControl = slotmap
+	currentSlotNumberMapControl = slotnum
+}
+
+function applyChanges() {
+	currentTeamMapControl = document.getElementById("selectTeamOptions").value
+
+	// Remove Protect
+	if (currentActionMapControl == "removeProtect") {
+		if (currentTeamMapControl == "blue") {
+			document.getElementById(`${protectCardBlueID}Button`).style.backgroundColor = "#FFFFFF"
+			protectCardBlueID = null
+			protectCardBlue.style.backgroundImage = "none"
+			protectCardBlueText.innerText = ""
+			blueProtectNum--
+			if (blueProtectNum < 0) blueProtectNum = 0
+		}
+		else if (currentTeamMapControl == "purple") {
+			document.getElementById(`${protectCardPurpleID}Button`).style.backgroundColor = "#FFFFFF"
+			protectCardPurpleID = null
+			protectCardPurple.style.backgroundImage = "none"
+			protectCardPurpleText.innerText = ""
+			purpleProtectNum--
+			if (purpleProtectNum < 0) purpleProtectNum = 0
+		}
+	} else if (currentActionMapControl == "setProtect") {
+		let savePreviousNextAction = `${nextAction.innerText}`
+		if (currentTeamMapControl == "blue") {
+			nextAction.innerText = "Blue Protect"
+			document.getElementById(`${currentMapMapControl}Button`).click()
+		} else if (currentTeamMapControl == "purple") {
+			nextAction.innerText = "Purple Protect"
+			document.getElementById(`${currentMapMapControl}Button`).click()
+		}
+		nextAction.innerText = savePreviousNextAction
+	} else if (currentActionMapControl == "removeBan" && banTotalNum == 1) {
+		if (currentTeamMapControl == "blue") {
+			document.getElementById(`${banCardBlueIDs[0]}Button`).style.backgroundColor = "#FFFFFF"
+			banCardBlueIDs[0] = null
+			banCardBlue[0].style.backgroundImage = "none"
+			if (banCardBlue[0].children[1].innerText !== "") {
+				banCardBlue[0].children[1].innerText = ""
+				banNum--
+			}
+		} else if (currentTeamMapControl == "purple") {
+			document.getElementById(`${banCardPurpleIDs[0]}Button`).style.backgroundColor = "#FFFFFF"
+			banCardPurpleIDs[0] = null
+			banCardPurple[0].style.backgroundImage = "none"
+			if (banCardPurple[0].children[1].innerText !== "") {
+				banCardPurple[0].children[1].innerText = ""
+				banNum--
+			}
+		}
+	} else if (currentActionMapControl == "removeBan" && banTotalNum == 2) {
+		if (currentTeamMapControl == "blue") {
+			for (var i = 0; i < banCardBlueIDs.length; i++) {
+				if (currentMapMapControl == banCardBlueIDs[i]) {
+					document.getElementById(`${banCardBlueIDs[i]}Button`).style.backgroundColor = "#FFFFFF"
+					banCardBlue[i].style.backgroundImage = "none"
+					document.getElementById(`${banCardBlueIDs[i]}MapMapControl`).remove()
+					banCardBlue[i].children[1].innerText = ""
+					banCardBlueIDs[i] = null
+					banNum--				
+					break
+				}
+			}
+		} else if (currentTeamMapControl == "purple") {
+			for (var i = 0; i < banCardPurpleIDs.length; i++) {
+				if (currentMapMapControl == banCardPurpleIDs[i]) {
+					document.getElementById(`${banCardPurpleIDs[i]}Button`).style.backgroundColor = "#FFFFFF"
+					banCardPurple[i].style.backgroundImage = "none"
+					document.getElementById(`${banCardPurpleIDs[i]}MapMapControl`).remove()
+					banCardPurple[i].children[1].innerText = ""
+					banCardPurpleIDs[i] = null
+					banNum--
+					break
+				}
+			}
+		}
+
+		// Remove Children That are not needed
+		let selectMapOptionButtons = document.getElementsByClassName("selectMapOptionButton")
+		if (selectMapOptionButtons.length == 0) removeMapControlElements("selectTeamOptionBRPost2")
+		if (banNum <= 0) removeMapControlElements("navigation")
+	} else if (currentActionMapControl == "setBan") {
+		if (currentTeamMapControl == "blue") {
+			if (currentSlotNumberMapControl == 1) { 
+				if (document.contains(document.getElementById(`${banCardBlueIDs[0]}Button`))) document.getElementById(`${banCardBlueIDs[0]}Button`).style.backgroundColor = "#FFFFFF"
+				banCardBlueIDs[0] = currentMapMapControl
+				let map = document.getElementById(`${currentMapMapControl}Button`)
+				map.style.backgroundColor = "rgb(248, 131, 121)"
+				for (var i = 0; i < allMaps.length; i++) {
+					for (var j = 0; j < allMaps[i].length; j++) {
+						if (allMaps[i][j].beatmapID == currentMapMapControl) {
+							banCardBlue[0].style.backgroundImage = `url(${allMaps[i][j].imgURL})`
+							banCardBlue[0].children[1].innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+							ban1Option.innerText = `Slot 1 - ${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+						}
+					}
+				}
+			} else if (currentSlotNumberMapControl == 2) {
+				if (document.contains(document.getElementById(`${banCardBlueIDs[1]}Button`))) document.getElementById(`${banCardBlueIDs[1]}Button`).style.backgroundColor = "#FFFFFF"
+				banCardBlueIDs[1] = currentMapMapControl
+				let map = document.getElementById(`${currentMapMapControl}Button`)
+				map.style.backgroundColor = "rgb(248, 131, 121)"
+				for (var i = 0; i < allMaps.length; i++) {
+					for (var j = 0; j < allMaps[i].length; j++) {
+						if (allMaps[i][j].beatmapID == currentMapMapControl) {
+							banCardBlue[1].style.backgroundImage = `url(${allMaps[i][j].imgURL})`
+							banCardBlue[1].children[1].innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+							ban2Option.innerText = `Slot 2 - ${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+						}
+					}
+				}
+			}
+		} else if (currentTeamMapControl == "purple") {
+			if (currentSlotNumberMapControl == 1) { 
+				if (document.contains(document.getElementById(`${banCardPurpleIDs[0]}Button`))) document.getElementById(`${banCardPurpleIDs[0]}Button`).style.backgroundColor = "#FFFFFF"
+				banCardPurpleIDs[0] = currentMapMapControl
+				console.log(currentMapMapControl)
+				console.log(banCardPurpleIDs[0])
+				console.log(document.getElementById(`${currentMapMapControl}Button`))
+				let map = document.getElementById(`${currentMapMapControl}Button`)
+				map.style.backgroundColor = "rgb(248, 131, 121)"
+				for (var i = 0; i < allMaps.length; i++) {
+					for (var j = 0; j < allMaps[i].length; j++) {
+						if (allMaps[i][j].beatmapID == currentMapMapControl) {
+							banCardPurple[0].style.backgroundImage = `url(${allMaps[i][j].imgURL})`
+							banCardPurple[0].children[1].innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+							ban1Option.innerText = `Slot 1 - ${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+						}
+					}
+				}
+			} else if (currentSlotNumberMapControl == 2) {
+				if (document.contains(document.getElementById(`${banCardPurpleIDs[1]}Button`))) document.getElementById(`${banCardPurpleIDs[1]}Button`).style.backgroundColor = "#FFFFFF"
+				banCardPurpleIDs[1] = currentMapMapControl
+				let map = document.getElementById(`${currentMapMapControl}Button`)
+				map.style.backgroundColor = "rgb(248, 131, 121)"
+				for (var i = 0; i < allMaps.length; i++) {
+					for (var j = 0; j < allMaps[i].length; j++) {
+						if (allMaps[i][j].beatmapID == currentMapMapControl) {
+							banCardPurple[1].style.backgroundImage = `url(${allMaps[i][j].imgURL})`
+							banCardPurple[1].children[1].innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+							ban2Option.innerText = `Slot 2 - ${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+						}
+					}
+				}
+			}
+		}
+	} else if (currentActionMapControl == "removePick") {
+		if (currentTeamMapControl == "blue") {
+			for (var i = 0; i < pickCardBlueIDs.length; i++) {
+				if (currentMapMapControl == pickCardBlueIDs[i]) {
+					document.getElementById(`${pickCardBlueIDs[i]}Button`).style.backgroundColor = "#FFFFFF"
+					let pickCardBlue = document.getElementsByClassName("pickCardBlue")
+					pickCardBlue[i].style.backgroundImage = "none"
+					pickCardBlue[i].children[1].innerText = ""
+					document.getElementById(`${pickCardBlueIDs[i]}MapMapControl`).remove()
+					pickCardBlueIDs[i] = null
+					break
+				}
+			}
+		} else if (currentTeamMapControl == "purple") {
+			for (var i = 0; i < pickCardPurpleIDs.length; i++) {
+				if (currentMapMapControl == pickCardPurpleIDs[i]) {
+					document.getElementById(`${pickCardPurpleIDs[i]}Button`).style.backgroundColor = "#FFFFFF"
+					let pickCardPurple = document.getElementsByClassName("pickCardPurple")
+					pickCardPurple[i].style.backgroundImage = "none"
+					pickCardPurple[i].children[1].innerText = ""
+					document.getElementById(`${pickCardPurpleIDs[i]}MapMapControl`).remove()
+					pickCardPurpleIDs[i] = null
+					break
+				}
+			}
+		}
+	}
+}
+
+function removeMapControlElements(elementIDName) {
+	let removeStartingChild
+	for (var i = 0; i < mapControl.childElementCount; i++) if (mapControl.children[i].id == elementIDName) removeStartingChild = i
+	for (var i = mapControl.childElementCount - 1; i  > removeStartingChild; i--) mapControl.children[i].remove()
 }
