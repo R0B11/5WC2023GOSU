@@ -257,8 +257,7 @@
             <section class="rightHandSide" id="mapControl">
                 Map Control:<br><br>
                 Action:<br>
-                <select class="mapControlSelect" id="setAction" onchange="setAction()">
-                    <option value="selectOptions" disabled selected>Select Options</option>
+                <select class="mapControlSelect" id="setAction" onchange="setAction()" size="7">
                     <option value="setWinner">Set Winner</option>
                     <option value="setPick">Set Pick</option>
                     <option value="removePick">Remove Pick</option>
@@ -268,8 +267,6 @@
                     <option value="removeProtect">Remove Protect</option>
                 </select><br><br>
                 
-                <!-- <button class="panelButton resetButton">Apply Changes</button> -->
-
                 <section id="navigation">
                     <button class="panelButton viewButton pickView" onclick="toPickScreenView();">Pick Screen View</button>
                     <button class="panelButton viewButton gameView" onclick="toGameplayView();">Game View</button>
