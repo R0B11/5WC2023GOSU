@@ -10,15 +10,6 @@
 
     <body>
         <div id="main">
-            <img src="static/prediction.png" id="predictionOverlay">
-            <!-- <img src="static/cameraframeOverlay.png" id="cameraframeOverlay">-->
-            <div id="castingCouch">
-                <div class="castBox" id="caster1"></div>
-                <div class="castBox" id="caster2"></div>
-                <div class="castBox" id="caster3"></div>
-                <div class="castBox" id="caster4"></div>
-                <div class="castBox" id="caster5"></div>
-            </div>
             <section id="currentCountry">
                 <button id="teamDisplaybuttonleft" onclick="teamDisplayleft();"></button>
                 <button id="teamDisplaybuttonright" onclick="teamDisplayright();"></button>
@@ -32,7 +23,6 @@
                 <div class="currentSongTextWrappers" id="currentSongTitleWrapper"><div class="currentSongText" id="currentSongTitle">Hello</div></div>
                 <div class="currentSongTextWrappers" id="currentSongArtistWrapper"><div class="currentSongText" id="currentSongArtist">Goodbye </div></div>
             </section>
-            <div id="lastyearplacement">Last Year: No Team </div>
             <div id="commBox"></div>
             <div id="compareBox">
                 
@@ -100,81 +90,6 @@
                 </div>
             </section>
             <section id="controlPanelSectionTwo"></section>
-            <section id="controlPanelSectionThree">
-                <div id="firstcaster">
-                    <button id="first" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `1st`)">1st</button>
-                    <button id="second" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `2nd`)">2nd</button>
-                    <button id="third" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `3rd`)">3rd</button>
-                    <button id="fourth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `4th`)">4th</button>
-                    <button id="fifth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `5th-6th`)">5th-6th</button>
-                    <button id="sixth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `7th-8th`)">7th-8th</button>
-                    <button id="seventh" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `9-12th`)">9-12th</button>
-                    <button id="eighth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `13-16th`)">13-16th</button>
-                    <button id="nineth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `17-24th`)">17-24th</button>
-                    <button id="tenth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `25-32nd`)">25-32nd</button>
-                    <button id="eleventh" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster1, `DNQ`)">DNQ</button>
-                </div>
-                <div id="secondcaster">
-                    <button id="first" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `1st`)">1st</button>
-                    <button id="second" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `2nd`)">2nd</button>
-                    <button id="third" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `3rd`)">3rd</button>
-                    <button id="fourth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `4th`)">4th</button>
-                    <button id="fifth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `5th-6th`)">5th-6th</button>
-                    <button id="sixth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `7th-8th`)">7th-8th</button>
-                    <button id="seventh" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `9-12th`)">9-12th</button>
-                    <button id="eighth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `13-16th`)">13-16th</button>
-                    <button id="nineth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `17-24th`)">17-24th</button>
-                    <button id="tenth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `25-32nd`)">25-32nd</button>
-                    <button id="eleventh" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster2, `DNQ`)">DNQ</button>
-                </div>
-                <div id="thirdcaster">
-                    <button id="first" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `1st`)">1st</button>
-                    <button id="second" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `2nd`)">2nd</button>
-                    <button id="third" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `3rd`)">3rd</button>
-                    <button id="fourth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `4th`)">4th</button>
-                    <button id="fifth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `5th-6th`)">5th-6th</button>
-                    <button id="sixth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `7th-8th`)">7th-8th</button>
-                    <button id="seventh" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `9-12th`)">9-12th</button>
-                    <button id="eighth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `13-16th`)">13-16th</button>
-                    <button id="nineth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `17-24th`)">17-24th</button>
-                    <button id="tenth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `25-32nd`)">25-32nd</button>
-                    <button id="eleventh" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster3, `DNQ`)">DNQ</button>
-                </div>
-                <div id="fourthcaster">
-                    <button id="first" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `1st`)">1st</button>
-                    <button id="second" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `2nd`)">2nd</button>
-                    <button id="third" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `3rd`)">3rd</button>
-                    <button id="fourth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `4th`)">4th</button>
-                    <button id="fifth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `5th-6th`)">5th-6th</button>
-                    <button id="sixth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `7th-8th`)">7th-8th</button>
-                    <button id="seventh" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `9-12th`)">9-12th</button>
-                    <button id="eighth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `13-16th`)">13-16th</button>
-                    <button id="nineth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `17-24th`)">17-24th</button>
-                    <button id="tenth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `25-32nd`)">25-32nd</button>
-                    <button id="eleventh" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster4, `DNQ`)">DNQ</button>
-                </div>
-                <div id="fifthcaster">
-                    <button id="first" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `1st`)">1st</button>
-                    <button id="second" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `2nd`)">2nd</button>
-                    <button id="third" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `3rd`)">3rd</button>
-                    <button id="fourth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `4th`)">4th</button>
-                    <button id="fifth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `5th-6th`)">5th-6th</button>
-                    <button id="sixth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `7th-8th`)">7th-8th</button>
-                    <button id="seventh" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `9-12th`)">9-12th</button>
-                    <button id="eighth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `13-16th`)">13-16th</button>
-                    <button id="nineth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `17-24th`)">17-24th</button>
-                    <button id="tenth" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `25-32nd`)">25-32nd</button>
-                    <button id="eleventh" class="controlPanelAddRemoveSectionButtons controlPanelButton" onclick="predictionPlacement(caster5, `DNQ`)">DNQ</button>
-                </div>
-                <div id="clearbutton">
-                    <button id="theclearbutton controlPanelAddRemoveSectionButtons" onclick="predictionClear()">Clear All</button>
-                </div>
-            </section>
-        </div>
-        <div id="sponsor">
-            <video loop autoplay width="400" height="130" >
-                <source src="static/sponsor.webm" type="video/webm">
-            </video>
         </div>
 
         <script src="js/predictions.js"></script>

@@ -6,12 +6,6 @@ let controlPanelSectionTwo = document.getElementById("controlPanelSectionTwo")
 let currentTeamLocation = 0
 let setTeamName = document.getElementById("currentTeamName");
 let setTeamFlag = document.getElementById("currentTeamFlag");
-let caster1 = document.getElementById("caster1");
-let caster2 = document.getElementById("caster2");
-let caster3 = document.getElementById("caster3");
-let caster4 = document.getElementById("caster4");
-let caster5 = document.getElementById("caster5");
-
 
 let getplayerData = new Promise(async (resolve, reject) => {
     let xhr = new XMLHttpRequest();
@@ -55,18 +49,6 @@ getplayerData.then(playerData => {
 
 let compareBox = document.getElementById("compareBox")
 
-function predictionPlacement(caster, string){
-    caster.innerText = string;
-}
-
-function predictionClear(){
-    caster1.innerHTML = ``;
-    caster2.innerHTML = ``;
-    caster3.innerHTML = ``;
-    caster4.innerHTML = ``;
-    caster5.innerHTML = ``;
-}
-
 function generateRoster() {
     
     let rightbox = document.querySelectorAll('.rightbox')
@@ -83,9 +65,6 @@ function generateRoster() {
             let playersFromLastYearNotInThisYear = []
             let playersFromLastYearAndThisYear = []
             let playersFromLastYear = []
-            let lastyearseed = document.getElementById("lastyearplacement");
-            lastyearseed.innerHTML = `Last Year: ${playerData[i].last_seed}`;
-            
             for (var j = 0; j < playerData[i].last_year.length; j++) {
                 playersFromLastYear.push(playerData[i].last_year[j][0])
                 if (!playerData[i].last_year[j][1]) playersFromLastYearNotInThisYear.push(playerData[i].last_year[j][0])

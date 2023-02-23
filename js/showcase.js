@@ -54,9 +54,6 @@ let toMapSlot = 0;
 let animTime;
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-let poolerComment
-let poolComment = document.getElementById("comments");
-
 let replayerName
 let replayer = document.getElementById("replayer")
 let allMaps;
@@ -91,6 +88,7 @@ getMaps.then(allMaps => {
 
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
+
     // Now Playing Container Data
     if (mapID !== data.menu.bm.id) {
         mapFound = false
@@ -151,8 +149,6 @@ socket.onmessage = async event => {
                 // BPM
                 currBPM = allMaps[i].bpm
                 mapStatsBPM.innerText = currBPM
-                // Pooler Comment
-                poolComment.innerText = allMaps[i].comment
                 break;
             }
         }
@@ -307,7 +303,4 @@ socket.onmessage = async event => {
         replayerName = data.gameplay.name
         replayer.innerText = replayerName
     }
-
-    
-    
 }

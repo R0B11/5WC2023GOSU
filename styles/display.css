@@ -367,7 +367,6 @@ body,html{
     background-size: cover;
 	border-radius: 25px;
 	z-index: -1;
-	box-shadow: 100px 5px 5px  black;
 }
 .mapTitleWrapper {
 	position: absolute; top: 12px; left: 15px;
@@ -584,11 +583,11 @@ body,html{
 .resetProtects { top: 750px; }
 
 .viewButton { top: -90px }
-.pickView { 
+.gameView { 
 	left: -470px;
 	width: 185px;
 } 
-.gameView { 
+.pickView { 
 	left: 30px; 
 	width: 185px;
 }
@@ -663,13 +662,13 @@ body,html{
 	top: 100px; right: 0px;
 	font-family: RenogareSoft-Regular; 
 	color: white;
-	font-size: 20px;
+	font-size: 18px;
 	height: 100%;
 }
 .mapControlSelect {
 	font-family: RenogareSoft-Regular; 
 	width: 200px;
-	font-size: 20px;
+	font-size: 18px;
 	background-color: transparent;
 	border-color: white;
 	color: white;
@@ -773,13 +772,13 @@ body,html{
 	position: relative; left: 50%; transform: translateX(-50%);
 }
 .selectMapOptionButton {
-    width: 65px;
-    height: 35px;
+    width: 55px;
+    height: 26.5px;
     font-family: RenogareSoft-Regular;
     color: rgb(180,180,180);
     background: transparent;
     border: 0px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 /* Gameplay Names */

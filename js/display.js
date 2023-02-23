@@ -1,3 +1,5 @@
+"use strict";
+
 let socket = new ReconnectingWebSocket("ws://" + location.host + "/ws");
 let mapid = document.getElementById('mapid');
 
@@ -307,7 +309,7 @@ socket.onmessage = async event => {
 		
 		// MAP TEXT
 		let replaceText = new Promise((resolve, reject) => {
-			tempMapTitle = `${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title} [${data.menu.bm.metadata.difficulty}]`.replaceAll("(", "( ").replaceAll(")", " )").replaceAll("[", "[ ").replaceAll("]", " ]")
+			let tempMapTitle = `${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title} [${data.menu.bm.metadata.difficulty}]`.replaceAll("(", "( ").replaceAll(")", " )").replaceAll("[", "[ ").replaceAll("]", " ]")
 			mapTitle.innerText = tempMapTitle;
 			mapTitle1.innerText = tempMapTitle;
 			mapTitle2.innerText = tempMapTitle;
@@ -674,6 +676,7 @@ function changeRound(round) {
 		for (var i = banCard.length; i < banTotalNum * 2; i++) {
 			let banCardCreate = document.createElement("div")
 			banCardCreate.setAttribute("class", "mappoolCard banCard")
+			banCardCreate.style.backgroundImage = "url('static/mappoolCardBlankImage.png')"
 
 			let banCardOverlayCreate = document.createElement("div")
 			banCardOverlayCreate.classList.add("mappoolCardOverlay")
@@ -720,6 +723,7 @@ function changeRound(round) {
 		for (var i = noOfBlueCards; i < bestOfTemp; i++) {
 			let pickCard = document.createElement("div")
 			pickCard.setAttribute("class","mappoolCard pickCard pickCardBlue")
+			pickCard.style.backgroundImage = "url('static/mappoolCardBlankImage.png')"
 			pickCard.style.left = `${160 * i}px`
 
 			let pickCardOverlay = document.createElement("div")
@@ -736,6 +740,7 @@ function changeRound(round) {
 		for (var i = noOfPurpleCards; i < bestOfTemp; i++) {
 			let pickCard = document.createElement("div")
 			pickCard.setAttribute("class","mappoolCard pickCard pickCardPurple")
+			pickCard.style.backgroundImage = "url('static/mappoolCardBlankImage.png')"
 			pickCard.style.right = `${(160 * i) - 120}px`
 
 			let pickCardOverlay = document.createElement("div")
@@ -1243,7 +1248,7 @@ function setTeam() {
 
 	selectMapOptions.classList.add("mapControlSelect")
 
-	if (currentActionMapControl == "setProtect" || currentActionMapControl == "setBan") {
+	if (currentActionMapControl == "setProtect" || currentActionMapControl == "setBan" || currentActionMapControl == "setPick") {
 		for (var i = 0; i < allMaps.length; i++) {
 			for (var j = 0; j < allMaps[i].length; j++) {
 				let selectMapOptionIndividual = document.createElement("button")
@@ -1424,6 +1429,114 @@ function setTeam() {
 				}
 			}
 		}
+	}
+
+	if (currentActionMapControl == "setPick") {
+		let selectSlotOptionText = document.createElement("div")
+		selectSlotOptionText.innerText = "Replacing Which Slot?"
+		let selectSlotOptions = document.createElement("select")
+		let selectSlotOptionBRPost = document.createElement("option")
+
+		selectSlotOptionText.setAttribute("id","selectSlotOptionText")
+		selectSlotOptions.setAttribute("id","seletSlotOptions")
+		selectSlotOptionBRPost.setAttribute("id","selectSlotOptionBRPost")
+		selectSlotOptions.classList.add("mapControlSelect")
+
+		if (currentTeamMapControl == "blue") {
+			let pickCardBlue = document.getElementsByClassName("pickCardBlue")
+			for (var i = 0; i < pickCardBlue.length; i++) {
+				let selectPickCardOption = document.createElement("option")
+				for (var j = 0; j < allMaps.length; j++) {
+					for (var k = 0; k < allMaps[j].length; k++) {
+						if (pickCardBlueIDs[i] == allMaps[j][k].beatmapID) {
+							
+							selectPickCardOption.setAttribute("value",`${allMaps[j][k].beatmapID}SlotMapControl`)
+							selectPickCardOption.innerText = `Slot ${i + 1} - ${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+							selectPickCardOption.setAttribute("onclick",`setCurrentMapSlotControl(${allMaps[j][k].beatmapID}, ${i + 1})`)
+							if (i == 0) {
+								currentSlotMapControl = allMaps[j][k].beatmapID
+								currentSlotNumberMapControl = 1
+							}
+						}
+					}
+				}
+				if (!pickCardBlueIDs[i]) {
+					selectPickCardOption.innerText = `Slot ${i + 1} - No Map`
+					selectPickCardOption.setAttribute("value","0SlotMapControl")
+					selectPickCardOption.setAttribute("onclick",`setCurrentMapSlotControl(0, ${i + 1})`)
+					if (i == 0) {
+						currentSlotMapControl = 0
+						currentSlotNumberMapControl = 1
+					}
+				}
+				selectSlotOptions.append(selectPickCardOption)
+			}
+		} else if (currentTeamMapControl == "purple") {
+			let pickCardPurple = document.getElementsByClassName("pickCardPurple")
+			for (var i = 0; i < pickCardPurple.length; i++) {
+				let selectPickCardOption = document.createElement("option")
+				for (var j = 0; j < allMaps.length; j++) {
+					for (var k = 0; k < allMaps[j].length; k++) {
+						if (pickCardPurpleIDs[i] == allMaps[j][k].beatmapID) {
+							selectPickCardOption.setAttribute("value",`${allMaps[j][k].beatmapID}SlotMapControl`)
+							selectPickCardOption.innerText = `Slot ${i + 1} - ${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+							selectPickCardOption.setAttribute("onclick",`setCurrentMapSlotControl(${allMaps[j][k].beatmapID}, ${i + 1})`)
+							if (i == 0) {
+								currentSlotMapControl = allMaps[j][k].beatmapID
+								currentSlotNumberMapControl = 1
+							}
+						}
+					}
+				}
+				if (!pickCardPurpleIDs[i]) {
+					selectPickCardOption.innerText = `Slot ${i + 1} - No Map`
+					selectPickCardOption.setAttribute("value","0SlotMapControl")
+					selectPickCardOption.setAttribute("onclick",`setCurrentMapSlotControl(0, ${i + 1})`)
+					if (i == 0) {
+						currentSlotMapControl = 0
+						currentSlotNumberMapControl = 1
+					}
+				}
+				selectSlotOptions.append(selectPickCardOption)
+			}
+		}
+		mapControl.append(selectSlotOptionText)
+		mapControl.append(selectSlotOptions)
+		mapControl.append(selectSlotOptionBRPost)
+		selectSlotOptions.setAttribute("size", selectSlotOptions.childElementCount)
+	}
+
+	if (currentActionMapControl == "setWinner") {
+		if (document.contains(document.getElementById("selectMapOptions"))) document.getElementById("selectMapOptions").remove()
+
+		let selectMapOptions = document.createElement("select")
+		selectMapOptions.classList.add("mapControlSelect")
+		selectMapOptions.setAttribute("id","selectMapOptionsSelect")
+		for (var i = 0; i < pickCardBlueIDs.length; i++) {
+			for (var j = 0; j < allMaps.length; j++) {
+				for (var k = 0; k < allMaps[j].length; k++) {
+					if (allMaps[j][k].beatmapID == pickCardBlueIDs[i]) {
+						let selectMapOptionIndividual = document.createElement("option")
+						selectMapOptionIndividual.innerText = `Blue Pick - ${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+						selectMapOptions.append(selectMapOptionIndividual)
+					}
+				}
+			}
+		}
+		for (var i = 0; i < pickCardPurpleIDs.length; i++) {
+			for (var j = 0; j < allMaps.length; j++) {
+				for (var k = 0; k < allMaps[j].length; k++) {
+					if (allMaps[j][k].beatmapID == pickCardPurpleIDs[i]) {
+						let selectMapOptionIndividual = document.createElement("option")
+						selectMapOptionIndividual.innerText = `Purple Pick - ${allMaps[j][k].mod.toUpperCase()}${allMaps[j][k].order}`
+
+						selectMapOptions.append(selectMapOptionIndividual)
+					}
+				}
+			}
+		}
+		selectMapOptions.setAttribute("size",selectMapOptions.childElementCount)
+		document.getElementById("selectMapOptionText").after(selectMapOptions)
 	}
 
 	let applyChangesButton = document.createElement("button")
@@ -1622,6 +1735,69 @@ function applyChanges() {
 					pickCardPurpleIDs[i] = null
 					break
 				}
+			}
+		}
+	} else if (currentActionMapControl == "setPick") {
+		if (currentTeamMapControl == "blue") {
+			let pickCardBlue = document.getElementsByClassName("pickCardBlue")
+			let currentMapCard = pickCardBlue[currentSlotNumberMapControl - 1]
+			let currentMapID = pickCardBlueIDs[currentSlotNumberMapControl - 1]
+
+			// Setting the current map ID
+			if (document.contains(document.getElementById(`${currentMapID}Button`))) document.getElementById(`${currentMapID}Button`).style.backgroundColor = "#FFFFFF"
+			pickCardBlueIDs[currentSlotNumberMapControl - 1] = currentMapMapControl
+			document.getElementById(`${pickCardBlueIDs[currentSlotNumberMapControl - 1]}Button`).style.backgroundColor = "var(--blue)"
+
+			// Changing Card Information and Map Control Info
+			let seletSlotOptions = document.getElementById("seletSlotOptions")
+
+			for (var i = 0; i < allMaps.length; i++) {
+				for (var j = 0; j < allMaps[i].length; j++) {
+					if (allMaps[i][j].beatmapID == currentMapMapControl) {
+						currentMapCard.style.backgroundImage = `url("${allMaps[i][j].imgURL}")`
+						currentMapCard.children[1].innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+						seletSlotOptions.children[currentSlotNumberMapControl - 1].innerText = `Slot ${currentSlotNumberMapControl} - ${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+					}
+				}
+			}
+		} else if (currentTeamMapControl == "purple") {
+			let pickCardPurple = document.getElementsByClassName("pickCardPurple")
+			let currentMapCard = pickCardPurple[currentSlotNumberMapControl - 1]
+			let currentMapID = pickCardPurpleIDs[currentSlotNumberMapControl - 1]
+
+			// Setting the current map ID
+			if (document.contains(document.getElementById(`${currentMapID}Button`))) document.getElementById(`${currentMapID}Button`).style.backgroundColor = "#FFFFFF"
+			pickCardPurpleIDs[currentSlotNumberMapControl - 1] = currentMapMapControl
+			document.getElementById(`${pickCardPurpleIDs[currentSlotNumberMapControl - 1]}Button`).style.backgroundColor = "var(--purple)"
+
+			// Changing Card Information and Map Control Info
+			let seletSlotOptions = document.getElementById("seletSlotOptions")
+
+			for (var i = 0; i < allMaps.length; i++) {
+				for (var j = 0; j < allMaps[i].length; j++) {
+					if (allMaps[i][j].beatmapID == currentMapMapControl) {
+						currentMapCard.style.backgroundImage = `url("${allMaps[i][j].imgURL}")`
+						currentMapCard.children[1].innerText = `${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+						seletSlotOptions.children[currentSlotNumberMapControl - 1].innerText = `Slot ${currentSlotNumberMapControl} - ${allMaps[i][j].mod.toUpperCase()}${allMaps[i][j].order}`
+					}
+				}
+			}
+		}
+	} else if (currentActionMapControl == "setWinner") {
+		let selectMapOptions = document.getElementById("selectMapOptionsSelect")
+		let selectMapOptionsValue = selectMapOptions.value.slice(-3)
+		let pickCards = document.getElementsByClassName("pickCard")
+
+		console.log(pickCards)
+		console.log(selectMapOptionsValue)
+
+		for (var i = 0; i < pickCards.length; i++) {
+			if (pickCards[i].children[1].innerText.trim().toUpperCase() == selectMapOptionsValue) {
+				console.log(pickCards[i].children[1].innerText.trim().toUpperCase())
+				console.log(selectMapOptionsValue)
+
+				if (currentTeamMapControl == "blue") pickCards[i].children[0].style.borderColor = "#75c6ea"
+				else if (currentTeamMapControl == "purple") pickCards[i].children[0].style.borderColor = "#936bf7"
 			}
 		}
 	}

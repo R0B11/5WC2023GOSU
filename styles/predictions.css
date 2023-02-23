@@ -25,23 +25,16 @@ body,html{
     padding: 0;
     margin: 0;
     overflow-y: hidden;
-    overflow: hidden
 }
 
-#main{
-    font-family: Round-Control;
-    font-weight: normal;
-    color: white;
-	background-color: #000210;
-    width: 1920px;
-    height: 1080px;
-    z-index: 2;
+body {
+    background-image: url("../static/prediction.png");
+    background-repeat: no-repeat;
+    background-color: black;
+    height: 3000px;
 }
-
-#predictionOverlay {
-	position: absolute; top: 0; left: 0;
+#main {
     width: 1920px; height: 1080px;
-	z-index: 2;
 }
 
 #teamDisplaybuttonleft{
@@ -177,7 +170,6 @@ body,html{
     position: absolute;
     left: 1419px; top: 447px;
     width: 500px; height: 500px;
-    z-index: 2;
 }
 .tierListRowTop {
     background-color: transparent;
@@ -220,7 +212,7 @@ body,html{
 /* Control Panel */
 #controlPanel {
     position: absolute; left: 1920px; top: 0;
-    width: 950px;
+    width: 500px;
     height: 1080px;
     background-color: rgb(46, 53, 90);
     color: white;
@@ -230,16 +222,12 @@ body,html{
     width: 250px;
 }
 #controlPanelSectionTwo {
-    position: absolute; right: 450px; top: 0px;
-    width: 250px;
-}
-#controlPanelSectionThree {
     position: absolute; right: 0px; top: 0px;
-    width: 450px;
+    width: 250px;
 }
 .controlPanelAddRemoveSectionButtons {
     position: relative;
-    width: 60%;
+    width: 100%;
     height: 60px;
 }
 #controlPanelAddRemovePlacesTitle {
@@ -249,7 +237,7 @@ body,html{
 }
 .controlPanelButton {
     position: absolute;
-    width: 60px; height: 50px;
+    width: 100px; height: 50px;
     color: white;
     background-color: transparent;
     border: 1px solid white;
@@ -261,10 +249,10 @@ body,html{
     background-color: white;
 }
 .controlPanelAddButton {
-    top: 0px; left: 10px;
+    top: 0px; left: 20px;
 }
 .controlPanelRemoveButton {
-    top: 0px; right: 10px;
+    top: 0px; right: 20px;
 }
 #selectList {
     font-family: RenogareSoft-Regular;
@@ -278,116 +266,8 @@ body,html{
 #selectList option {
     width: 210px;
     text-align: center;
-    font-size: 9px;
 }
 
 #selectList::-webkit-scrollbar {
     display: none;
- 
-}
-
-
-/* Caster */
-
-#castingCouch {
-    position: absolute;
-    left: 0px;
-    top: 315px;
-    height: 40px;
-    width: 1920px; 
-    background-color: transparent;
-}
-.castBox {
-    position: inherit;
-    margin-top: 0px;
-    height: 15px;
-    width: 150px;
-    border: 3px solid white;
-    text-align: center;
-    font-size: 24px;
-    vertical-align: middle;
-    padding-top: 5px;
-    padding-bottom: 15px;
-}
-#sponsor { position: absolute; left: 75px; bottom: -25px; z-index: 1; }
-#caster1{
-    left: 7%;
-}
-#caster2{
-    left: 22%;
-    transform: translateX(+55%);
-}
-#caster3{
-    left: 50%;
-    transform: translateX(-50%);
-}
-#caster4{
-    right: 22.5%;
-    transform: translateX(-40%);
-}
-#caster5{
-    right: 7%;
-}
-#firstcaster {
-    position: absolute;
-    left: 0px;
-}
-#secondcaster {
-    position: absolute;
-    left: 100px;
-}
-#thirdcaster {
-    position: absolute;
-    left: 200px;
-}
-#fourthcaster {
-    position: absolute;
-    left: 300px;
-}
-#fifthcaster {
-    position: absolute;
-    left: 400px;
-}
-
-#first {
-    top: 50px;
-}
-#second {
-    top: 100px;
-}
-#third {
-    top: 150px;
-}
-#fourth {
-    top: 200px;
-}
-#fifth {
-    top: 250px;
-}
-#sixth {
-    top: 300px;
-}
-#seventh {
-    top: 350px;
-}
-#eighth {
-    top: 400px;
-}
-#nineth {
-    top: 450px;
-}
-#tenth {
-    top: 500px;
-}
-#eleventh {
-    top: 550px;
-}
-
-#lastyearplacement{
-    position: absolute;
-    top: 467px;
-    left: 960px;
-    z-index: 2;
-    font-size: 20px;
-}
-
+  }

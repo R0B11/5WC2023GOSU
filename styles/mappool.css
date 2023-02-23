@@ -1,3 +1,15 @@
+:root {
+	--lightpurple: #E0B0FF;
+	/* --lightpurple: #CCCCFF; */
+	--purple: #936bf7;
+	--purple75Opacity: #936bf77F;
+	--blue: #75c6ea;
+	--blue75Opacity: #75c7ea7F;
+	--green: #6ACE0C;
+	--red: #FF4141;
+	--darkGreen: #1F9B29;
+}
+
 #mappool { 
     opacity: 0;
     transition: 750ms ease-in-out
