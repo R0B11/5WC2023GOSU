@@ -302,7 +302,6 @@ socket.onmessage = async event => {
 	if (tempMapID !== data.menu.bm.id) {
 		// MAP ID
 		tempMapID = data.menu.bm.id
-		await new Promise(r => setTimeout(r, 1000));
 		// MAP MAIN SECTION
 		tempImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/');
 		mapContainer.style.backgroundImage = `url('http://` + location.host + `/Songs/${tempImg}?a=${Math.random(10000)}')`;
@@ -352,6 +351,8 @@ socket.onmessage = async event => {
 						mapStatsOD.innerText = tempMapStatsOD;
 						mapStatsLEN.innerText = `${(Math.floor(tempMapStatsLEN / 60))}:${("0" + Math.floor(tempMapStatsLEN % 60)).slice(-2)}`
 						mapStatsSR.innerText = tempMapStatsSR;
+
+						document.getElementById(`${data.menu.bm.id}Button`).click()
 					}
 					if (foundMapFromMappool) break;
 			}
@@ -511,6 +512,9 @@ socket.onmessage = async event => {
 					else if (blueTeamAccuracy < purpleTeamAccuracy) purpleStarControlPlus.click()
 				}
 			}
+
+			// Automatically go to mappool page
+			setTimeout(toPickScreenView(), 15000)
 		}
 	}
 	if(scoreVisibleTemp) {
@@ -658,6 +662,7 @@ socket.onmessage = async event => {
 }
 
 const changeAction = (actionText) => nextAction.innerText = actionText
+changeRound('Round of 32')
 function changeRound(round) {
 	// Changing Round Text
 	roundText.innerText = round;
@@ -864,6 +869,12 @@ function reset(section) {
 		// Picks
 		resetButtonPicks.style.display = "none"	
 		resetButtonPicksConfirm.style.display = "block"
+		let pickCardBlue = document.getElementsByClassName("pickCardBlue")
+		let pickCardPurple = document.getElementsByClassName("pickCardPurple")
+		for (var i = 0; i < pickCardBlue.length; i++) {
+			pickCardBlue[i].children[0].borderColor = "white"
+			pickCardPurple[i].children[0].borderColor = "white"
+		}
 		resetBanButton()
 		resetProtectButton()
 	} else if (section == "bans") {
@@ -1069,110 +1080,289 @@ function mapClickEvent() {
 	}
 
 	// Changes based on protection
+	let validation = true
 	switch(true) {
 	case (nextAction.innerText == "Blue Protect"):
-		// Changing the style of buttonS
-		this.style.backgroundColor = "#6ACE0C"
-		if (clickedMapID !== protectCardBlueID && typeof protectCardBlueID !== "undefined") {
-			document.getElementById(`${protectCardBlueID}Button`).style.backgroundColor = "#FFFFFF" 
+		// Checking for Bans
+		for (var i = 0; i < banCardBlueIDs.length; i++) {
+			if (clickedMapID == banCardBlueIDs[i]) validation = false
 		}
-		protectCardBlueID = clickedMapID
-		// Changing the style of the card
-		protectCardBlue.style.backgroundImage = `url("${clickedMap.imgURL}")`
-		protectCardBlueText.innerText = `${clickedMap.mod}${clickedMap.order}`
-		// Other Details
-		blueProtectNum++;
-		if (purpleProtectNum >= protectTotalNum) nextAction.innerText = "Blue Ban"
-		else nextAction.innerText = "Purple Protect"
+		for (var i = 0; i < banCardPurpleIDs.length; i++) {
+			if (clickedMapID == banCardPurpleIDs[i]) validation = false
+		}
+		// Checking for Purple Protect
+		if (clickedMapID == protectCardPurpleID) validation = false
+		if (validation) {
+			// Changing the style of buttonS
+			this.style.backgroundColor = "#6ACE0C"
+			if (clickedMapID !== protectCardBlueID && (typeof protectCardBlueID !== "undefined" || protectCardBlueID == null)) {
+				document.getElementById(`${protectCardBlueID}Button`).style.backgroundColor = "#FFFFFF" 
+			}
+			protectCardBlueID = clickedMapID
+			// Changing the style of the card
+			protectCardBlue.style.backgroundImage = `url("${clickedMap.imgURL}")`
+			protectCardBlueText.innerText = `${clickedMap.mod}${clickedMap.order}`
+			// Other Details
+			blueProtectNum++;
+			if (purpleProtectNum >= protectTotalNum) nextAction.innerText = "Blue Ban"
+			else nextAction.innerText = "Purple Protect"
+		}
 		break;
 	case (nextAction.innerText == "Purple Protect"): 
-		// Changing the style of buttons
-		this.style.backgroundColor = "#6ACE0C"
-		if (clickedMapID !== protectCardPurpleID && typeof protectCardPurpleID !== "undefined") {
-			document.getElementById(`${protectCardPurpleID}Button`).style.backgroundColor = "#FFFFFF" 
+		// Checking for Bans
+		for (var i = 0; i < banCardBlueIDs.length; i++) {
+			if (clickedMapID == banCardBlueIDs[i]) validation = false
 		}
-		protectCardPurpleID = clickedMapID
-		// Changing the style of the card
-		protectCardPurple.style.backgroundImage = `url("${clickedMap.imgURL}")`
-		protectCardPurpleText.innerText = `${clickedMap.mod}${clickedMap.order}`
-		// Other Details
-		purpleProtectNum++;
-		if (blueProtectNum >= protectTotalNum) nextAction.innerText = "Purple Ban"
-		else nextAction.innerText = "Blue Protect"
+		for (var i = 0; i < banCardPurpleIDs.length; i++) {
+			if (clickedMapID == banCardPurpleIDs[i]) validation = false
+		}
+		// Checking for Purple Protect
+		if (clickedMapID == protectCardBlueID) validation = false
+		if (validation) {
+			// Changing the style of buttons
+			this.style.backgroundColor = "#6ACE0C"
+			if (clickedMapID !== protectCardPurpleID && (typeof protectCardPurpleID !== "undefined" || protectCardPurpleID == null)) {
+				document.getElementById(`${protectCardPurpleID}Button`).style.backgroundColor = "#FFFFFF" 
+			}
+			protectCardPurpleID = clickedMapID
+			// Changing the style of the card
+			protectCardPurple.style.backgroundImage = `url("${clickedMap.imgURL}")`
+			protectCardPurpleText.innerText = `${clickedMap.mod}${clickedMap.order}`
+			// Other Details
+			purpleProtectNum++;
+			if (blueProtectNum >= protectTotalNum) nextAction.innerText = "Purple Ban"
+			else nextAction.innerText = "Blue Protect"
+		}
+
 		break;
 	case (nextAction.innerText == "Blue Ban"):
-		banNum++
-		// Changing style of buttons
-		this.style.backgroundColor = "#F88379"
-		// Changing the style of the card
-		for (var i = 0; i < banCardBlue.length; i++) {
-			if (i == banCardBlue.length - 1 || banCardBlue[i].children[1].innerText.trim() == "") {
-				setCardInfo(banCardBlue[i], clickedMap)
-				banCardBlueIDs[i] = clickedMap.beatmapID
-				break;
-			}
+		// Checking for protects
+		if (clickedMapID == protectCardBlueID || clickedMapID == protectCardPurpleID) validation = false
+		// Checking for ban
+		for (var i = 0; i < banCardBlueIDs[i]; i++) {
+			if (clickedMapID == banCardBlueIDs[i]) validation = false
 		}
-		if (banNum == 1) nextAction.innerText = "Purple Ban"
-		else if (banTotalNum == 2) {
-			if (banNum == 2) nextAction.innerText = "Blue Ban"
-			else if (banNum == 3) nextAction.innerText = "Purple Ban"
-			else nextAction.innerText = "Blue Pick"
-		} else if (banTotalNum == 1) nextAction.innerText = "Blue Pick"
+		for (var i = 0; i < banCardPurpleIDs[i]; i++) {
+			if (clickedMapID == banCardPurpleIDs[i]) validation = false
+		}
+		if (validation) {
+			banNum++
+			// Changing style of buttons
+			this.style.backgroundColor = "#F88379"
+			// Changing the style of the card
+			for (var i = 0; i < banCardBlue.length; i++) {
+				if (clickedMapID !== banCardBlueIDs[i] && (typeof banCardBlueIDs[i] !== "undefined" || banCardBlueIDs[i] == null)) {
+					document.getElementById(`${banCardBlueIDs[i]}Button`).style.backgroundColor = "#FFFFFF" 
+				}
+
+				if (i == banCardBlue.length - 1 || banCardBlue[i].children[1].innerText.trim() == "") {
+					setCardInfo(banCardBlue[i], clickedMap)
+					banCardBlueIDs[i] = clickedMap.beatmapID
+					break;
+				}
+			}
+			if (banNum == 1) nextAction.innerText = "Purple Ban"
+			else if (banTotalNum == 2) {
+				if (banNum == 2) nextAction.innerText = "Blue Ban"
+				else if (banNum == 3) nextAction.innerText = "Purple Ban"
+				else nextAction.innerText = "Blue Pick"
+			} else if (banTotalNum == 1) nextAction.innerText = "Blue Pick"
+		}
 		break;
 	case (nextAction.innerText == "Purple Ban"): 
-		banNum++
-		banCardPurpleIDs.push(clickedMap.beatmapID)
-		// Changing style of buttons
-		this.style.backgroundColor = "#F88379"
-		// Changing the style of the card
-		for (var i = 0; i < banCardPurple.length; i++) {
-			if (i == banCardPurple.length - 1 || banCardPurple[i].children[1].innerText.trim() == "") {
-				setCardInfo(banCardPurple[i], clickedMap)
-				banCardPurpleIDs[i] = clickedMap.beatmapID
-				break;
-			}
+		// Checking for protects
+		if (clickedMapID == protectCardBlueID || clickedMapID == protectCardPurpleID) validation = false
+		// Checking for bans
+		for (var i = 0; i < banCardBlueIDs[i]; i++) {
+			if (clickedMapID == banCardBlueIDs[i]) validation = false
 		}
-		if (banNum == 1) nextAction.innerText = "Blue Ban"
-		else if (banTotalNum == 2) {
-			if (banNum == 2) nextAction.innerText = "Purple Ban"
-			else if (banNum == 3) nextAction.innerText = "Blue Ban"
-			else nextAction.innerText = "Purple Pick"
-		} else if (banTotalNum == 1) nextAction.innerText = "Purple Pick"
+		for (var i = 0; i < banCardPurpleIDs[i]; i++) {
+			if (clickedMapID == banCardPurpleIDs[i]) validation = false
+		}
+		if (validation) {
+			banNum++
+			banCardPurpleIDs.push(clickedMap.beatmapID)
+			// Changing style of buttons
+			this.style.backgroundColor = "#F88379"
+			// Changing the style of the card
+			for (var i = 0; i < banCardPurple.length; i++) {
+				if (clickedMapID !== banCardPurpleIDs[i] && (typeof banCardPurpleIDs[i] !== "undefined" || banCardPurpleIDs[i] == null)) {
+					document.getElementById(`${banCardPurpleIDs[i]}Button`).style.backgroundColor = "#FFFFFF" 
+				}
+
+				if (i == banCardPurple.length - 1 || banCardPurple[i].children[1].innerText.trim() == "") {
+					setCardInfo(banCardPurple[i], clickedMap)
+					banCardPurpleIDs[i] = clickedMap.beatmapID
+					break;
+				}
+			}
+			if (banNum == 1) nextAction.innerText = "Blue Ban"
+			else if (banTotalNum == 2) {
+				if (banNum == 2) nextAction.innerText = "Purple Ban"
+				else if (banNum == 3) nextAction.innerText = "Blue Ban"
+				else nextAction.innerText = "Purple Pick"
+			} else if (banTotalNum == 1) nextAction.innerText = "Purple Pick"
+		}
 		break;
 	case (nextAction.innerText == "Blue Pick"):
-		// Change style of button
-		this.style.backgroundColor = "var(--blue)"
-		// Change style of card
-		for (var i = 0; i < mapPickCardsBlue.childElementCount; i++) {
-			if (mapPickCardsBlue.children[i].children[1].innerText !== "") continue
-			mapPickCardsBlue.children[i].children[1].innerText = `${clickedMap.mod.toUpperCase()}${clickedMap.order}`
-			mapPickCardsBlue.children[i].style.backgroundImage = `url("${clickedMap.imgURL}")`
-			pickCardBlueIDs[i] = clickedMap.beatmapID
-			break;
+		// Checking Bans
+		for (var i = 0; i < banCardBlueIDs.length; i++) {
+			if (clickedMapID == banCardBlueIDs[i]) validation = false
 		}
-		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0
-		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 1
-		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0
-		nextAction.innerText = "Purple Pick"
+		for (var i = 0; i < banCardPurpleIDs.length; i++) {
+			if (clickedMapID == banCardPurpleIDs[i]) validation = false
+		}
+		// Checking Picks
+		for (var i = 0; i < pickCardBlueIDs.length; i++) {
+			if (clickedMap == pickCardBlueIDs[i]) validation = false
+		}
+		for (var i = 0; i < pickCardPurpleIDs.length; i++) {
+			if (clickedMap == pickCardPurpleIDs[i]) validation = false
+		}
+		if (validation) {
+			// Change style of button
+			this.style.backgroundColor = "var(--blue)"
+			// Change style of card
+			for (var i = 0; i < mapPickCardsBlue.childElementCount; i++) {
+				if (mapPickCardsBlue.children[i].children[1].innerText !== "") continue
+				mapPickCardsBlue.children[i].children[1].innerText = `${clickedMap.mod.toUpperCase()}${clickedMap.order}`
+				mapPickCardsBlue.children[i].style.backgroundImage = `url("${clickedMap.imgURL}")`
+				pickCardBlueIDs[i] = clickedMap.beatmapID
+				break;
+			}
+			document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0
+			document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 1
+			document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 0
+			nextAction.innerText = "Purple Pick"
+			// Automatically go to gameplay page
+			setTimeout(() => {
+				// Changing Background Image
+				topSection.style.backgroundImage = "url('static/gameplayView.png')";
+				// Gameplay greenscreen
+				gameplaySection.style.left = 0;
+				// Round Text
+				roundText.style.opacity = 1;
+				// Now Playing Container
+				nowPlayingContainer.style.bottom = "15px";
+				for (var i = 0; i < mapStatsTop.length; i++) mapStatsTop[i].style.top = "87px"
+				for (var i = 0; i < mapStatsBot.length; i++) mapStatsBot[i].style.top = "106px"
+				// Stars
+				for (var i = 0; i < blueStars.length; i++) {
+					blueStars[i].style.top = "88px";
+					blueStars[i].style.left = `${740 - (i * 50)}px`;
+					purpleStars[i].style.top = "88px";
+					purpleStars[i].style.right = `${728 - (i * 50)}px`;
+				}
+				// Team Names
+				for (var i = 0; i < teamNames.length; i++) {
+					teamNames[i].style.top = "10px"
+					teamNames[i].style.width = "max-content"
+					teamNames[i].style.fontSize = "31px"
+					teamNames[i].style.transform = "translateX(0)"
+				}
+				teamBlueName.style.left = "170px"
+				teamPurpleName.style.right = "185px"
+				teamBlueName.style.textShadow = "0px 0px 0px #ffffff"
+				teamPurpleName.style.textShadow = "0px 0px 0px #ffffff"
+				// Team Flags
+				for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "90px";
+				teamBlueFlag.style.top = "10px"
+				teamBlueFlag.style.left = "50px"
+				teamPurpleFlag.style.left = "1785px"
+				// Chat
+				chats.style.bottom = "10px"
+				chats.style.height = "130px"
+				// Sponsors
+				sponsor.style.opacity = 1;
+				mappoolSponsor.style.opacity = 0;
+				// Gameplay Names
+				gameplayNames.style.opacity = 1;
+				mappool.style.opacity = 0;
+			},10000)
+		}
+
 		break;
 		
 	case (nextAction.innerText == "Purple Pick"): 
-		// Change style of button
-		this.style.backgroundColor = "var(--purple)"
-		// Change style of card
-		for (var i = 0; i < mapPickCardsPurple.childElementCount; i++) {
-			if (mapPickCardsPurple.children[i].children[1].innerText !== "") continue
-			mapPickCardsPurple.children[i].children[1].innerText = `${clickedMap.mod.toUpperCase()}${clickedMap.order}`
-			mapPickCardsPurple.children[i].style.backgroundImage = `url("${clickedMap.imgURL}")`
-			pickCardPurpleIDs[i] = clickedMap.beatmapID
-			break;
+		// Checking Bans
+		for (var i = 0; i < banCardBlueIDs.length; i++) {
+			if (clickedMapID == banCardBlueIDs[i]) validation = false
 		}
-		document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0
-		document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0
-		document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 1
-		nextAction.innerText = "Blue Pick"
+		for (var i = 0; i < banCardPurpleIDs.length; i++) {
+			if (clickedMapID == banCardPurpleIDs[i]) validation = false
+		}
+		// Checking Picks
+		for (var i = 0; i < pickCardBlueIDs.length; i++) {
+			if (clickedMap == pickCardBlueIDs[i]) validation = false
+		}
+		for (var i = 0; i < pickCardPurpleIDs.length; i++) {
+			if (clickedMap == pickCardPurpleIDs[i]) validation = false
+		}
+		if (validation) {
+			// Change style of button
+			this.style.backgroundColor = "var(--purple)"
+			// Change style of card
+			for (var i = 0; i < mapPickCardsPurple.childElementCount; i++) {
+				if (mapPickCardsPurple.children[i].children[1].innerText !== "") continue
+				mapPickCardsPurple.children[i].children[1].innerText = `${clickedMap.mod.toUpperCase()}${clickedMap.order}`
+				mapPickCardsPurple.children[i].style.backgroundImage = `url("${clickedMap.imgURL}")`
+				pickCardPurpleIDs[i] = clickedMap.beatmapID
+				break;
+			}
+			document.getElementById("nowPlayingWrapperImageNeutral").style.opacity = 0
+			document.getElementById("nowPlayingWrapperImageBlue").style.opacity = 0
+			document.getElementById("nowPlayingWrapperImagePurple").style.opacity = 1
+			nextAction.innerText = "Blue Pick"
+			// Automatically go to gameplay page
+			setTimeout(() => {
+				// Changing Background Image
+				topSection.style.backgroundImage = "url('static/gameplayView.png')";
+				// Gameplay greenscreen
+				gameplaySection.style.left = 0;
+				// Round Text
+				roundText.style.opacity = 1;
+				// Now Playing Container
+				nowPlayingContainer.style.bottom = "15px";
+				for (var i = 0; i < mapStatsTop.length; i++) mapStatsTop[i].style.top = "87px"
+				for (var i = 0; i < mapStatsBot.length; i++) mapStatsBot[i].style.top = "106px"
+				// Stars
+				for (var i = 0; i < blueStars.length; i++) {
+					blueStars[i].style.top = "88px";
+					blueStars[i].style.left = `${740 - (i * 50)}px`;
+					purpleStars[i].style.top = "88px";
+					purpleStars[i].style.right = `${728 - (i * 50)}px`;
+				}
+				// Team Names
+				for (var i = 0; i < teamNames.length; i++) {
+					teamNames[i].style.top = "10px"
+					teamNames[i].style.width = "max-content"
+					teamNames[i].style.fontSize = "31px"
+					teamNames[i].style.transform = "translateX(0)"
+				}
+				teamBlueName.style.left = "170px"
+				teamPurpleName.style.right = "185px"
+				teamBlueName.style.textShadow = "0px 0px 0px #ffffff"
+				teamPurpleName.style.textShadow = "0px 0px 0px #ffffff"
+				// Team Flags
+				for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "90px";
+				teamBlueFlag.style.top = "10px"
+				teamBlueFlag.style.left = "50px"
+				teamPurpleFlag.style.left = "1785px"
+				// Chat
+				chats.style.bottom = "10px"
+				chats.style.height = "130px"
+				// Sponsors
+				sponsor.style.opacity = 1;
+				mappoolSponsor.style.opacity = 0;
+				// Gameplay Names
+				gameplayNames.style.opacity = 1;
+				mappool.style.opacity = 0;
+			},10000)
+		}
 		break;
 	}
+
+
 }
 function rollWinner() {
 	if (setRollWinner.value == "blue") nextAction.innerText = "Purple Protect"
@@ -1225,7 +1415,10 @@ function setAction() {
 		applyChangesButton.setAttribute("onclick", "applyChanges()")
 		applyChangesButton.innerText = "Apply Changes"
 		mapControl.append(applyChangesButton)
-	} else selectTeamOptions.setAttribute("onchange","setTeam()")
+	} else {
+		selectTeamOptions.setAttribute("onchange","setTeam()")
+		setTeam()
+	}
 }
 
 function setTeam() {

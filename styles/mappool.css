@@ -98,6 +98,7 @@
     border: 5px solid;
     background-size: cover;
     background-position: 50%;
+    transition: 750ms ease-in-out
 }
 .mappoolCardOverlay {
     width: inherit; height: inherit;
