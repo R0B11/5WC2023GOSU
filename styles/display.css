@@ -490,7 +490,7 @@ body,html{
 	position: absolute;
 	font-family: RenogareSoft-Regular; 
 	left: 30px;
-	top: 95px;
+	top: 53px;
 	width: 120px;
 	font-size: 20px;
 	background-color: transparent;
@@ -499,7 +499,9 @@ body,html{
 	border-radius: 10px;
 	text-align: center;
 }
-#setRollWinner option { color: black; }
+#setRollWinner option { color: white; }
+#setRollWinner option:checked { color: black; }
+#setRollWinner::-webkit-scrollbar { display: none; }
 
 /* Next Action */
 #nextActionText, #setRollWinnerText {
@@ -536,8 +538,8 @@ body,html{
 	color: black;
 	border: 1px solid white;
 	position: absolute;
-	top: 95px; left: 160px;
-	height: 33px;
+	top: 53px; left: 160px;
+	height: 61px;
 	width: 60px;
 }
 

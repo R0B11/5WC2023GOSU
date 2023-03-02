@@ -75,16 +75,50 @@
 #blueTeamSeed { left: 40px; }
 #purpleTeamSeed { right: 40px; }
 
-#teamNamesBlue {
+.teamNamesBlue {
     display: flex;
     position: absolute; top: 930px; left: 60px;
-    width: 370px;
+    width: 260px;
     flex-wrap: wrap;
+    opacity: 1;
 }
-#teamNameBluePlayer1 {
+.teamNamesPurple {
+    display: flex;
+    position: absolute; top: 930px; right: 60px;
+    width: 260px;
+    flex-wrap: wrap;
+    opacity: 1;
+}
+.teamNameBluePlayer {
     z-index: 0;
-    font-size: 16px;
-    width: 180px;
+    font-size: 22px;
+    width: 260px;
+}
+.teamNamePurplePlayer {
+    z-index: 0;
+    font-size: 22px;
+    width: 260px;
+    text-align: right;
+}
+.teamNamesBlueKeyFrame1 {
+    animation: teamNamesBlueKeyFrame1Animation 10s ease-in-out infinite forwards
+}
+.teamNamesBlueKeyFrame2 {
+    animation: teamNamesBlueKeyFrame2Animation 10s ease-in-out infinite forwards
+}
+@keyframes teamNamesBlueKeyFrame1Animation {
+    0% { opacity: 0; }
+    5% { opacity: 1; }
+    45% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes teamNamesBlueKeyFrame2Animation {
+    0% { opacity: 0; }
+    50% { opacity: 0; }
+    55% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 /* Cards */

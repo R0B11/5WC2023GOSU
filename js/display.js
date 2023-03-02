@@ -48,6 +48,25 @@ let purpleTeamStatsPrecisionBar = document.getElementById("purpleTeamStatsPrecis
 let purpleTeamStatsReadingBar = document.getElementById("purpleTeamStatsReadingBar")
 let purpleTeamStatsTechBar = document.getElementById("purpleTeamStatsTechBar")
 
+// TEAM PLAYER NAMES
+let teamNameBluePlayer1 = document.getElementById("teamNameBluePlayer1")
+let teamNameBluePlayer2 = document.getElementById("teamNameBluePlayer2")
+let teamNameBluePlayer3 = document.getElementById("teamNameBluePlayer3")
+let teamNameBluePlayer4 = document.getElementById("teamNameBluePlayer4")
+let teamNameBluePlayer5 = document.getElementById("teamNameBluePlayer5")
+let teamNameBluePlayer6 = document.getElementById("teamNameBluePlayer6")
+let teamNameBluePlayer7 = document.getElementById("teamNameBluePlayer7")
+let teamNameBluePlayer8 = document.getElementById("teamNameBluePlayer8")
+let teamNamePurplePlayer1 = document.getElementById("teamNamePurplePlayer1")
+let teamNamePurplePlayer2 = document.getElementById("teamNamePurplePlayer2")
+let teamNamePurplePlayer3 = document.getElementById("teamNamePurplePlayer3")
+let teamNamePurplePlayer4 = document.getElementById("teamNamePurplePlayer4")
+let teamNamePurplePlayer5 = document.getElementById("teamNamePurplePlayer5")
+let teamNamePurplePlayer6 = document.getElementById("teamNamePurplePlayer6")
+let teamNamePurplePlayer7 = document.getElementById("teamNamePurplePlayer7")
+let teamNamePurplePlayer8 = document.getElementById("teamNamePurplePlayer8")
+
+
 // SEEDS
 let blueTeamSeedNumber = document.getElementById("blueTeamSeedNumber")
 let purpleTeamSeedNumber = document.getElementById("purpleTeamSeedNumber")
@@ -93,6 +112,8 @@ let teamBlueFlag = document.getElementById("teamBlueFlag");
 let teamFlags = document.getElementsByClassName("teamFlags")
 
 // MAP STATS
+let currentMap
+let clickedMapID
 let nowPlayingContainer = document.getElementById("nowPlayingContainer");
 let mapStatsCS = document.getElementById("mapStatsCS");
 let mapStatsAR = document.getElementById("mapStatsAR");
@@ -218,6 +239,7 @@ let purpleTeamStatsStamina
 let purpleTeamStatsFingerControl
 let purpleTeamStatsPrecision
 let purpleTeamStatsReading
+let purpleTeamStatsTech
 
 let scoreBlueTemp = 0
 let scorePurpleTemp = 0
@@ -394,6 +416,15 @@ socket.onmessage = async event => {
 				blueTeamStatsPrecision = parseFloat(allTeams[i].precision)
 				blueTeamStatsReading = parseFloat(allTeams[i].reading)
 				blueTeamStatsTech = parseFloat(allTeams[i].tech)
+				teamNameBluePlayer1.innerText = allTeams[i].captain
+				teamNameBluePlayer2.innerText = allTeams[i].player2
+				teamNameBluePlayer3.innerText = allTeams[i].player3
+				teamNameBluePlayer4.innerText = allTeams[i].player4
+				teamNameBluePlayer5.innerText = allTeams[i].player5
+				teamNameBluePlayer6.innerText = allTeams[i].player6
+				teamNameBluePlayer7.innerText = allTeams[i].player7
+				teamNameBluePlayer8.innerText = allTeams[i].player8
+				break;
 			}
 		}
 
@@ -431,6 +462,15 @@ socket.onmessage = async event => {
 			blueTeamStatsPrecisionBar.style.width = 0
 			blueTeamStatsReadingBar.style.width = 0
 			blueTeamStatsTechBar.style.width = 0
+
+			teamNameBluePlayer1.innerText = ""
+			teamNameBluePlayer2.innerText = ""
+			teamNameBluePlayer3.innerText = ""
+			teamNameBluePlayer4.innerText = ""
+			teamNameBluePlayer5.innerText = ""
+			teamNameBluePlayer6.innerText = ""
+			teamNameBluePlayer7.innerText = ""
+			teamNameBluePlayer8.innerText = ""
 		}
 	}
 	if(teamNamePurpleTemp !== data.tourney.manager.teamName.right) {
@@ -449,6 +489,14 @@ socket.onmessage = async event => {
 				purpleTeamStatsPrecision = parseFloat(allTeams[i].precision)
 				purpleTeamStatsReading = parseFloat(allTeams[i].reading)
 				purpleTeamStatsTech = parseFloat(allTeams[i].tech)
+				teamNamePurplePlayer1.innerText = allTeams[i].captain
+				teamNamePurplePlayer2.innerText = allTeams[i].player2
+				teamNamePurplePlayer3.innerText = allTeams[i].player3
+				teamNamePurplePlayer4.innerText = allTeams[i].player4
+				teamNamePurplePlayer5.innerText = allTeams[i].player5
+				teamNamePurplePlayer6.innerText = allTeams[i].player6
+				teamNamePurplePlayer7.innerText = allTeams[i].player7
+				teamNamePurplePlayer8.innerText = allTeams[i].player8
 			}
 		}
 
@@ -486,6 +534,15 @@ socket.onmessage = async event => {
 			purpleTeamStatsPrecisionBar.style.width = 0
 			purpleTeamStatsReadingBar.style.width = 0
 			purpleTeamStatsTechBar.style.width = 0
+
+			teamNamePurplePlayer1.innerText = ""
+			teamNamePurplePlayer2.innerText = ""
+			teamNamePurplePlayer3.innerText = ""
+			teamNamePurplePlayer4.innerText = ""
+			teamNamePurplePlayer5.innerText = ""
+			teamNamePurplePlayer6.innerText = ""
+			teamNamePurplePlayer7.innerText = ""
+			teamNamePurplePlayer8.innerText = ""
 		}
 	}
 	// IPC State
@@ -493,11 +550,41 @@ socket.onmessage = async event => {
 	if (ipcState !== data.tourney.manager.ipcState) {
 		ipcState = data.tourney.manager.ipcState
 		if (ipcState == 1) pointAwarded = false;
+		else if (ipcState == 3) {
+			pointAwarded = false;
+			toGameplayView()
+		}
 		else if (ipcState == 4) {
+			console.log(pointAwarded)
+			let currentMapCardSetWinner = ""
+			let pickCardBlue = document.getElementsByClassName("pickCardBlue")
+			let pickCardPurple = document.getElementsByClassName("pickCardPurple")
+			for (var i = 0; i < pickCardBlueIDs.length; i++) {
+				if (clickedMapID == pickCardBlueIDs[i]) {
+					currentMapCardSetWinner = pickCardBlue[i]
+					break
+				}
+			}
+			if (currentMapCardSetWinner == "") {
+				for (var i = 0; i < pickCardPurpleIDs.length; i++) {
+					if (clickedMapID == pickCardPurpleIDs[i]) {
+						currentMapCardSetWinner = pickCardPurple[i]
+						break
+					}
+				}
+			}
+			console.log(currentMapCardSetWinner)
+
 			if (pointAwarded == false) {
 				pointAwarded = true;
-				if (playScoreBlueTemp > playScorePurpleTemp) blueStarControlPlus.click()
-				else if (playScoreBlueTemp < playScorePurpleTemp) purpleStarControlPlus.click()
+				if (playScoreBlueTemp > playScorePurpleTemp) {
+					blueStarControlPlus.click()
+					if (currentMapCardSetWinner !== "") currentMapCardSetWinner.children[0].style.borderColor = "var(--blue)"
+				}
+				else if (playScoreBlueTemp < playScorePurpleTemp) {
+					purpleStarControlPlus.click()
+					if (currentMapCardSetWinner !== "") currentMapCardSetWinner.children[0].style.borderColor = "var(--purple)"
+				}
 				else if (playScoreBlueTemp == playScorePurpleTemp) {
 					let blueTeamAccuracy = 0;
 					let purpleTeamAccuracy = 0;
@@ -508,13 +595,64 @@ socket.onmessage = async event => {
 						else purpleTeamAccuracy += currentAccuracy
 					}
 
-					if (blueTeamAccuracy > purpleTeamAccuracy) blueStarControlPlus.click()
-					else if (blueTeamAccuracy < purpleTeamAccuracy) purpleStarControlPlus.click()
+					if (blueTeamAccuracy > purpleTeamAccuracy) {
+						blueStarControlPlus.click()
+						if (currentMapCardSetWinner !== "") currentMapCardSetWinner.children[0].style.borderColor = "var(--blue)"
+					}
+					else if (blueTeamAccuracy < purpleTeamAccuracy) {
+						purpleStarControlPlus.click()
+						if (currentMapCardSetWinner !== "") currentMapCardSetWinner.children[0].style.borderColor = "var(--purple)"
+					}
 				}
 			}
 
 			// Automatically go to mappool page
-			setTimeout(toPickScreenView(), 25000)
+			setTimeout(() => {
+				// Changing Background Image
+				topSection.style.backgroundImage = "url('static/mappoolViewTop.png')"
+				// Gameplay Greenscreen 
+				gameplaySection.style.left = "-1920px"
+				// Round Text
+				roundText.style.opacity = 0
+				// Now Playing Container
+				nowPlayingContainer.style.bottom = "-135px"
+				for (var i = 0; i < mapStatsTop.length; i++) mapStatsTop[i].style.top = "237px"
+				for (var i = 0; i < mapStatsBot.length; i++) mapStatsBot[i].style.top = "256px"
+				// Stars
+				for (var i = 0; i < blueStars.length; i++) {
+					blueStars[i].style.top = "-25px"
+					blueStars[i].style.left = `${615 - (i * 55)}px`
+					purpleStars[i].style.top = "-25px"
+					purpleStars[i].style.right = `${615 - (i * 55)}px`	
+				}
+				// Team Names
+				for (var i = 0; i < teamNames.length; i++) {
+					teamNames[i].style.top = "320px"
+					teamNames[i].style.fontSize = "40px"
+					teamNames[i].style.width = "350px"
+				}
+				teamBlueName.style.transform = "translateX(-50%)"
+				teamBlueName.style.left = "190px"
+				teamBlueName.style.textShadow = "0px 0px 10px var(--blue75Opacity), 0px 0px 20px var(--blue75Opacity), 0px 0px 30px var(--blue75Opacity)"
+				teamPurpleName.style.transform = "translateX(50%)"
+				teamPurpleName.style.right = "190px"
+				teamPurpleName.style.textShadow = "0px 0px 10px var(--purple75Opacity), 0px 0px 20px var(--purple75Opacity), 0px 0px 30px var(--purple75Opacity)"
+				// Team Flags
+				for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "200px";
+				teamBlueFlag.style.top = "115px"
+				teamBlueFlag.style.left = "52px"
+				teamPurpleFlag.style.left = "1590px"
+				teamPurpleFlag.style.top = "-85px"
+				// Chat
+				chats.style.bottom = "45px"
+				chats.style.height = "145px"
+				// Sponsors
+				sponsor.style.opacity = 0;
+				mappoolSponsor.style.opacity = 1;
+				// Gameplay Names
+				gameplayNames.style.opacity = 0;
+				mappool.style.opacity = 1;
+			}, 15000)
 		}
 	}
 	if(scoreVisibleTemp) {
@@ -631,34 +769,34 @@ socket.onmessage = async event => {
 		playerSlotName1 = data.tourney.ipcClients[0].spectating.name
 		gameplayName1.innerText = playerSlotName1
 	}
-	if (playerSlotName2 !== data.tourney.ipcClients[2].spectating.name) {
-		playerSlotName2 = data.tourney.ipcClients[2].spectating.name
-		gameplayName2.innerText = playerSlotName2
-	}
+	// if (playerSlotName2 !== data.tourney.ipcClients[2].spectating.name) {
+	// 	playerSlotName2 = data.tourney.ipcClients[2].spectating.name
+	// 	gameplayName2.innerText = playerSlotName2
+	// }
 	if (playerSlotName3 !== data.tourney.ipcClients[1].spectating.name) {
 		playerSlotName3 = data.tourney.ipcClients[1].spectating.name
 		gameplayName3.innerText = playerSlotName3
 	}
-	if (playerSlotName4 !== data.tourney.ipcClients[3].spectating.name) {
-		playerSlotName4 = data.tourney.ipcClients[3].spectating.name
-		gameplayName4.innerText = playerSlotName4
-	}
-	if (playerSlotName5 !== data.tourney.ipcClients[4].spectating.name) {
-		playerSlotName5 = data.tourney.ipcClients[4].spectating.name
-		gameplayName5.innerText = playerSlotName5
-	}
-	if (playerSlotName6 !== data.tourney.ipcClients[6].spectating.name) {
-		playerSlotName6 = data.tourney.ipcClients[6].spectating.name
-		gameplayName6.innerText = playerSlotName6
-	}
-	if (playerSlotName7 !== data.tourney.ipcClients[5].spectating.name) {
-	 	playerSlotName7 = data.tourney.ipcClients[5].spectating.name
-	 	gameplayName7.innerText = playerSlotName7
-	}
-	if (playerSlotName8 !== data.tourney.ipcClients[7].spectating.name) {
-		playerSlotName8 = data.tourney.ipcClients[7].spectating.name
-		gameplayName8.innerText = playerSlotName8
-	}
+	// if (playerSlotName4 !== data.tourney.ipcClients[3].spectating.name) {
+	// 	playerSlotName4 = data.tourney.ipcClients[3].spectating.name
+	// 	gameplayName4.innerText = playerSlotName4
+	// }
+	// if (playerSlotName5 !== data.tourney.ipcClients[4].spectating.name) {
+	// 	playerSlotName5 = data.tourney.ipcClients[4].spectating.name
+	// 	gameplayName5.innerText = playerSlotName5
+	// }
+	// if (playerSlotName6 !== data.tourney.ipcClients[6].spectating.name) {
+	// 	playerSlotName6 = data.tourney.ipcClients[6].spectating.name
+	// 	gameplayName6.innerText = playerSlotName6
+	// }
+	// if (playerSlotName7 !== data.tourney.ipcClients[5].spectating.name) {
+	//  	playerSlotName7 = data.tourney.ipcClients[5].spectating.name
+	//  	gameplayName7.innerText = playerSlotName7
+	// }
+	// if (playerSlotName8 !== data.tourney.ipcClients[7].spectating.name) {
+	// 	playerSlotName8 = data.tourney.ipcClients[7].spectating.name
+	// 	gameplayName8.innerText = playerSlotName8
+	// }
 }
 
 const changeAction = (actionText) => nextAction.innerText = actionText
@@ -1064,7 +1202,6 @@ changeStars(null)
 function mapClickEvent() {
 
 	// Get id of the element clicked
-	let clickedMapID
 	if (typeof this.id !== "undefined") clickedMapID = this.id.replace(/\D/g, "")
 
 	// Finding the correct map
@@ -1156,10 +1293,12 @@ function mapClickEvent() {
 
 			banCardBlueIDs.push(clickedMap.beatmapID)
 			// Changing style of buttons
-			this.style.backgroundColor = "#F88379"
+			console.log("change style of button")
+			console.log(document.getElementById(`${clickedMap.beatmapID}Button`))
+			document.getElementById(`${clickedMap.beatmapID}Button`).style.backgroundColor = "#F88379"
 			// Changing the style of the card
 			for (var i = 0; i < banCardBlue.length; i++) {
-				if (clickedMapID !== banCardBlueIDs[i] && (typeof banCardBlueIDs[i] !== "undefined" || banCardBlueIDs[i] == null)) {
+				if (clickedMapID != banCardBlueIDs[i] && (typeof banCardBlueIDs[i] !== "undefined" || banCardBlueIDs[i] == null)) {
 					document.getElementById(`${banCardBlueIDs[i]}Button`).style.backgroundColor = "#FFFFFF" 
 				}
 
@@ -1173,8 +1312,8 @@ function mapClickEvent() {
 			else if (banTotalNum == 2) {
 				if (banNum == 2) nextAction.innerText = "Blue Ban"
 				else if (banNum == 3) nextAction.innerText = "Purple Ban"
-				else nextAction.innerText = "Blue Pick"
-			} else if (banTotalNum == 1) nextAction.innerText = "Blue Pick"
+				else nextAction.innerText = "Purple Pick"
+			} else if (banTotalNum == 1) nextAction.innerText = "Purple Pick"
 		}
 		break;
 	case (nextAction.innerText == "Purple Ban"): 
@@ -1191,12 +1330,16 @@ function mapClickEvent() {
 			banNum++
 
 			banCardPurpleIDs.push(clickedMap.beatmapID)
+			console.log("change style of button")
+			console.log(document.getElementById(`${clickedMap.beatmapID}Button`))
 			// Changing style of buttons
-			this.style.backgroundColor = "#F88379"
+			document.getElementById(`${clickedMap.beatmapID}Button`).style.backgroundColor = "#F88379"
 			console.log(clickedMap.beatmapID)
 			// Changing the style of the card
 			for (var i = 0; i < banCardPurple.length; i++) {
-				if (clickedMapID !== banCardPurpleIDs[i] && (typeof banCardPurpleIDs[i] !== "undefined" || banCardPurpleIDs[i] == null)) {
+				if (clickedMapID != banCardPurpleIDs[i] && (typeof banCardPurpleIDs[i] !== "undefined" || banCardPurpleIDs[i] == null)) {
+					console.log(clickedMapID !== banCardPurpleIDs[i], clickedMapID, banCardPurpleIDs[i])
+					console.log("hello there")
 					document.getElementById(`${banCardPurpleIDs[i]}Button`).style.backgroundColor = "#FFFFFF" 
 				}
 
@@ -1210,8 +1353,8 @@ function mapClickEvent() {
 			else if (banTotalNum == 2) {
 				if (banNum == 2) nextAction.innerText = "Purple Ban"
 				else if (banNum == 3) nextAction.innerText = "Blue Ban"
-				else nextAction.innerText = "Purple Pick"
-			} else if (banTotalNum == 1) nextAction.innerText = "Purple Pick"
+				else nextAction.innerText = "Blue Pick"
+			} else if (banTotalNum == 1) nextAction.innerText = "Blue Pick"
 		}
 		break;
 	case (nextAction.innerText == "Blue Pick"):
