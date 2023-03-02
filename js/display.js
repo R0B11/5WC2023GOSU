@@ -514,7 +514,7 @@ socket.onmessage = async event => {
 			}
 
 			// Automatically go to mappool page
-			setTimeout(toPickScreenView(), 15000)
+			setTimeout(toPickScreenView(), 25000)
 		}
 	}
 	if(scoreVisibleTemp) {
@@ -631,34 +631,34 @@ socket.onmessage = async event => {
 		playerSlotName1 = data.tourney.ipcClients[0].spectating.name
 		gameplayName1.innerText = playerSlotName1
 	}
-	if (playerSlotName2 !== data.tourney.ipcClients[1].spectating.name) {
-		playerSlotName2 = data.tourney.ipcClients[1].spectating.name
+	if (playerSlotName2 !== data.tourney.ipcClients[2].spectating.name) {
+		playerSlotName2 = data.tourney.ipcClients[2].spectating.name
 		gameplayName2.innerText = playerSlotName2
 	}
-	// if (playerSlotName3 !== data.tourney.ipcClients[2].spectating.name) {
-	// 	playerSlotName3 = data.tourney.ipcClients[2].spectating.name
-	// 	gameplayName3.innerText = playerSlotName3
-	// }
-	// if (playerSlotName4 !== data.tourney.ipcClients[3].spectating.name) {
-	// 	playerSlotName4 = data.tourney.ipcClients[3].spectating.name
-	// 	gameplayName4.innerText = playerSlotName4
-	// }
-	// if (playerSlotName5 !== data.tourney.ipcClients[4].spectating.name) {
-	// 	playerSlotName5 = data.tourney.ipcClients[4].spectating.name
-	// 	gameplayName5.innerText = playerSlotName5
-	// }
-	// if (playerSlotName6 !== data.tourney.ipcClients[5].spectating.name) {
-	// 	playerSlotName6 = data.tourney.ipcClients[5].spectating.name
-	// 	gameplayName6.innerText = playerSlotName6
-	// }
-	// if (playerSlotName7 !== data.tourney.ipcClients[6].spectating.name) {
-	// 	playerSlotName7 = data.tourney.ipcClients[6].spectating.name
-	// 	gameplayName7.innerText = playerSlotName7
-	// }
-	// if (playerSlotName8 !== data.tourney.ipcClients[7].spectating.name) {
-	// 	playerSlotName8 = data.tourney.ipcClients[7].spectating.name
-	// 	gameplayName8.innerText = playerSlotName8
-	// }
+	if (playerSlotName3 !== data.tourney.ipcClients[1].spectating.name) {
+		playerSlotName3 = data.tourney.ipcClients[1].spectating.name
+		gameplayName3.innerText = playerSlotName3
+	}
+	if (playerSlotName4 !== data.tourney.ipcClients[3].spectating.name) {
+		playerSlotName4 = data.tourney.ipcClients[3].spectating.name
+		gameplayName4.innerText = playerSlotName4
+	}
+	if (playerSlotName5 !== data.tourney.ipcClients[4].spectating.name) {
+		playerSlotName5 = data.tourney.ipcClients[4].spectating.name
+		gameplayName5.innerText = playerSlotName5
+	}
+	if (playerSlotName6 !== data.tourney.ipcClients[6].spectating.name) {
+		playerSlotName6 = data.tourney.ipcClients[6].spectating.name
+		gameplayName6.innerText = playerSlotName6
+	}
+	if (playerSlotName7 !== data.tourney.ipcClients[5].spectating.name) {
+	 	playerSlotName7 = data.tourney.ipcClients[5].spectating.name
+	 	gameplayName7.innerText = playerSlotName7
+	}
+	if (playerSlotName8 !== data.tourney.ipcClients[7].spectating.name) {
+		playerSlotName8 = data.tourney.ipcClients[7].spectating.name
+		gameplayName8.innerText = playerSlotName8
+	}
 }
 
 const changeAction = (actionText) => nextAction.innerText = actionText
@@ -968,7 +968,7 @@ function starToggleOnOff(toggle) {
 
 function toPickScreenView() {
 	// Changing Background Image
-	topSection.style.backgroundImage = "url('static/mappoolView.png')"
+	topSection.style.backgroundImage = "url('static/mappoolViewTop.png')"
 	// Gameplay Greenscreen 
 	gameplaySection.style.left = "-1920px"
 	// Round Text
@@ -986,21 +986,22 @@ function toPickScreenView() {
 	}
 	// Team Names
 	for (var i = 0; i < teamNames.length; i++) {
-		teamNames[i].style.top = "310px"
+		teamNames[i].style.top = "320px"
 		teamNames[i].style.fontSize = "40px"
 		teamNames[i].style.width = "350px"
 	}
 	teamBlueName.style.transform = "translateX(-50%)"
-	teamBlueName.style.left = "185px"
+	teamBlueName.style.left = "190px"
 	teamBlueName.style.textShadow = "0px 0px 10px var(--blue75Opacity), 0px 0px 20px var(--blue75Opacity), 0px 0px 30px var(--blue75Opacity)"
 	teamPurpleName.style.transform = "translateX(50%)"
-	teamPurpleName.style.right = "185px"
+	teamPurpleName.style.right = "190px"
 	teamPurpleName.style.textShadow = "0px 0px 10px var(--purple75Opacity), 0px 0px 20px var(--purple75Opacity), 0px 0px 30px var(--purple75Opacity)"
 	// Team Flags
-	for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "210px";
-	teamBlueFlag.style.top = "128px"
-	teamBlueFlag.style.left = "83px"
-	teamPurpleFlag.style.left = "1630px"
+	for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "200px";
+	teamBlueFlag.style.top = "115px"
+	teamBlueFlag.style.left = "52px"
+	teamPurpleFlag.style.left = "1590px"
+	teamPurpleFlag.style.top = "-85px"
 	// Chat
 	chats.style.bottom = "45px"
 	chats.style.height = "145px"
@@ -1037,14 +1038,15 @@ function toGameplayView() {
 		teamNames[i].style.transform = "translateX(0)"
 	}
 	teamBlueName.style.left = "170px"
-	teamPurpleName.style.right = "185px"
+	teamPurpleName.style.right = "170px"
 	teamBlueName.style.textShadow = "0px 0px 0px #ffffff"
 	teamPurpleName.style.textShadow = "0px 0px 0px #ffffff"
 	// Team Flags
-	for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "90px";
-	teamBlueFlag.style.top = "10px"
+	for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "70px";
+	teamBlueFlag.style.top = "20px"
 	teamBlueFlag.style.left = "50px"
-	teamPurpleFlag.style.left = "1785px"
+	teamPurpleFlag.style.left = "1780px"
+	teamPurpleFlag.style.top = "-50px"
 	// Chat
 	chats.style.bottom = "10px"
 	chats.style.height = "130px"
@@ -1094,11 +1096,12 @@ function mapClickEvent() {
 		if (clickedMapID == protectCardPurpleID) validation = false
 		if (validation) {
 			// Changing the style of buttonS
+			protectCardBlueID = clickedMapID
 			this.style.backgroundColor = "#6ACE0C"
 			if (clickedMapID !== protectCardBlueID && (typeof protectCardBlueID !== "undefined" || protectCardBlueID == null)) {
 				document.getElementById(`${protectCardBlueID}Button`).style.backgroundColor = "#FFFFFF" 
 			}
-			protectCardBlueID = clickedMapID
+			//protectCardBlueID = clickedMapID
 			// Changing the style of the card
 			protectCardBlue.style.backgroundImage = `url("${clickedMap.imgURL}")`
 			protectCardBlueText.innerText = `${clickedMap.mod}${clickedMap.order}`
@@ -1118,13 +1121,16 @@ function mapClickEvent() {
 		}
 		// Checking for Purple Protect
 		if (clickedMapID == protectCardBlueID) validation = false
+		console.log(validation)
+		console.log(protectCardPurpleID)
 		if (validation) {
 			// Changing the style of buttons
+			protectCardPurpleID = clickedMapID
 			this.style.backgroundColor = "#6ACE0C"
 			if (clickedMapID !== protectCardPurpleID && (typeof protectCardPurpleID !== "undefined" || protectCardPurpleID == null)) {
 				document.getElementById(`${protectCardPurpleID}Button`).style.backgroundColor = "#FFFFFF" 
 			}
-			protectCardPurpleID = clickedMapID
+			//protectCardPurpleID = clickedMapID
 			// Changing the style of the card
 			protectCardPurple.style.backgroundImage = `url("${clickedMap.imgURL}")`
 			protectCardPurpleText.innerText = `${clickedMap.mod}${clickedMap.order}`
@@ -1147,6 +1153,8 @@ function mapClickEvent() {
 		}
 		if (validation) {
 			banNum++
+
+			banCardBlueIDs.push(clickedMap.beatmapID)
 			// Changing style of buttons
 			this.style.backgroundColor = "#F88379"
 			// Changing the style of the card
@@ -1181,9 +1189,11 @@ function mapClickEvent() {
 		}
 		if (validation) {
 			banNum++
+
 			banCardPurpleIDs.push(clickedMap.beatmapID)
 			// Changing style of buttons
 			this.style.backgroundColor = "#F88379"
+			console.log(clickedMap.beatmapID)
 			// Changing the style of the card
 			for (var i = 0; i < banCardPurple.length; i++) {
 				if (clickedMapID !== banCardPurpleIDs[i] && (typeof banCardPurpleIDs[i] !== "undefined" || banCardPurpleIDs[i] == null)) {
@@ -1265,10 +1275,11 @@ function mapClickEvent() {
 				teamBlueName.style.textShadow = "0px 0px 0px #ffffff"
 				teamPurpleName.style.textShadow = "0px 0px 0px #ffffff"
 				// Team Flags
-				for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "90px";
-				teamBlueFlag.style.top = "10px"
+				for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "70px";
+				teamBlueFlag.style.top = "20px"
 				teamBlueFlag.style.left = "50px"
-				teamPurpleFlag.style.left = "1785px"
+				teamPurpleFlag.style.left = "1780px"
+				teamPurpleFlag.style.top = "-50px"
 				// Chat
 				chats.style.bottom = "10px"
 				chats.style.height = "130px"
@@ -1344,10 +1355,11 @@ function mapClickEvent() {
 				teamBlueName.style.textShadow = "0px 0px 0px #ffffff"
 				teamPurpleName.style.textShadow = "0px 0px 0px #ffffff"
 				// Team Flags
-				for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "90px";
-				teamBlueFlag.style.top = "10px"
+				for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "70px";
+				teamBlueFlag.style.top = "20px"
 				teamBlueFlag.style.left = "50px"
 				teamPurpleFlag.style.left = "1785px"
+				teamPurpleFlag.style.top = "20px"
 				// Chat
 				chats.style.bottom = "10px"
 				chats.style.height = "130px"
