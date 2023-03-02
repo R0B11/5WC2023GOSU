@@ -269,6 +269,8 @@ let blueProtectNum  = 0
 let purpleProtectNum = 0
 let banNum = 0
 
+let viewState = 0
+
 for (var i = 0; i < allMaps.length; i++) {
 	for (var j = 0; j < allMaps[i].length; j++) {
 		let mapChoicesButton = document.createElement("button")
@@ -650,6 +652,8 @@ socket.onmessage = async event => {
 				// Gameplay Names
 				gameplayNames.style.opacity = 0;
 				mappool.style.opacity = 1;
+
+				viewState = 1;
 			}, 15000)
 		}
 	}
@@ -981,17 +985,33 @@ function starGenerate(side, i) {
 	let star = document.createElement("div")
 	let line1 = document.createElement("div")
 	let line2 = document.createElement("div")
+	if (viewState == 0){
+		if (side == "left") {
+			line1.style.backgroundColor = "#75c6ea";
+			line2.style.backgroundColor = "#75c6ea";
 
-	if (side == "left") {
-		line1.style.backgroundColor = "#75c6ea";
-		line2.style.backgroundColor = "#75c6ea";
+			star.style.left = `${740 - (i * 50)}px`;
+		} else {
+			line1.style.backgroundColor = "#936bf7";
+			line2.style.backgroundColor = "#936bf7";
 
-		star.style.left = `${740 - (i * 50)}px`;
-	} else {
-		line1.style.backgroundColor = "#936bf7";
-		line2.style.backgroundColor = "#936bf7";
+			star.style.right = `${728 - (i * 50)}px`;
+		}
+	}
+	else {
+		if (side == "left") {
+			line1.style.backgroundColor = "#75c6ea";
+			line2.style.backgroundColor = "#75c6ea";
 
-		star.style.right = `${728 - (i * 50)}px`;
+			star.style.left = `${615 - (i * 55)}px`;
+			star.style.top = `-25px`;
+		} else {
+			line1.style.backgroundColor = "#936bf7";
+			line2.style.backgroundColor = "#936bf7";
+
+			star.style.right = `${615 - (i * 55)}px`;
+			star.style.top = `-25px`;
+		}
 	}
 
 	star.setAttribute("class", "star");
@@ -1147,6 +1167,8 @@ function toPickScreenView() {
 	// Gameplay Names
 	gameplayNames.style.opacity = 0;
 	mappool.style.opacity = 1;
+
+	viewState = 1;
 }
 function toGameplayView() {
 	// Changing Background Image
@@ -1192,6 +1214,8 @@ function toGameplayView() {
 	// Gameplay Names
 	gameplayNames.style.opacity = 1;
 	mappool.style.opacity = 0;
+
+	viewState = 0;
 }
 
 changeStars(null)
@@ -1421,6 +1445,8 @@ function mapClickEvent() {
 				// Gameplay Names
 				gameplayNames.style.opacity = 1;
 				mappool.style.opacity = 0;
+
+				viewState = 0;
 			},10000)
 		}
 
@@ -1501,6 +1527,8 @@ function mapClickEvent() {
 				// Gameplay Names
 				gameplayNames.style.opacity = 1;
 				mappool.style.opacity = 0;
+
+				viewState = 0;
 			},10000)
 		}
 		break;
