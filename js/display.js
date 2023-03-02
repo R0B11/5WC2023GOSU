@@ -555,7 +555,6 @@ socket.onmessage = async event => {
 			toGameplayView()
 		}
 		else if (ipcState == 4) {
-			console.log(pointAwarded)
 			let currentMapCardSetWinner = ""
 			let pickCardBlue = document.getElementsByClassName("pickCardBlue")
 			let pickCardPurple = document.getElementsByClassName("pickCardPurple")
@@ -573,7 +572,6 @@ socket.onmessage = async event => {
 					}
 				}
 			}
-			console.log(currentMapCardSetWinner)
 
 			if (pointAwarded == false) {
 				pointAwarded = true;
@@ -1258,8 +1256,6 @@ function mapClickEvent() {
 		}
 		// Checking for Purple Protect
 		if (clickedMapID == protectCardBlueID) validation = false
-		console.log(validation)
-		console.log(protectCardPurpleID)
 		if (validation) {
 			// Changing the style of buttons
 			protectCardPurpleID = clickedMapID
@@ -1293,8 +1289,6 @@ function mapClickEvent() {
 
 			banCardBlueIDs.push(clickedMap.beatmapID)
 			// Changing style of buttons
-			console.log("change style of button")
-			console.log(document.getElementById(`${clickedMap.beatmapID}Button`))
 			document.getElementById(`${clickedMap.beatmapID}Button`).style.backgroundColor = "#F88379"
 			// Changing the style of the card
 			for (var i = 0; i < banCardBlue.length; i++) {
@@ -1330,16 +1324,11 @@ function mapClickEvent() {
 			banNum++
 
 			banCardPurpleIDs.push(clickedMap.beatmapID)
-			console.log("change style of button")
-			console.log(document.getElementById(`${clickedMap.beatmapID}Button`))
 			// Changing style of buttons
 			document.getElementById(`${clickedMap.beatmapID}Button`).style.backgroundColor = "#F88379"
-			console.log(clickedMap.beatmapID)
 			// Changing the style of the card
 			for (var i = 0; i < banCardPurple.length; i++) {
 				if (clickedMapID != banCardPurpleIDs[i] && (typeof banCardPurpleIDs[i] !== "undefined" || banCardPurpleIDs[i] == null)) {
-					console.log(clickedMapID !== banCardPurpleIDs[i], clickedMapID, banCardPurpleIDs[i])
-					console.log("hello there")
 					document.getElementById(`${banCardPurpleIDs[i]}Button`).style.backgroundColor = "#FFFFFF" 
 				}
 
@@ -2029,9 +2018,6 @@ function applyChanges() {
 			if (currentSlotNumberMapControl == 1) { 
 				if (document.contains(document.getElementById(`${banCardPurpleIDs[0]}Button`))) document.getElementById(`${banCardPurpleIDs[0]}Button`).style.backgroundColor = "#FFFFFF"
 				banCardPurpleIDs[0] = currentMapMapControl
-				console.log(currentMapMapControl)
-				console.log(banCardPurpleIDs[0])
-				console.log(document.getElementById(`${currentMapMapControl}Button`))
 				let map = document.getElementById(`${currentMapMapControl}Button`)
 				map.style.backgroundColor = "rgb(248, 131, 121)"
 				for (var i = 0; i < allMaps.length; i++) {
@@ -2136,13 +2122,8 @@ function applyChanges() {
 		let selectMapOptionsValue = selectMapOptions.value.slice(-3)
 		let pickCards = document.getElementsByClassName("pickCard")
 
-		console.log(pickCards)
-		console.log(selectMapOptionsValue)
-
 		for (var i = 0; i < pickCards.length; i++) {
 			if (pickCards[i].children[1].innerText.trim().toUpperCase() == selectMapOptionsValue) {
-				console.log(pickCards[i].children[1].innerText.trim().toUpperCase())
-				console.log(selectMapOptionsValue)
 
 				if (currentTeamMapControl == "blue") pickCards[i].children[0].style.borderColor = "#75c6ea"
 				else if (currentTeamMapControl == "purple") pickCards[i].children[0].style.borderColor = "#936bf7"
