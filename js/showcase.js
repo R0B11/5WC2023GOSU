@@ -58,6 +58,8 @@ let replayerName
 let replayer = document.getElementById("replayer")
 let allMaps;
 
+let comments = document.getElementById("comments")
+
 let getMaps = new Promise(async (resolve, reject) => {
     let xhr = new XMLHttpRequest();
     xhr.open("GET",`http://localhost:24050/5WC2023GOSU/data/showcaseBeatmaps.json`, false);
@@ -149,6 +151,8 @@ socket.onmessage = async event => {
                 // BPM
                 currBPM = allMaps[i].bpm
                 mapStatsBPM.innerText = currBPM
+                // Comment
+                comments.innerText = allMaps[i].comment
                 break;
             }
         }
