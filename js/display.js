@@ -194,6 +194,8 @@ let currentMapMapControl;
 let currentSlotMapControl;
 let currentSlotNumberMapControl;
 
+let warmupState = 0;
+
 socket.onopen = () => console.log("Successfully Connected");
 socket.onerror = error => console.log("Socket Error: ", error);
 
@@ -284,6 +286,7 @@ for (var i = 0; i < allMaps.length; i++) {
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
 	console.log(data)
+	console.log(numOfClients)
 
 	// SCore and Star Visibility
 	if(scoreVisibleTemp !== data.tourney.manager.bools.scoreVisible) {
@@ -654,7 +657,7 @@ socket.onmessage = async event => {
 				mappool.style.opacity = 1;
 
 				viewState = 1;
-			}, 15000)
+			}, 20000)
 		}
 	}
 	if(scoreVisibleTemp) {
@@ -767,37 +770,37 @@ socket.onmessage = async event => {
 	}
 
 	// Player Names
-	if (playerSlotName1 !== data.tourney.ipcClients[0].spectating.name) {
-		playerSlotName1 = data.tourney.ipcClients[0].spectating.name
-		gameplayName1.innerText = playerSlotName1
-	}
-	// if (playerSlotName2 !== data.tourney.ipcClients[2].spectating.name) {
-	// 	playerSlotName2 = data.tourney.ipcClients[2].spectating.name
+	// if (playerSlotName1 !== data.tourney.ipcClients[0].spectating.name) {
+	// 	playerSlotName1 = data.tourney.ipcClients[0].spectating.name
+	// 	gameplayName1.innerText = playerSlotName1
+	// }
+	//  if (playerSlotName2 !== data.tourney.ipcClients[2].spectating.name) {
+	//  	playerSlotName2 = data.tourney.ipcClients[2].spectating.name
 	// 	gameplayName2.innerText = playerSlotName2
 	// }
-	if (playerSlotName3 !== data.tourney.ipcClients[1].spectating.name) {
-		playerSlotName3 = data.tourney.ipcClients[1].spectating.name
-		gameplayName3.innerText = playerSlotName3
-	}
+	// if (playerSlotName3 !== data.tourney.ipcClients[1].spectating.name) {
+	// 	playerSlotName3 = data.tourney.ipcClients[1].spectating.name
+	// 	gameplayName3.innerText = playerSlotName3
+	// }
 	// if (playerSlotName4 !== data.tourney.ipcClients[3].spectating.name) {
-	// 	playerSlotName4 = data.tourney.ipcClients[3].spectating.name
-	// 	gameplayName4.innerText = playerSlotName4
+	//  	playerSlotName4 = data.tourney.ipcClients[3].spectating.name
+	//  	gameplayName4.innerText = playerSlotName4
 	// }
 	// if (playerSlotName5 !== data.tourney.ipcClients[4].spectating.name) {
-	// 	playerSlotName5 = data.tourney.ipcClients[4].spectating.name
-	// 	gameplayName5.innerText = playerSlotName5
+	//  	playerSlotName5 = data.tourney.ipcClients[4].spectating.name
+	//  	gameplayName5.innerText = playerSlotName5
 	// }
 	// if (playerSlotName6 !== data.tourney.ipcClients[6].spectating.name) {
-	// 	playerSlotName6 = data.tourney.ipcClients[6].spectating.name
-	// 	gameplayName6.innerText = playerSlotName6
+	//  	playerSlotName6 = data.tourney.ipcClients[6].spectating.name
+	//  	gameplayName6.innerText = playerSlotName6
 	// }
 	// if (playerSlotName7 !== data.tourney.ipcClients[5].spectating.name) {
-	//  	playerSlotName7 = data.tourney.ipcClients[5].spectating.name
-	//  	gameplayName7.innerText = playerSlotName7
+	//   	playerSlotName7 = data.tourney.ipcClients[5].spectating.name
+	//   	gameplayName7.innerText = playerSlotName7
 	// }
 	// if (playerSlotName8 !== data.tourney.ipcClients[7].spectating.name) {
-	// 	playerSlotName8 = data.tourney.ipcClients[7].spectating.name
-	// 	gameplayName8.innerText = playerSlotName8
+	//  	playerSlotName8 = data.tourney.ipcClients[7].spectating.name
+	//  	gameplayName8.innerText = playerSlotName8
 	// }
 }
 
@@ -901,27 +904,32 @@ function changeRound(round) {
 }
 function changeScore(side, scoreEvent) {
 	let animation = true;
-	if (side == "blue" && scoreEvent == "add") scoreBlueTemp++
-	else if (side == "blue" && scoreEvent == "remove") scoreBlueTemp--
-	else if (side == "purple" && scoreEvent == "add") scorePurpleTemp++
-	else if (side == "purple" && scoreEvent == "remove") scorePurpleTemp--
-	
-	if (scoreBlueTemp < 0) {
-		scoreBlueTemp = 0
-		animation = false;
-	} else if (scoreBlueTemp > bestOfTemp) {
-		scoreBlueTemp = bestOfTemp
-		animation = false;
-	}
-	if (scorePurpleTemp < 0) {
-		scorePurpleTemp = 0
-		animation = false;
-	} else if (scorePurpleTemp > bestOfTemp) {
-		scorePurpleTemp = bestOfTemp;
-		animation = false;
-	}
+	if	(warmupState == 0){
+		if (side == "blue" && scoreEvent == "add") scoreBlueTemp++
+		else if (side == "blue" && scoreEvent == "remove") scoreBlueTemp--
+		else if (side == "purple" && scoreEvent == "add") scorePurpleTemp++
+		else if (side == "purple" && scoreEvent == "remove") scorePurpleTemp--
 
-	if (animation) changeStars(`${side}-${scoreEvent}`)
+		if (scoreBlueTemp < 0) {
+			scoreBlueTemp = 0
+			animation = false;
+		} else if (scoreBlueTemp > bestOfTemp) {
+			scoreBlueTemp = bestOfTemp
+			animation = false;
+		}
+		if (scorePurpleTemp < 0) {
+			scorePurpleTemp = 0
+			animation = false;
+		} else if (scorePurpleTemp > bestOfTemp) {
+			scorePurpleTemp = bestOfTemp;
+			animation = false;
+		}
+
+		if (animation) changeStars(`${side}-${scoreEvent}`)
+	}
+	else {
+		return false;
+	}
 }
 function changeStars(starEvent) {
 	// Left Stars
@@ -1115,10 +1123,12 @@ function starToggleOnOff(toggle) {
 		starToggleState = false;
 		starToggle.innerText = "OFF";
 		starToggle.setAttribute("onclick", "starToggleOnOff('turnOn')")
+		warmupState = 1;
 	} else if (toggle == "turnOn") {
 		starToggleState = true;
 		starToggle.innerText = "ON";
 		starToggle.setAttribute("onclick", "starToggleOnOff('turnOff')")
+		warmupState = 0;
 	}
 }
 
@@ -1434,7 +1444,7 @@ function mapClickEvent() {
 				for (var i = 0; i < teamFlags.length; i++) teamFlags[i].style.height = "70px";
 				teamBlueFlag.style.top = "20px"
 				teamBlueFlag.style.left = "50px"
-				teamPurpleFlag.style.left = "1780px"
+				teamPurpleFlag.style.left = "1785px"
 				teamPurpleFlag.style.top = "-50px"
 				// Chat
 				chats.style.bottom = "10px"
@@ -1517,7 +1527,7 @@ function mapClickEvent() {
 				teamBlueFlag.style.top = "20px"
 				teamBlueFlag.style.left = "50px"
 				teamPurpleFlag.style.left = "1785px"
-				teamPurpleFlag.style.top = "20px"
+				teamPurpleFlag.style.top = "-50px"
 				// Chat
 				chats.style.bottom = "10px"
 				chats.style.height = "130px"
