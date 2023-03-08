@@ -670,12 +670,14 @@ socket.onmessage = async event => {
 			for (var i = 0; i < numOfClients; i++) {
 				// All mod combination multipliers
 				var tempScore = data.tourney.ipcClients[i].gameplay.score
-				if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZHD")) tempScore = tempScore * 1.9
+				if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZHD")) tempScore = tempScore * 1.75
 				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZ")) tempScore = tempScore * 1.75
-				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HDHR")) tempScore = tempScore * 1.03
-				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HR")) tempScore = tempScore * 1.05
-				// Separate FL as that gets added on top of the current multipliers(?)
-				if (data.tourney.ipcClients[i].gameplay.mods.str.includes("FL")) tempScore = tempScore * 1.4
+				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HR")) tempScore = tempScore * 1.04
+				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("FL")) tempScore = tempScore * 1.4
+				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZFL")) tempScore = tempScore * 2.15
+				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HRFL")) tempScore = tempScore * 1.456
+				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HDFL")) tempScore = tempScore * 1.4
+				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HDHRFL")) tempScore = tempScore * 1.4
 				if (i < numOfClients / 2) playScoreBlueTemp += tempScore 
 				else playScorePurpleTemp += tempScore  
 			}
