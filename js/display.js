@@ -326,7 +326,7 @@ socket.onmessage = async event => {
 		}
 	}
 	// Getting maps
-	if (tempMapID !== data.menu.bm.id) {
+	if (tempMapID !== data.menu.bm.id && data.menu.bm.id != 0) {
 		// MAP ID
 		tempMapID = data.menu.bm.id
 		// MAP MAIN SECTION
@@ -670,14 +670,14 @@ socket.onmessage = async event => {
 			for (var i = 0; i < numOfClients; i++) {
 				// All mod combination multipliers
 				var tempScore = data.tourney.ipcClients[i].gameplay.score
-				if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZHD")) tempScore = tempScore * 1.75
-				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZ")) tempScore = tempScore * 1.75
-				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HR")) tempScore = tempScore * 1.04
-				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("FL")) tempScore = tempScore * 1.4
-				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("EZFL")) tempScore = tempScore * 2.15
-				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HRFL")) tempScore = tempScore * 1.456
-				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HDFL")) tempScore = tempScore * 1.4
-				else if (data.tourney.ipcClients[i].gameplay.mods.str.includes("HDHRFL")) tempScore = tempScore * 1.4
+				let modStr = data.tourney.ipcClients[i].gameplay.mods.str
+
+				if (modStr.includes("EZFL")) tempScore *= 2.15
+				else if (modStr.includes("EZ")) tempScore *= 1.75 
+
+				if (!modStr.includes("HD") && modStr.includes("HR")) tempScore *= 1.04
+				
+				if (modStr.includes("FL") && !modStr.includes("EZ")) tempScore *= 1.4
 				if (i < numOfClients / 2) playScoreBlueTemp += tempScore 
 				else playScorePurpleTemp += tempScore  
 			}
