@@ -268,6 +268,7 @@ function requestMapData(mapID, apiKey, mod, order) {
                     else {singleMap.ar = ((1200-((1200-(map.diff_approach-5)*150)*2/3))/150)+5;}
                     if (map.diff_overall <= 5) {singleMap.od = (1800-((1800 - map.diff_overall)*2/3))/120;}
                     else {singleMap.od = ((1200-((1200-(map.diff_overall-5)*150)*2/3))/150)+5;}
+                    singleMap.songLength = Math.round(map.total_length / 3 * 2);
                 }
                 else if (mapMod == "easy" || mapMod == "ez") {
                     singleMap.bpm = map.bpm;
