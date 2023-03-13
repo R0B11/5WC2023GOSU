@@ -285,8 +285,6 @@ for (var i = 0; i < allMaps.length; i++) {
 
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
-	console.log(data)
-	console.log(numOfClients)
 
 	// SCore and Star Visibility
 	if(scoreVisibleTemp !== data.tourney.manager.bools.scoreVisible) {
@@ -326,12 +324,13 @@ socket.onmessage = async event => {
 		}
 	}
 	// Getting maps
-	if (tempMapID !== data.menu.bm.id && data.menu.bm.id != 0) {
+	if (tempMapID !== data.menu.bm.id) {
 		// MAP ID
 		tempMapID = data.menu.bm.id
 		// MAP MAIN SECTION
-		tempImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/');
+		tempImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/').replace(/'/g, "\\'");
 		mapContainer.style.backgroundImage = `url('http://` + location.host + `/Songs/${tempImg}?a=${Math.random(10000)}')`;
+		console.log(mapContainer.style.backgroundImage);
 		
 		// MAP TEXT
 		let replaceText = new Promise((resolve, reject) => {
@@ -361,10 +360,9 @@ socket.onmessage = async event => {
 		foundMapFromMappool = false;
 		for (var i = 0; i < allMaps.length; i++) {
 			for (var j = 0; j < allMaps[i].length; j++) {
-					if (allMaps[i][j].beatmapID == data.menu.bm.id) {
+					if (allMaps[i][j].beatmapID == data.menu.bm.id && !pickCardBlueIDs.includes(allMaps[i][j].beatmapID) && !pickCardPurpleIDs.includes(allMaps[i][j].beatmapID) ) {
 						currentMap = allMaps[i][j];
 						foundMapFromMappool = true;
-
 						tempMapStatsCS = Math.round((parseFloat(currentMap.cs) + Number.EPSILON) * 10) / 10
 						tempMapStatsAR = Math.round((parseFloat(currentMap.ar) + Number.EPSILON) * 10) / 10
 						tempMapStatsOD = Math.round((parseFloat(currentMap.od) + Number.EPSILON) * 10) / 10
@@ -657,7 +655,7 @@ socket.onmessage = async event => {
 				mappool.style.opacity = 1;
 
 				viewState = 1;
-			}, 20000)
+			}, 25000)
 		}
 	}
 	if(scoreVisibleTemp) {
@@ -807,7 +805,7 @@ socket.onmessage = async event => {
 }
 
 const changeAction = (actionText) => nextAction.innerText = actionText
-changeRound('Round of 32')
+changeRound('Round of 16')
 function changeRound(round) {
 	// Changing Round Text
 	roundText.innerText = round;

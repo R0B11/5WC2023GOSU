@@ -96,7 +96,7 @@ socket.onmessage = async event => {
         mapFound = false
         mapID = data.menu.bm.id;
         // Map Image
-        currImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/');
+        currImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/').replace(/'/g, "\\'");
         nowPlayingContainer.style.backgroundImage = `url('http://` + location.host + `/Songs/${currImg}?a=${Math.random(10000)}')`
         // Map Title
         mapTitle.innerText = data.menu.bm.metadata.title;
