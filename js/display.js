@@ -826,7 +826,7 @@ socket.onmessage = async event => {
 }
 
 const changeAction = (actionText) => nextAction.innerText = actionText
-changeRound('Round of 16')
+changeRound('Quarterfinals')
 function changeRound(round) {
 	// Changing Round Text
 	roundText.innerText = round;
