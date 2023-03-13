@@ -76,6 +76,12 @@ let movingScoreBars = document.getElementById("movingScoreBars");
 let movingScoreBarBlue = document.getElementById("movingScoreBarBlue");
 let movingScoreBarPurple = document.getElementById("movingScoreBarPurple");
 
+// SCORE DIFFERENCE
+let playScoreDifferenceLeftArrow = document.getElementById("playScoreDifferenceLeftArrow")
+let playScoreDifferenceRightArrow = document.getElementById("playScoreDifferenceRightArrow")
+let playScoreDifferenceScore = document.getElementById("playScoreDifferenceScore")
+let playScoreDifference = document.getElementById("playScoreDifference")
+
 // STAR VISIBILITY
 let scoreBlue = document.getElementById("scoreBlue");
 let scorePurple = document.getElementById("scorePurple");
@@ -202,6 +208,7 @@ socket.onerror = error => console.log("Socket Error: ", error);
 let animation = {
     playScoreBlue:  new CountUp('playScoreBlue', 0, 0, 0, .2, {useEasing: true, useGrouping: true,   separator: " ", decimal: "." }),
     playScorePurple:  new CountUp('playScorePurple', 0, 0, 0, .2, {useEasing: true, useGrouping: true,   separator: " ", decimal: "." }),
+	playScoreDifference:  new CountUp('playScoreDifferenceScore', 0, 0, 0, .2, {useEasing: true, useGrouping: true,   separator: " ", decimal: "." }),
 }
 
 socket.onclose = event => {
@@ -252,6 +259,7 @@ let isFreemod = true;
 
 let playScoreBlueTemp = 0
 let playScorePurpleTemp = 0
+let playScoreDifferenceTemp = 0
 
 let numOfClients
 let starEvent 
@@ -295,12 +303,14 @@ socket.onmessage = async event => {
 			chats.style.opacity = 0;
 			playScoreBlue.style.opacity = 1;
 			playScorePurple.style.opacity = 1;
+			playScoreDifference.style.opacity = 1;
 		} else {
 			// Score invisible -> Set bg to show chats
 			movingScoreBars.style.opacity = 0;
 			chats.style.opacity = 1;
 			playScoreBlue.style.opacity = 0;
 			playScorePurple.style.opacity = 0;
+			playScoreDifference.style.opacity = 0;
 		}
 	}
 	if(starsVisibleTemp !== starToggleState) {
@@ -686,9 +696,11 @@ socket.onmessage = async event => {
 
 		playScoreBlueTemp = parseInt(playScoreBlueTemp);
 		playScorePurpleTemp = parseInt(playScorePurpleTemp); 
+		playScoreDifferenceTemp = Math.abs(playScoreBlueTemp - playScorePurpleTemp)
 
 		animation.playScoreBlue.update(playScoreBlueTemp);
 		animation.playScorePurple.update(playScorePurpleTemp);
+		animation.playScoreDifference.update(playScoreDifferenceTemp)
 
 		let widthOfScoreBar = Math.abs(playScoreBlueTemp - playScorePurpleTemp) / 1000000 * 720;
 		if (widthOfScoreBar > 720) widthOfScoreBar = 720
@@ -702,6 +714,9 @@ socket.onmessage = async event => {
 
 			movingScoreBarBlue.style.width = `${widthOfScoreBar}px`;
 			movingScoreBarPurple.style.width = "0px";
+
+			// playScoreDifferenceLeftArrow.style.display = "none"
+			// playScoreDifferenceRightArrow.style.display = "block"
 		} else if (playScoreBlueTemp == playScorePurpleTemp) {
 			// Tie
 			playScoreBlue.style.fontSize = "40px";
@@ -711,6 +726,9 @@ socket.onmessage = async event => {
 
 			movingScoreBarBlue.style.width = "0px";
 			movingScoreBarPurple.style.width = "0px";
+
+			// playScoreDifferenceLeftArrow.style.display = "none"
+			// playScoreDifferenceRightArrow.style.display = "none"
 		} else {
 			// Purple is leading
 			playScoreBlue.style.fontSize = "40px";
@@ -720,6 +738,9 @@ socket.onmessage = async event => {
 
 			movingScoreBarBlue.style.width = "0px";
 			movingScoreBarPurple.style.width = `${widthOfScoreBar}px`;
+
+			// playScoreDifferenceLeftArrow.style.display = "none"
+			// playScoreDifferenceRightArrow.style.display = "block"
 		}
 	}
 	if(!scoreVisibleTemp) {

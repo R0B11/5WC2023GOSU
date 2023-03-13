@@ -802,3 +802,36 @@ body,html{
 .gameplayNameColumn4 { right: 15px; }
 .gameplayNameTopRow { bottom: 544px; }
 .gameplayNameBottomRow { bottom: 184px; }
+
+/* Score Difference */
+#playScoreDifference {
+	opacity: 1;
+	transition: ease-in-out 750ms;
+}
+.playScoreDifferenceArrow {
+    position: absolute;
+    border: solid;
+    border-width: 0 10px 10px 0;
+    display: inline-block;
+    padding: 10px;
+    bottom: 36px;
+    transition: translate(-50%);
+}
+#playScoreDifferenceLeftArrow { 
+	transform: rotate(135deg); left: 40%;
+	box-shadow: 2px 2px 2px 0px var(--blue);
+	border-color: var(--blue);
+	color: var(--blue);
+}
+#playScoreDifferenceRightArrow { 
+	transform: rotate(-45deg); right: 40%; 
+	box-shadow: 2px 2px 2px 0px var(--purple);
+	border-color: var(--purple);
+	color: var(--purple);
+}
+#playScoreDifferenceScore { 
+	position: absolute; left: 50%; transform: translateX(-50%);
+	bottom: 30px;
+	color: white; 
+	font-size: 40px;
+}
