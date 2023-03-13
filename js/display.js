@@ -281,6 +281,9 @@ let banNum = 0
 
 let viewState = 0
 
+playScoreDifferenceLeftArrow.style.opacity = 0;
+playScoreDifferenceRightArrow.style.opacity = 0;
+
 for (var i = 0; i < allMaps.length; i++) {
 	for (var j = 0; j < allMaps[i].length; j++) {
 		let mapChoicesButton = document.createElement("button")
@@ -715,6 +718,9 @@ socket.onmessage = async event => {
 			movingScoreBarBlue.style.width = `${widthOfScoreBar}px`;
 			movingScoreBarPurple.style.width = "0px";
 
+			playScoreDifferenceLeftArrow.style.opacity = 1;
+			playScoreDifferenceRightArrow.style.opacity = 0;
+
 			// playScoreDifferenceLeftArrow.style.display = "none"
 			// playScoreDifferenceRightArrow.style.display = "block"
 		} else if (playScoreBlueTemp == playScorePurpleTemp) {
@@ -727,6 +733,9 @@ socket.onmessage = async event => {
 			movingScoreBarBlue.style.width = "0px";
 			movingScoreBarPurple.style.width = "0px";
 
+			playScoreDifferenceLeftArrow.style.opacity = 0;
+			playScoreDifferenceRightArrow.style.opacity = 0;
+
 			// playScoreDifferenceLeftArrow.style.display = "none"
 			// playScoreDifferenceRightArrow.style.display = "none"
 		} else {
@@ -738,6 +747,9 @@ socket.onmessage = async event => {
 
 			movingScoreBarBlue.style.width = "0px";
 			movingScoreBarPurple.style.width = `${widthOfScoreBar}px`;
+
+			playScoreDifferenceLeftArrow.style.opacity = 0;
+			playScoreDifferenceRightArrow.style.opacity = 1;
 
 			// playScoreDifferenceLeftArrow.style.display = "none"
 			// playScoreDifferenceRightArrow.style.display = "block"
