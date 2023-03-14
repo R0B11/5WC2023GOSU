@@ -2267,7 +2267,7 @@ function removeMapControlElements(elementIDName) {
 }
 
 function toWinScreen(){
-	if (scoreBlueTemp > scorePurpleTemp) {
+	if (scoreBlueTemp == bestOfTemp && scorePurpleTemp < bestOfTemp) {
 		winnerRoster1.innerHTML = teamNameBluePlayer1Temp
 		winnerRoster2.innerHTML = teamNameBluePlayer2Temp
 		winnerRoster3.innerHTML = teamNameBluePlayer3Temp
@@ -2280,7 +2280,7 @@ function toWinScreen(){
 		winnerName.innerHTML = `${teamNameBlueTemp}`
 
 	}
-	else if (scorePurpleTemp > scoreBlueTemp) {
+	else if (scorePurpleTemp == bestOfTemp && scoreBlueTemp < bestOfTemp) {
 		winnerRoster1.innerHTML = teamNamePurplePlayer1Temp
 		winnerRoster2.innerHTML = teamNamePurplePlayer2Temp
 		winnerRoster3.innerHTML = teamNamePurplePlayer3Temp
