@@ -14,7 +14,9 @@ let mapTitle2 = document.getElementById("mapTitle2");
 // TEAM NAME
 let teamBlueName = document.getElementById("teamBlueName");
 let teamPurpleName = document.getElementById("teamPurpleName");
-let teamNames = document.getElementsByClassName("teamNames")
+let teamNames = document.getElementsByClassName("teamNames");
+
+let winnerName = document.getElementById("winnerName");
 
 // TEAM STATS
 let blueTeamStatsAimNum = document.getElementById("blueTeamStatsAimNum")
@@ -66,6 +68,32 @@ let teamNamePurplePlayer6 = document.getElementById("teamNamePurplePlayer6")
 let teamNamePurplePlayer7 = document.getElementById("teamNamePurplePlayer7")
 let teamNamePurplePlayer8 = document.getElementById("teamNamePurplePlayer8")
 
+let teamNameBluePlayer1Temp
+let teamNameBluePlayer2Temp
+let teamNameBluePlayer3Temp
+let teamNameBluePlayer4Temp
+let teamNameBluePlayer5Temp
+let teamNameBluePlayer6Temp
+let teamNameBluePlayer7Temp
+let teamNameBluePlayer8Temp
+
+let teamNamePurplePlayer1Temp
+let teamNamePurplePlayer2Temp
+let teamNamePurplePlayer3Temp
+let teamNamePurplePlayer4Temp
+let teamNamePurplePlayer5Temp
+let teamNamePurplePlayer6Temp
+let teamNamePurplePlayer7Temp
+let teamNamePurplePlayer8Temp
+
+let winnerRoster1 = document.getElementById("winnerRoster1")
+let winnerRoster2 = document.getElementById("winnerRoster2")
+let winnerRoster3 = document.getElementById("winnerRoster3")
+let winnerRoster4 = document.getElementById("winnerRoster4")
+let winnerRoster5 = document.getElementById("winnerRoster5")
+let winnerRoster6 = document.getElementById("winnerRoster6")
+let winnerRoster7 = document.getElementById("winnerRoster7")
+let winnerRoster8 = document.getElementById("winnerRoster8")
 
 // SEEDS
 let blueTeamSeedNumber = document.getElementById("blueTeamSeedNumber")
@@ -115,7 +143,9 @@ let chats = document.getElementById("chats");
 // FLAGS
 let teamPurpleFlag = document.getElementById("teamPurpleFlag");
 let teamBlueFlag = document.getElementById("teamBlueFlag");
-let teamFlags = document.getElementsByClassName("teamFlags")
+let teamFlags = document.getElementsByClassName("teamFlags");
+
+let winnerFlag = document.getElementById("winnerFlag");
 
 // MAP STATS
 let currentMap
@@ -201,6 +231,8 @@ let currentSlotMapControl;
 let currentSlotNumberMapControl;
 
 let warmupState = 0;
+
+let winScreen = document.getElementById("winScreen");
 
 socket.onopen = () => console.log("Successfully Connected");
 socket.onerror = error => console.log("Socket Error: ", error);
@@ -432,6 +464,16 @@ socket.onmessage = async event => {
 				blueTeamStatsPrecision = parseFloat(allTeams[i].precision)
 				blueTeamStatsReading = parseFloat(allTeams[i].reading)
 				blueTeamStatsTech = parseFloat(allTeams[i].tech)
+				
+				teamNameBluePlayer1Temp = allTeams[i].captain
+				teamNameBluePlayer2Temp = allTeams[i].player2
+				teamNameBluePlayer3Temp = allTeams[i].player3
+				teamNameBluePlayer4Temp = allTeams[i].player4
+				teamNameBluePlayer5Temp = allTeams[i].player5
+				teamNameBluePlayer6Temp = allTeams[i].player6
+				teamNameBluePlayer7Temp = allTeams[i].player7
+				teamNameBluePlayer8Temp = allTeams[i].player8
+
 				teamNameBluePlayer1.innerText = allTeams[i].captain
 				teamNameBluePlayer2.innerText = allTeams[i].player2
 				teamNameBluePlayer3.innerText = allTeams[i].player3
@@ -505,6 +547,16 @@ socket.onmessage = async event => {
 				purpleTeamStatsPrecision = parseFloat(allTeams[i].precision)
 				purpleTeamStatsReading = parseFloat(allTeams[i].reading)
 				purpleTeamStatsTech = parseFloat(allTeams[i].tech)
+
+				teamNamePurplePlayer1Temp = allTeams[i].captain
+				teamNamePurplePlayer2Temp = allTeams[i].player2
+				teamNamePurplePlayer3Temp = allTeams[i].player3
+				teamNamePurplePlayer4Temp = allTeams[i].player4
+				teamNamePurplePlayer5Temp = allTeams[i].player5
+				teamNamePurplePlayer6Temp = allTeams[i].player6
+				teamNamePurplePlayer7Temp = allTeams[i].player7
+				teamNamePurplePlayer8Temp = allTeams[i].player8
+
 				teamNamePurplePlayer1.innerText = allTeams[i].captain
 				teamNamePurplePlayer2.innerText = allTeams[i].player2
 				teamNamePurplePlayer3.innerText = allTeams[i].player3
@@ -669,6 +721,7 @@ socket.onmessage = async event => {
 
 				viewState = 1;
 			}, 25000)
+			
 		}
 	}
 	if(scoreVisibleTemp) {
@@ -1166,6 +1219,8 @@ function starToggleOnOff(toggle) {
 }
 
 function toPickScreenView() {
+	// Resetting Win Screen opacity
+	winScreen.style.opacity = 0;
 	// Changing Background Image
 	topSection.style.backgroundImage = "url('static/mappoolViewTop.png')"
 	// Gameplay Greenscreen 
@@ -1214,6 +1269,8 @@ function toPickScreenView() {
 	viewState = 1;
 }
 function toGameplayView() {
+	// Resetting Win Screen opacity
+	winScreen.style.opacity = 0;
 	// Changing Background Image
 	topSection.style.backgroundImage = "url('static/gameplayView.png')";
 	// Gameplay greenscreen
@@ -2207,4 +2264,46 @@ function removeMapControlElements(elementIDName) {
 	let removeStartingChild
 	for (var i = 0; i < mapControl.childElementCount; i++) if (mapControl.children[i].id == elementIDName) removeStartingChild = i
 	for (var i = mapControl.childElementCount - 1; i  > removeStartingChild; i--) mapControl.children[i].remove()
+}
+
+function toWinScreen(){
+	if (scoreBlueTemp > scorePurpleTemp) {
+		winnerRoster1.innerHTML = teamNameBluePlayer1Temp
+		winnerRoster2.innerHTML = teamNameBluePlayer2Temp
+		winnerRoster3.innerHTML = teamNameBluePlayer3Temp
+		winnerRoster4.innerHTML = teamNameBluePlayer4Temp
+		winnerRoster5.innerHTML = teamNameBluePlayer5Temp
+		winnerRoster6.innerHTML = teamNameBluePlayer6Temp
+		winnerRoster7.innerHTML = teamNameBluePlayer7Temp
+		winnerRoster8.innerHTML = teamNameBluePlayer8Temp
+		winnerFlag.style.backgroundImage = `url("static/flags/${teamNameBlueTemp}.png")`
+		winnerName.innerHTML = `${teamNameBlueTemp}`
+
+	}
+	else if (scorePurpleTemp > scoreBlueTemp) {
+		winnerRoster1.innerHTML = teamNamePurplePlayer1Temp
+		winnerRoster2.innerHTML = teamNamePurplePlayer2Temp
+		winnerRoster3.innerHTML = teamNamePurplePlayer3Temp
+		winnerRoster4.innerHTML = teamNamePurplePlayer4Temp
+		winnerRoster5.innerHTML = teamNamePurplePlayer5Temp
+		winnerRoster6.innerHTML = teamNamePurplePlayer6Temp
+		winnerRoster7.innerHTML = teamNamePurplePlayer7Temp
+		winnerRoster8.innerHTML = teamNamePurplePlayer8Temp
+		winnerFlag.style.backgroundImage = `url("static/flags/${teamNamePurpleTemp}.png")`
+		winnerName.innerHTML = `${teamNamePurpleTemp}`
+	}
+	else {
+		winnerRoster1.innerHTML = ""
+		winnerRoster2.innerHTML = ""
+		winnerRoster3.innerHTML = ""
+		winnerRoster4.innerHTML = ""
+		winnerRoster5.innerHTML = ""
+		winnerRoster6.innerHTML = ""
+		winnerRoster7.innerHTML = ""
+		winnerRoster8.innerHTML = ""
+		winnerFlag.style.backgroundImage = ``
+		winnerName.innerHTML = `No Winner`
+	}
+
+	winScreen.style.opacity = 1;
 }
