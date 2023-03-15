@@ -720,7 +720,14 @@ socket.onmessage = async event => {
 				mappool.style.opacity = 1;
 
 				viewState = 1;
+				if (scoreBlueTemp == bestOfTemp || scorePurpleTemp == bestOfTemp){
+					setTimeout(() => {
+						toWinScreen();
+					}, 30000);
+				}
 			}, 25000)
+			
+			
 			
 		}
 	}
