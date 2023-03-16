@@ -2296,6 +2296,8 @@ function toWinScreen(){
 		winnerRoster8.innerHTML = teamNameBluePlayer8Temp
 		winnerFlag.style.backgroundImage = `url("static/flags/${teamNameBlueTemp}.png")`
 		winnerName.innerHTML = `${teamNameBlueTemp} wins!`
+		winnerName.style.textShadow = "0px 0px 10px var(--blue75Opacity), 0px 0px 20px var(--blue75Opacity), 0px 0px 30px var(--blue75Opacity)"
+		
 
 	}
 	else if (scorePurpleTemp == bestOfTemp && scoreBlueTemp < bestOfTemp) {
@@ -2309,6 +2311,7 @@ function toWinScreen(){
 		winnerRoster8.innerHTML = teamNamePurplePlayer8Temp
 		winnerFlag.style.backgroundImage = `url("static/flags/${teamNamePurpleTemp}.png")`
 		winnerName.innerHTML = `${teamNamePurpleTemp} wins!`
+		winnerName.style.textShadow = "0px 0px 10px var(--purple75Opacity), 0px 0px 20px var(--purple75Opacity), 0px 0px 30px var(--purple75Opacity)"
 	}
 	else {
 		winnerRoster1.innerHTML = ""
@@ -2321,6 +2324,7 @@ function toWinScreen(){
 		winnerRoster8.innerHTML = ""
 		winnerFlag.style.backgroundImage = ``
 		winnerName.innerHTML = `No Winner`
+		winnerName.style.textShadow = 'none'
 	}
 	winVideoBG.setAttribute('loop','true');
 	winVideoBG.currentTime = 0;
