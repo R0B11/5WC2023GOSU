@@ -234,6 +234,9 @@ let warmupState = 0;
 
 let winScreen = document.getElementById("winScreen");
 
+let winVideoBG = document.getElementById("winVideoBG")
+let winVideoText = document.getElementById("winVideoText")
+
 socket.onopen = () => console.log("Successfully Connected");
 socket.onerror = error => console.log("Socket Error: ", error);
 
@@ -1274,6 +1277,10 @@ function toPickScreenView() {
 	mappool.style.opacity = 1;
 
 	viewState = 1;
+
+	winVideoBG.removeAttribute('loop');
+	winVideoBG.pause();
+	winVideoText.pause();
 }
 function toGameplayView() {
 	// Resetting Win Screen opacity
@@ -1323,6 +1330,10 @@ function toGameplayView() {
 	mappool.style.opacity = 0;
 
 	viewState = 0;
+
+	winVideoBG.removeAttribute('loop');
+	winVideoBG.pause();
+	winVideoText.pause();
 }
 
 changeStars(null)
@@ -2284,7 +2295,7 @@ function toWinScreen(){
 		winnerRoster7.innerHTML = teamNameBluePlayer7Temp
 		winnerRoster8.innerHTML = teamNameBluePlayer8Temp
 		winnerFlag.style.backgroundImage = `url("static/flags/${teamNameBlueTemp}.png")`
-		winnerName.innerHTML = `${teamNameBlueTemp}`
+		winnerName.innerHTML = `${teamNameBlueTemp} wins!`
 
 	}
 	else if (scorePurpleTemp == bestOfTemp && scoreBlueTemp < bestOfTemp) {
@@ -2297,7 +2308,7 @@ function toWinScreen(){
 		winnerRoster7.innerHTML = teamNamePurplePlayer7Temp
 		winnerRoster8.innerHTML = teamNamePurplePlayer8Temp
 		winnerFlag.style.backgroundImage = `url("static/flags/${teamNamePurpleTemp}.png")`
-		winnerName.innerHTML = `${teamNamePurpleTemp}`
+		winnerName.innerHTML = `${teamNamePurpleTemp} wins!`
 	}
 	else {
 		winnerRoster1.innerHTML = ""
@@ -2311,6 +2322,10 @@ function toWinScreen(){
 		winnerFlag.style.backgroundImage = ``
 		winnerName.innerHTML = `No Winner`
 	}
-
+	winVideoBG.setAttribute('loop','true');
+	winVideoBG.currentTime = 0;
+	winScreen.currentTime = 0;
+	winVideoBG.play();
+	winVideoText.play();
 	winScreen.style.opacity = 1;
 }
