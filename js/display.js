@@ -726,7 +726,7 @@ socket.onmessage = async event => {
 				if (scoreBlueTemp == bestOfTemp || scorePurpleTemp == bestOfTemp){
 					setTimeout(() => {
 						toWinScreen();
-					}, 30000);
+					}, 25000);
 				}
 			}, 25000)
 			
