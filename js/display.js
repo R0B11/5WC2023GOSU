@@ -727,7 +727,7 @@ socket.onmessage = async event => {
 				if (scoreBlueTemp == bestOfTemp || scorePurpleTemp == bestOfTemp){
 					setTimeout(() => {
 						toWinScreen();
-					}, 25000);
+					}, 20000);
 				}
 			}, 25000)
 			
@@ -1232,6 +1232,7 @@ function starToggleOnOff(toggle) {
 function toPickScreenView() {
 	// Resetting Win Screen opacity
 	winScreen.style.opacity = 0;
+	winScreen.style.zIndex = -1;
 	// Changing Background Image
 	topSection.style.backgroundImage = "url('static/mappoolViewTop.png')"
 	// Gameplay Greenscreen 
@@ -1288,6 +1289,7 @@ function toPickScreenView() {
 function toGameplayView() {
 	// Resetting Win Screen opacity
 	winScreen.style.opacity = 0;
+	winScreen.style.zIndex = -1;
 	// Changing Background Image
 	topSection.style.backgroundImage = "url('static/gameplayView.png')";
 	// Gameplay greenscreen
@@ -1453,8 +1455,8 @@ function mapClickEvent() {
 			else if (banTotalNum == 2) {
 				if (banNum == 2) nextAction.innerText = "Blue Ban"
 				else if (banNum == 3) nextAction.innerText = "Purple Ban"
-				else nextAction.innerText = "Purple Pick"
-			} else if (banTotalNum == 1) nextAction.innerText = "Purple Pick"
+				else nextAction.innerText = "Blue Pick"
+			} else if (banTotalNum == 1) nextAction.innerText = "Blue Pick"
 		}
 		break;
 	case (nextAction.innerText == "Purple Ban"): 
@@ -1489,8 +1491,8 @@ function mapClickEvent() {
 			else if (banTotalNum == 2) {
 				if (banNum == 2) nextAction.innerText = "Purple Ban"
 				else if (banNum == 3) nextAction.innerText = "Blue Ban"
-				else nextAction.innerText = "Blue Pick"
-			} else if (banTotalNum == 1) nextAction.innerText = "Blue Pick"
+				else nextAction.innerText = "Purple Pick"
+			} else if (banTotalNum == 1) nextAction.innerText = "Purple Pick"
 		}
 		break;
 	case (nextAction.innerText == "Blue Pick"):
@@ -2347,4 +2349,5 @@ function toWinScreen(){
 	winVideoText.currentTime = 0;
 	winVideoText.play();
 	winScreen.style.opacity = 1;
+	winScreen.style.zIndex = 3;
 }

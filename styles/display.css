@@ -849,7 +849,7 @@ body,html{
 	right: 0px;
 	height: 1080px;
 	width: 1920px;
-	z-index: 3;
+	z-index: -1;
 	background-color: black;
 	opacity: 0;
 	transition: 750ms ease-in-out;
