@@ -1341,6 +1341,10 @@ function toGameplayView() {
 	winVideoBlue.pause();
 	winVideoPurple.pause();
 	winVideoText.pause();
+	setTimeout(() => {
+		// Chat Scroll
+		chats.scrollTop = chats.scrollHeight;
+	}, 1000);
 }
 
 changeStars(null)
@@ -1571,8 +1575,14 @@ function mapClickEvent() {
 				gameplayNames.style.opacity = 1;
 				mappool.style.opacity = 0;
 
+
 				viewState = 0;
 			},10000)
+			setTimeout(() => {
+				// Chat Scroll
+				chats.scrollTop = chats.scrollHeight;
+			}, 1000);
+
 		}
 
 		break;
@@ -1655,6 +1665,10 @@ function mapClickEvent() {
 
 				viewState = 0;
 			},10000)
+			setTimeout(() => {
+				// Chat Scroll
+				chats.scrollTop = chats.scrollHeight;
+			}, 1000);
 		}
 		break;
 	}
