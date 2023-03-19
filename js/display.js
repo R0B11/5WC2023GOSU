@@ -1581,7 +1581,7 @@ function mapClickEvent() {
 			setTimeout(() => {
 				// Chat Scroll
 				chats.scrollTop = chats.scrollHeight;
-			}, 1000);
+			}, 2000);
 
 		}
 
@@ -1668,7 +1668,7 @@ function mapClickEvent() {
 			setTimeout(() => {
 				// Chat Scroll
 				chats.scrollTop = chats.scrollHeight;
-			}, 1000);
+			}, 2000);
 		}
 		break;
 	}
