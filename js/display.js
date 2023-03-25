@@ -332,7 +332,6 @@ for (var i = 0; i < allMaps.length; i++) {
 
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
-
 	// SCore and Star Visibility
 	if(scoreVisibleTemp !== data.tourney.manager.bools.scoreVisible) {
 		scoreVisibleTemp = data.tourney.manager.bools.scoreVisible;
@@ -379,7 +378,6 @@ socket.onmessage = async event => {
 		// MAP MAIN SECTION
 		tempImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/').replace(/'/g, "\\'");
 		mapContainer.style.backgroundImage = `url('http://` + location.host + `/Songs/${tempImg}?a=${Math.random(10000)}')`;
-		console.log(mapContainer.style.backgroundImage);
 		
 		// MAP TEXT
 		let replaceText = new Promise((resolve, reject) => {
@@ -751,7 +749,7 @@ socket.onmessage = async event => {
 				else if (modStr.includes("EZ")) tempScore *= 1.75 
 
 				if (!modStr.includes("HD") && modStr.includes("HR")) tempScore *= 1.04
-				
+
 				if (modStr.includes("FL") && !modStr.includes("EZ")) tempScore *= 1.4
 				if (i < numOfClients / 2) playScoreBlueTemp += tempScore 
 				else playScorePurpleTemp += tempScore  
@@ -902,7 +900,7 @@ socket.onmessage = async event => {
 }
 
 const changeAction = (actionText) => nextAction.innerText = actionText
-changeRound('Quarterfinals')
+changeRound('Semifinals')
 function changeRound(round) {
 	// Changing Round Text
 	roundText.innerText = round;
