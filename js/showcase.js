@@ -90,9 +90,10 @@ getMaps.then(allMaps => {
 
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
-
+    console.log(data)
+    console.log(data.gameplay.name)
     // Now Playing Container Data
-    if (mapID !== data.menu.bm.id) {
+    if (mapID !== data.menu.bm.id || mapTitle.innerText !== data.menu.bm.metadata.title) {
         mapFound = false
         mapID = data.menu.bm.id;
         // Map Image
@@ -301,7 +302,6 @@ socket.onmessage = async event => {
             mapStatsBPM.innerText = currBPM;
         }
     }
-
     // Replayer Name
     if (replayerName !== data.gameplay.name) {
         replayerName = data.gameplay.name
