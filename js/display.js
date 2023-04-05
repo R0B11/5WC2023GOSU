@@ -234,6 +234,10 @@ let warmupState = 0;
 
 let winScreen = document.getElementById("winScreen");
 
+let winVideoBlue = document.getElementById("winVideoBlue")
+let winVideoPurple = document.getElementById("winVideoPurple")
+let winVideoText = document.getElementById("winVideoText")
+
 socket.onopen = () => console.log("Successfully Connected");
 socket.onerror = error => console.log("Socket Error: ", error);
 
@@ -287,7 +291,7 @@ let scorePurpleTemp = 0
 let teamNameBlueTemp;
 let teamNamePurpleTemp;
 let gameState;
-let isFreemod = true;
+let isFreemod = false;
 
 let playScoreBlueTemp = 0
 let playScorePurpleTemp = 0
@@ -328,7 +332,6 @@ for (var i = 0; i < allMaps.length; i++) {
 
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
-
 	// SCore and Star Visibility
 	if(scoreVisibleTemp !== data.tourney.manager.bools.scoreVisible) {
 		scoreVisibleTemp = data.tourney.manager.bools.scoreVisible;
@@ -375,7 +378,6 @@ socket.onmessage = async event => {
 		// MAP MAIN SECTION
 		tempImg = data.menu.bm.path.full.replace(/#/g,'%23').replace(/%/g,'%25').replace(/\\/g,'/').replace(/'/g, "\\'");
 		mapContainer.style.backgroundImage = `url('http://` + location.host + `/Songs/${tempImg}?a=${Math.random(10000)}')`;
-		console.log(mapContainer.style.backgroundImage);
 		
 		// MAP TEXT
 		let replaceText = new Promise((resolve, reject) => {
@@ -421,6 +423,9 @@ socket.onmessage = async event => {
 						mapStatsOD.innerText = tempMapStatsOD;
 						mapStatsLEN.innerText = `${(Math.floor(tempMapStatsLEN / 60))}:${("0" + Math.floor(tempMapStatsLEN % 60)).slice(-2)}`
 						mapStatsSR.innerText = tempMapStatsSR;
+
+						if (currentMap.mod == "fm") isFreemod = true
+						else isFreemod = false
 
 						document.getElementById(`${data.menu.bm.id}Button`).click()
 					}
@@ -623,6 +628,7 @@ socket.onmessage = async event => {
 			toGameplayView()
 		}
 		else if (ipcState == 4) {
+			isFreemod = false
 			let currentMapCardSetWinner = ""
 			let pickCardBlue = document.getElementsByClassName("pickCardBlue")
 			let pickCardPurple = document.getElementsByClassName("pickCardPurple")
@@ -720,7 +726,14 @@ socket.onmessage = async event => {
 				mappool.style.opacity = 1;
 
 				viewState = 1;
+				if (scoreBlueTemp == bestOfTemp || scorePurpleTemp == bestOfTemp){
+					setTimeout(() => {
+						toWinScreen();
+					}, 20000);
+				}
 			}, 25000)
+			
+			
 			
 		}
 	}
@@ -740,7 +753,7 @@ socket.onmessage = async event => {
 				else if (modStr.includes("EZ")) tempScore *= 1.75 
 
 				if (!modStr.includes("HD") && modStr.includes("HR")) tempScore *= 1.04
-				
+
 				if (modStr.includes("FL") && !modStr.includes("EZ")) tempScore *= 1.4
 				if (i < numOfClients / 2) playScoreBlueTemp += tempScore 
 				else playScorePurpleTemp += tempScore  
@@ -891,7 +904,7 @@ socket.onmessage = async event => {
 }
 
 const changeAction = (actionText) => nextAction.innerText = actionText
-changeRound('Quarterfinals')
+changeRound('Finals')
 function changeRound(round) {
 	// Changing Round Text
 	roundText.innerText = round;
@@ -1221,6 +1234,7 @@ function starToggleOnOff(toggle) {
 function toPickScreenView() {
 	// Resetting Win Screen opacity
 	winScreen.style.opacity = 0;
+	winScreen.style.zIndex = -1;
 	// Changing Background Image
 	topSection.style.backgroundImage = "url('static/mappoolViewTop.png')"
 	// Gameplay Greenscreen 
@@ -1267,10 +1281,17 @@ function toPickScreenView() {
 	mappool.style.opacity = 1;
 
 	viewState = 1;
+
+	winVideoBlue.removeAttribute('loop');
+	winVideoPurple.removeAttribute('loop');
+	winVideoBlue.pause();
+	winVideoPurple.pause();
+	winVideoText.pause();
 }
 function toGameplayView() {
 	// Resetting Win Screen opacity
 	winScreen.style.opacity = 0;
+	winScreen.style.zIndex = -1;
 	// Changing Background Image
 	topSection.style.backgroundImage = "url('static/gameplayView.png')";
 	// Gameplay greenscreen
@@ -1316,6 +1337,16 @@ function toGameplayView() {
 	mappool.style.opacity = 0;
 
 	viewState = 0;
+
+	winVideoBlue.removeAttribute('loop');
+	winVideoPurple.removeAttribute('loop');
+	winVideoBlue.pause();
+	winVideoPurple.pause();
+	winVideoText.pause();
+	setTimeout(() => {
+		// Chat Scroll
+		chats.scrollTop = chats.scrollHeight;
+	}, 1000);
 }
 
 changeStars(null)
@@ -1430,8 +1461,8 @@ function mapClickEvent() {
 			else if (banTotalNum == 2) {
 				if (banNum == 2) nextAction.innerText = "Blue Ban"
 				else if (banNum == 3) nextAction.innerText = "Purple Ban"
-				else nextAction.innerText = "Purple Pick"
-			} else if (banTotalNum == 1) nextAction.innerText = "Purple Pick"
+				else nextAction.innerText = "Blue Pick"
+			} else if (banTotalNum == 1) nextAction.innerText = "Blue Pick"
 		}
 		break;
 	case (nextAction.innerText == "Purple Ban"): 
@@ -1466,8 +1497,8 @@ function mapClickEvent() {
 			else if (banTotalNum == 2) {
 				if (banNum == 2) nextAction.innerText = "Purple Ban"
 				else if (banNum == 3) nextAction.innerText = "Blue Ban"
-				else nextAction.innerText = "Blue Pick"
-			} else if (banTotalNum == 1) nextAction.innerText = "Blue Pick"
+				else nextAction.innerText = "Purple Pick"
+			} else if (banTotalNum == 1) nextAction.innerText = "Purple Pick"
 		}
 		break;
 	case (nextAction.innerText == "Blue Pick"):
@@ -1546,8 +1577,14 @@ function mapClickEvent() {
 				gameplayNames.style.opacity = 1;
 				mappool.style.opacity = 0;
 
+
 				viewState = 0;
 			},10000)
+			setTimeout(() => {
+				// Chat Scroll
+				chats.scrollTop = chats.scrollHeight;
+			}, 2000);
+
 		}
 
 		break;
@@ -1630,6 +1667,10 @@ function mapClickEvent() {
 
 				viewState = 0;
 			},10000)
+			setTimeout(() => {
+				// Chat Scroll
+				chats.scrollTop = chats.scrollHeight;
+			}, 2000);
 		}
 		break;
 	}
@@ -2267,7 +2308,7 @@ function removeMapControlElements(elementIDName) {
 }
 
 function toWinScreen(){
-	if (scoreBlueTemp > scorePurpleTemp) {
+	if (scoreBlueTemp == bestOfTemp && scorePurpleTemp < bestOfTemp) {
 		winnerRoster1.innerHTML = teamNameBluePlayer1Temp
 		winnerRoster2.innerHTML = teamNameBluePlayer2Temp
 		winnerRoster3.innerHTML = teamNameBluePlayer3Temp
@@ -2275,12 +2316,20 @@ function toWinScreen(){
 		winnerRoster5.innerHTML = teamNameBluePlayer5Temp
 		winnerRoster6.innerHTML = teamNameBluePlayer6Temp
 		winnerRoster7.innerHTML = teamNameBluePlayer7Temp
-		winnerRoster8.innerHTML = teamNameBluePlayer8Temp
+		if (teamNameBluePlayer8Temp == 'undefined' || teamNameBluePlayer8Temp == undefined){ winnerRoster8.innerHTML = ""}
+		else {winnerRoster8.innerHTML = teamNameBluePlayer8Temp}
+		
 		winnerFlag.style.backgroundImage = `url("static/flags/${teamNameBlueTemp}.png")`
-		winnerName.innerHTML = `${teamNameBlueTemp}`
+		winnerName.innerHTML = `${teamNameBlueTemp} wins!`
+		winnerName.style.textShadow = "0px 0px 10px var(--blue75Opacity), 0px 0px 20px var(--blue75Opacity), 0px 0px 30px var(--blue75Opacity)"
+		winVideoPurple.style.opacity = 0;
+		winVideoBlue.style.opacity = 1;
+		winVideoBlue.setAttribute('loop','true');
+		winVideoBlue.currentTime = 0;
+		winVideoBlue.play();
 
 	}
-	else if (scorePurpleTemp > scoreBlueTemp) {
+	else if (scorePurpleTemp == bestOfTemp && scoreBlueTemp < bestOfTemp) {
 		winnerRoster1.innerHTML = teamNamePurplePlayer1Temp
 		winnerRoster2.innerHTML = teamNamePurplePlayer2Temp
 		winnerRoster3.innerHTML = teamNamePurplePlayer3Temp
@@ -2288,9 +2337,16 @@ function toWinScreen(){
 		winnerRoster5.innerHTML = teamNamePurplePlayer5Temp
 		winnerRoster6.innerHTML = teamNamePurplePlayer6Temp
 		winnerRoster7.innerHTML = teamNamePurplePlayer7Temp
-		winnerRoster8.innerHTML = teamNamePurplePlayer8Temp
+		if (teamNamePurplePlayer8Temp == 'undefined' || teamNamePurplePlayer8Temp == undefined){ winnerRoster8.innerHTML = ""}
+		else {winnerRoster8.innerHTML = teamNamePurplePlayer8Temp}
 		winnerFlag.style.backgroundImage = `url("static/flags/${teamNamePurpleTemp}.png")`
-		winnerName.innerHTML = `${teamNamePurpleTemp}`
+		winnerName.innerHTML = `${teamNamePurpleTemp} wins!`
+		winnerName.style.textShadow = "0px 0px 10px var(--purple75Opacity), 0px 0px 20px var(--purple75Opacity), 0px 0px 30px var(--purple75Opacity)"
+		winVideoPurple.style.opacity = 1;
+		winVideoBlue.style.opacity = 0;
+		winVideoPurple.setAttribute('loop','true');
+		winVideoPurple.currentTime = 0;
+		winVideoPurple.play();
 	}
 	else {
 		winnerRoster1.innerHTML = ""
@@ -2303,7 +2359,11 @@ function toWinScreen(){
 		winnerRoster8.innerHTML = ""
 		winnerFlag.style.backgroundImage = ``
 		winnerName.innerHTML = `No Winner`
-	}
+		winnerName.style.textShadow = 'none'
 
+	}
+	winVideoText.currentTime = 0;
+	winVideoText.play();
 	winScreen.style.opacity = 1;
+	winScreen.style.zIndex = 3;
 }

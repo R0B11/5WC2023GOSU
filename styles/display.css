@@ -849,36 +849,39 @@ body,html{
 	right: 0px;
 	height: 1080px;
 	width: 1920px;
-	z-index: 3;
+	z-index: -1;
 	background-color: black;
 	opacity: 0;
-	transition: 750ms;
+	transition: 750ms ease-in-out;
 }
 #winnerFlag {
-	position: relative;
+	position: absolute;
 	height: 250px;
 	width: 500px;
-	top: 300px;
-	left: 480px;
+	top: 380px;
+	left: 330px;
 	background-size: contain;
 	background-repeat: no-repeat;
+	z-index: 3;
 }
 #winnerName {
-	position: relative;
+	position: absolute;
 	height: 50px;
 	width: 600px;
-	top: 350px;
-	left: 355px;
+	top: 660px;
+	left: 205px;
 	text-align: center;
 	font-size: 60px;
+	z-index: 3;
 }
 #winnerRosters {
 	position: absolute;
 	width: 700px;
 	height: 500px;
-	top: 340px;
+	top: 360px;
 	left: 1040px;
 	font-size: 50px;
+	z-index: 2;
 }
 .winnerNameLeft {
 	position: absolute;
@@ -888,11 +891,57 @@ body,html{
 	position: absolute;
 	left: 400px;
 }
-#winnerRoster1 {top: 0px;}
-#winnerRoster2 {top: 40px;}
-#winnerRoster3 {top: 80px;}
-#winnerRoster4 {top: 120px;}
-#winnerRoster5 {top: 160px;}
-#winnerRoster6 {top: 200px;}
-#winnerRoster7 {top: 240px;}
-#winnerRoster8 {top: 280px;}
+#winnerRoster1 {
+	position: absolute;
+	top: 0px;
+}
+#winnerRoster2 {
+	position: absolute;
+	top: 55px;
+}
+#winnerRoster3 {
+	position: absolute;
+	top: 110px;
+}
+#winnerRoster4 {
+	position: absolute;
+	top: 165px;
+}
+#winnerRoster5 {
+	position: absolute;
+	top: 220px;
+}
+#winnerRoster6 {
+	position: absolute;
+	top: 275px;
+}
+#winnerRoster7 {
+	position: absolute;
+	top: 330px;
+}
+#winnerRoster8 {
+	position: absolute;
+	top: 385px;
+}
+
+#winVideoBlue {
+	z-index: 1;
+	opacity: 0;
+	top: 0px;
+	left: 0px;
+	position: absolute;
+}
+#winVideoPurple {
+	z-index: 1;
+	opacity: 0;
+	top: 0px;
+	left: 0px;
+	position: absolute;
+
+}
+#winVideoText {
+	z-index: 2;
+	top: 0px;
+	left: 0px;
+	position: absolute;
+}
