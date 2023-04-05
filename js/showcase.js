@@ -90,6 +90,7 @@ getMaps.then(allMaps => {
 
 socket.onmessage = async event => {
     let data = JSON.parse(event.data);
+    console.log(data)
 
     // Now Playing Container Data
     if (mapID !== data.menu.bm.id) {
