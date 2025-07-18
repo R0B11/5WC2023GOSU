@@ -74,7 +74,6 @@ body,html{
 	bottom: 0px;
     width: 1920px;
     height: 178px;
-	background-image: url('../static/bottomplay.png');
 	background-repeat: no-repeat;	
     transition: ease-in-out 200ms;
 	z-index: 0;
